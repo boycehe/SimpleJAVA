@@ -45,6 +45,10 @@ void
 #define HC_RD							   22 
 #define HC_ID							   23
 #define HC_FLOAT						   24 
+#define HC_PLUS						  	   25 
+#define HC_MINUS						   26 
+#define HC_DIVIDE						   27 
+#define HC_MULTI						   28 
 
 
 

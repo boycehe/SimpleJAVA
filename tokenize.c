@@ -21,8 +21,14 @@
 #define CC_COMMA      8     /* ',' */
 #define CC_LD         9     /* '{' */
 #define CC_RD         10    /* '}' */
-#define CC_ILLEGAL    11    /* Illegal character */
-#define CC_NUL        12    /* 0x00 */
+#define CC_LP         11    /* '(' */
+#define CC_RP         12    /* ')' */
+#define CC_PLUS       13    /* '+' */
+#define CC_DIVIDE     14    /* '/' */
+#define CC_MINUS      15    /* '-' */
+#define CC_MULTI      16    /* '*' */
+#define CC_ILLEGAL    17    /* Illegal character */
+#define CC_NUL        18    /* 0x00 */
 
 #define IdChar(C)  ((javaCtypeMap[(unsigned char)C]&0x46)!=0)
 #define javaToupper(x)  ((x)&~(javaCtypeMap[(unsigned char)(x)]&0x20))
@@ -100,12 +106,12 @@ static const unsigned char aiClass[] = {
     /*         x0          x1          x2          x3          x4          x5          x6          x7          x8           x9          xa          xb           xc         xd           xe          xf */
     /* 0x */   CC_NUL    , CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,  CC_SPACE  , CC_SPACE  , CC_ILLEGAL,  CC_SPACE  , CC_SPACE  , CC_ILLEGAL, CC_ILLEGAL,
     /* 1x */   CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,  CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,  CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,
-    /* 2x */   CC_SPACE  , CC_DIGIT  , CC_QUOTE  , CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_QUOTE  , CC_ILLEGAL,  CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,  CC_COMMA  , CC_ILLEGAL, CC_DOT    , CC_ILLEGAL,
+    /* 2x */   CC_SPACE  , CC_DIGIT  , CC_QUOTE  , CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_QUOTE  , CC_LP     ,  CC_RP     , CC_MULTI  , CC_PLUS   ,  CC_COMMA  , CC_MINUS  , CC_DOT    , CC_DIVIDE ,
     /* 3x */   CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  , CC_DIGIT  ,  CC_DIGIT  , CC_ILLEGAL, CC_SEMI   ,  CC_ILLEGAL, CC_EQ     , CC_ILLEGAL, CC_ILLEGAL,
     /* 4x */   CC_ILLEGAL, CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,
     /* 5x */   CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_ILLEGAL,  CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL, CC_ILLEGAL,
     /* 6x */   CC_ILLEGAL, CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,
-    /* 7x */   CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_ILLEGAL,  CC_LD     , CC_ILLEGAL, CC_RD     , CC_ILLEGAL,
+    /* 7x */   CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   , CC_KYWD   ,  CC_KYWD   , CC_KYWD   , CC_LD     ,  CC_ILLEGAL, CC_RD     , CC_ILLEGAL, CC_ILLEGAL,
     /* 8x */   CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     , CC_ID     ,
     /* 9x */   CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     , CC_ID     ,
     /* Ax */   CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     ,  CC_ID     , CC_ID     , CC_ID     , CC_ID     ,
@@ -263,7 +269,40 @@ int javaGetToken(const unsigned char *z, int *tokenType){
             *tokenType = HC_ILLEGAL;
             return 0;
         }
+        case CC_LD:{
+             *tokenType = HC_LD;
+             return 1;
+        }
+        case CC_RD:{
+            *tokenType = HC_RD;
+             return 1;
+        }
+        case CC_LP:{
+            *tokenType = HC_LP;
+             return 1;
+        }
+        case CC_RP:{
+            *tokenType = HC_RP;
+            return 1;
+        }
+        case CC_PLUS:{
+            *tokenType = HC_PLUS;
+            return 1;
+        }
+        case CC_MINUS:{
+            *tokenType = HC_MINUS;
+            return 1;
+        }
+        case CC_MULTI:{
+            *tokenType = HC_MULTI;
+            return 1;
+        }
+        case CC_DIVIDE:{
+            *tokenType = HC_DIVIDE;
+            return 1;
+        }
         default: {
+            printf("%c",*z);
             *tokenType = HC_ILLEGAL;
             return 1;
         }
@@ -376,8 +415,20 @@ void printTokenType(int tokenType){
       case HC_FLOAT:
         printf("HC_FLOAT\n");
         break;
+      case HC_PLUS:
+        printf("HC_PLUS\n");  
+        break;
+      case HC_MINUS:
+        printf("HC_MINUS\n");  
+        break;
+      case HC_MULTI:
+        printf("HC_MULTI\n");
+        break;
+      case HC_DIVIDE:
+        printf("HC_DIVIDE\n");
+        break;
       default:
-        printf("invalild");
+        printf("invalild\n");
         break;
   
     } 
