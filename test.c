@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include "tokenize.h"
 #include "simple_java.h"
+#include "simple_java_foundation.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
-void showToken(const char *sourcecode);
+void showToken(const unsigned char *sourcecode);
 void testToken();
 int main(int argc, char *argv[]) {
 	
@@ -21,13 +22,13 @@ int main(int argc, char *argv[]) {
 		strcat(buff,text);
 	}
 
-	showToken(buff);
+	showToken((const unsigned char*)buff);
 		
-
 }
 
-void showToken(const char *sourcecode){
+void showToken(const unsigned char *sourcecode){
 	
+	void* pParser = ParseAlloc(malloc);
 	int tokenType;
 	int len = javaGetToken(sourcecode, &tokenType);
 	while (tokenType != HC_ILLEGAL) {
@@ -39,6 +40,14 @@ void showToken(const char *sourcecode){
 		printf("\n");
 		printf("tokentype:\t");
 		printTokenType(tokenType);
+		
+		Token token ;
+		token.z = sourcecode;
+		token.n = len;
+		
+		if (tokenType != HC_SPACE) {
+		 	Parse(pParser,tokenType,token,0);
+		}
 				
 		sourcecode = &sourcecode[len];
 		len = javaGetToken(sourcecode, &tokenType);
@@ -47,11 +56,16 @@ void showToken(const char *sourcecode){
 		}
 				
 	}
-	
+	 Token endToken;
+	 endToken.z = 0;
+	 endToken.n = 0;
+	 Parse(pParser,0,endToken,0);
+		
+	ParseFree(pParser, free);
 	//printf("source code:%s",sourcecode);
 	
 }
-
+/*
 void testToken(){
 	
 	const char *testql = "class new int String public private protected return extends void";
@@ -94,3 +108,4 @@ void testToken(){
 		const char *token10 = "void";
 		testKeywordCode(token10,4);
 }
+*/

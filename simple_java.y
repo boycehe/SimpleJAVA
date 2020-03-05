@@ -1,6 +1,7 @@
 %token_type {Token}
 %default_type {Token}
 %extra_argument {JavaParser *pParse}
+%token_prefix HC_
 
 /*
 类声明
@@ -81,7 +82,6 @@ callparameterlist(A) ::= callidist(B) expr(C).{
 	printf("119\n");
 }
 callparameterlist(A) ::= .{
-	A = 0;
 	printf("123\n");
 }
 
@@ -151,16 +151,13 @@ rightval(A) ::= INTEGER(B).{
 	printf("190\n");
 }
 rightval(A) ::= STRING(B).{
-	A = B;
 	printf("193\n");
 }
 
 returnval(A) ::= RETURN rightval(B) COMMA.{
-	A = B;
 	printf("199\n");
 }
 returnval(A) ::= RETURN COMMA.{
-	A = 0;
 	printf("206\n");
 }
 
@@ -191,11 +188,11 @@ funcbodyitems(A) ::= funcbodyitems callexpr.{
 	printf("239\n");
 }
 funcbodyitems(A) ::= funcbodyitems returnval.{
-	A = 0;
+	printf("240\n");
 }
 
 funcbodyitems(A) ::= funcbodyitems sentence.{
-	A = 0;
+	printf("250\n");
 }
 
 funcbodyitems(A) ::= .{

@@ -7,6 +7,11 @@ typedef struct JavaFunction JavaFunction;
 typedef struct JavaVar JavaVar;
 typedef struct JavaExprList  JavaExprList;
 typedef struct JavaExpr	JavaExpr;
+typedef struct JavaSentenceList JavaSentenceList;
+typedef struct MetaJavaClass MetaJavaClass;
+typedef struct JavaSentence JavaSentence;
+typedef struct JavaClassBody JavaClassBody;
+typedef struct JavaParser JavaParser;
 
 /*
 access ::= PUBLIC.
@@ -14,16 +19,22 @@ access ::= PROTECTED.
 access ::= PRIVATE.
 */
 
+struct Token {
+	const unsigned char *z;     /* Text of the token.  Not NULL-terminated! */
+	unsigned int n;    /* Number of characters in this token */
+};
+typedef struct Token Token;
+
 enum JavaAccessType {
 	PUBLIC = 0,
 	PROTECTED = 1,
 	PRIVATE = 2
-}
+};
 
 enum JavaType {
 	 JAVA_INT = 0,
 	 JAVA_STRING
-}
+};
 
 struct MetaJavaClass {
 	
@@ -36,7 +47,7 @@ struct MetaJavaClass {
 struct JavaExprList{
 	JavaExpr **exprs;
 	unsigned short len;
-}
+};
 
 struct JavaExpr{
 	
@@ -45,7 +56,7 @@ struct JavaExpr{
 	Token 	*propertyToken;
 	JavaVar *var;
 	
-}
+};
 
 struct JavaFunction {
 	const char *name;
@@ -55,20 +66,16 @@ struct JavaFunction {
 
 struct JavaSentenceList {
 	
-}
+};
 
 struct JavaSentence {
 	
-}
+};
 
 struct JavaVar {
 	
 	unsigned char type;
-	enum {
-		java_int = 0,
-		java_string
-	}
-	
+
 };
 
 struct JavaClassBody {
@@ -76,13 +83,13 @@ struct JavaClassBody {
 	unsigned char funLen;
 	JavaVar **javaVars;
 	unsigned char javaVarLen;
-}
+};
 
 struct JavaParser {
 	
 	 MetaJavaClass **classes;
 	 unsigned clsLen;
 	
-}
+};
 
 #endif
