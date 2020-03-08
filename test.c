@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	while((fgets(text,1000,fp))!=NULL){
 		strcat(buff,text);
 	}
-
+	
 	showToken((const unsigned char*)buff);
 		
 }
@@ -33,22 +33,21 @@ void showToken(const unsigned char *sourcecode){
 	int len = javaGetToken(sourcecode, &tokenType);
 	while (tokenType != HC_ILLEGAL) {
 			
-		printf("token:\t");
-		for (int i = 0; i < len; i++) {
-			printf("%c",sourcecode[i]);
-		}
-		printf("\n");
-		printf("tokentype:\t");
-		printTokenType(tokenType);
-		
 		Token token ;
 		token.z = sourcecode;
 		token.n = len;
 		
 		if (tokenType != HC_SPACE) {
 		 	Parse(pParser,tokenType,token,0);
+			printf("token:\t");
+			for (int i = 0; i < len; i++) {
+				printf("%c",sourcecode[i]);
+			}
+			printf("\n");
+			printf("tokentype:\t");
+			printTokenType(tokenType);
 		}
-				
+
 		sourcecode = &sourcecode[len];
 		len = javaGetToken(sourcecode, &tokenType);
 		if (len == 0) {
@@ -56,19 +55,20 @@ void showToken(const unsigned char *sourcecode){
 		}
 				
 	}
-	 Token endToken;
-	 endToken.z = 0;
-	 endToken.n = 0;
-	 Parse(pParser,0,endToken,0);
-		
+	
+	Token endToken;
+	endToken.z = 0;
+	endToken.n = 0;
+	Parse(pParser,0,endToken,0);
+	
 	ParseFree(pParser, free);
 	//printf("source code:%s",sourcecode);
 	
 }
-/*
+
 void testToken(){
 	
-	const char *testql = "class new int String public private protected return extends void";
+	const char *testql = "class new int String public private protected return extends void this";
 	int tokenType;
 	int len = javaGetToken(testql, &tokenType);
 	while (tokenType != HC_ILLEGAL) {
@@ -107,5 +107,6 @@ void testToken(){
 		testKeywordCode(token9,7);
 		const char *token10 = "void";
 		testKeywordCode(token10,4);
+		const char *token11 = "this";
+		testKeywordCode(token11,4);
 }
-*/

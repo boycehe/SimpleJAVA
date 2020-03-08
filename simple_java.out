@@ -1,128 +1,135 @@
 State 0:
-          javaclass ::= * CLASS ID javasinherit LD classitems RD
+          javabegin ::= * javaclass
+          javaclass ::= * javaclass CLASS ID javasinherit LD classitems RD
+      (2) javaclass ::= *
 
-                         CLASS shift        59     
-                     javaclass accept
+                     javabegin accept
+                     javaclass shift        21     
+                     {default} reduce       2      javaclass ::=
 
 State 1:
-          opcal ::= * opcal INTEGER PLUS|MULTI|DIVIDED|MINUS
-      (6) opcal ::= *
+          opcal ::= * opcal INTEGER PLUS|MULTI|DIVIDE|MINUS
+      (8) opcal ::= *
           sentence ::= * opcal INTEGER
           callexpr ::= * ID DOT ID LP callparameterlist RP SEMI
-          declarevar ::= * INT|STRING declarevaritems SEMI
-          assign ::= * leftval EQ rightval
-          leftval ::= * ID
-          leftval ::= * ID DOT ID
-          returnval ::= * RETURN rightval COMMA
-          returnval ::= * RETURN COMMA
+          declarevar ::= * INT|STRING declarevaritems ID SEMI
           functionbody ::= LD funcbodyitems * RD
           funcbodyitems ::= funcbodyitems * declarevar
           funcbodyitems ::= funcbodyitems * assign
           funcbodyitems ::= funcbodyitems * callexpr
           funcbodyitems ::= funcbodyitems * returnval
           funcbodyitems ::= funcbodyitems * sentence
+          assign ::= * leftval EQ rightval
+          leftval ::= * THIS DOT ID
+          leftval ::= * ID
+          leftval ::= * ID DOT ID
+          returnval ::= * RETURN rightval SEMI
+          returnval ::= * RETURN SEMI
 
-                            ID shift        38     
-                            RD shift-reduce 33     functionbody ::= LD funcbodyitems RD
-                           INT shift        16     
-                        STRING shift        16     
+                            ID shift        37     
+                            RD shift-reduce 25     functionbody ::= LD funcbodyitems RD
+                           INT shift        14     
+                        STRING shift        14     
+                          THIS shift        26     
                         RETURN shift        6      
-                         opcal shift        39     
-                      sentence shift-reduce 38     funcbodyitems ::= funcbodyitems sentence
-                      callexpr shift-reduce 36     funcbodyitems ::= funcbodyitems callexpr
-                    declarevar shift-reduce 34     funcbodyitems ::= funcbodyitems declarevar
-                        assign shift-reduce 35     funcbodyitems ::= funcbodyitems assign
-                       leftval shift        33     
-                     returnval shift-reduce 37     funcbodyitems ::= funcbodyitems returnval
-                     {default} reduce       6      opcal ::=
+                         opcal shift        38     
+                      sentence shift-reduce 30     funcbodyitems ::= funcbodyitems sentence
+                      callexpr shift-reduce 28     funcbodyitems ::= funcbodyitems callexpr
+                    declarevar shift-reduce 26     funcbodyitems ::= funcbodyitems declarevar
+                        assign shift-reduce 27     funcbodyitems ::= funcbodyitems assign
+                     returnval shift-reduce 29     funcbodyitems ::= funcbodyitems returnval
+                       leftval shift        32     
+                     {default} reduce       8      opcal ::=
 
 State 2:
-          javaclass ::= CLASS ID javasinherit LD classitems * RD
-          declarevar ::= * INT|STRING declarevaritems SEMI
+          javaclass ::= javaclass CLASS ID javasinherit LD classitems * RD
+          declarevar ::= * INT|STRING declarevaritems ID SEMI
           function ::= * PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody
-          function ::= * returntype ID LP parameterlist RP functionbody
           classitems ::= classitems * declarevar
           classitems ::= classitems * function
 
-                            RD shift        57     
-                           INT shift        16     
-                        STRING shift        16     
-                        PUBLIC shift        22     
-                     PROTECTED shift        22     
-                       PRIVATE shift        22     
-                    declarevar shift-reduce 44     classitems ::= classitems declarevar
-                      function shift-reduce 45     classitems ::= classitems function
-                    returntype shift        27     
+                            RD shift-reduce 1      javaclass ::= javaclass CLASS ID javasinherit LD classitems RD
+                           INT shift        14     
+                        STRING shift        14     
+                        PUBLIC shift        19     
+                     PROTECTED shift        19     
+                       PRIVATE shift        19     
+                    declarevar shift-reduce 47     classitems ::= classitems declarevar
+                      function shift-reduce 48     classitems ::= classitems function
 
 State 3:
           callparameterlist ::= * callidist expr
-     (10) callparameterlist ::= *
+     (12) callparameterlist ::= *
           callidist ::= * callidist INTEGER COMMA
           callidist ::= * callidist TEXT COMMA
           callidist ::= * callidist ID DOT ID COMMA
-     (14) callidist ::= *
+     (16) callidist ::= *
           rightval ::= NEW ID LP * callparameterlist RP
 
-                            RP reduce       10     callparameterlist ::=
-             callparameterlist shift        30     
+                            RP reduce       12     callparameterlist ::=
+             callparameterlist shift        27     
                      callidist shift        9      
-                     {default} reduce       14     callidist ::=
+                     {default} reduce       16     callidist ::=
 
 State 4:
           callexpr ::= ID DOT ID LP * callparameterlist RP SEMI
           callparameterlist ::= * callidist expr
-     (10) callparameterlist ::= *
+     (12) callparameterlist ::= *
           callidist ::= * callidist INTEGER COMMA
           callidist ::= * callidist TEXT COMMA
           callidist ::= * callidist ID DOT ID COMMA
-     (14) callidist ::= *
+     (16) callidist ::= *
 
-                            RP reduce       10     callparameterlist ::=
-             callparameterlist shift        35     
+                            RP reduce       12     callparameterlist ::=
+             callparameterlist shift        34     
                      callidist shift        9      
-                     {default} reduce       14     callidist ::=
+                     {default} reduce       16     callidist ::=
 
 State 5:
           callparameterlist ::= * callidist expr
-     (10) callparameterlist ::= *
+     (12) callparameterlist ::= *
           callidist ::= * callidist INTEGER COMMA
           callidist ::= * callidist TEXT COMMA
           callidist ::= * callidist ID DOT ID COMMA
-     (14) callidist ::= *
+     (16) callidist ::= *
           declarevaritems ::= declarevaritems ID EQ NEW ID LP * callparameterlist RP COMMA
 
-                            RP reduce       10     callparameterlist ::=
-             callparameterlist shift        43     
+                            RP reduce       12     callparameterlist ::=
+             callparameterlist shift        42     
                      callidist shift        9      
-                     {default} reduce       14     callidist ::=
+                     {default} reduce       16     callidist ::=
 
 State 6:
           rightval ::= * ID
+          rightval ::= * THIS DOT ID
           rightval ::= * NEW ID LP callparameterlist RP
           rightval ::= * INTEGER
           rightval ::= * STRING
-          returnval ::= RETURN * rightval COMMA
-          returnval ::= RETURN * COMMA
+          returnval ::= RETURN * rightval SEMI
+          returnval ::= RETURN * SEMI
 
-                            ID shift-reduce 25     rightval ::= ID
-                       INTEGER shift-reduce 27     rightval ::= INTEGER
-                         COMMA shift-reduce 30     returnval ::= RETURN COMMA
-                        STRING shift-reduce 28     rightval ::= STRING
-                           NEW shift        32     
-                      rightval shift        29     
+                            ID shift-reduce 36     rightval ::= ID
+                       INTEGER shift-reduce 39     rightval ::= INTEGER
+                          SEMI shift-reduce 42     returnval ::= RETURN SEMI
+                        STRING shift-reduce 40     rightval ::= STRING
+                           NEW shift        29     
+                          THIS shift        31     
+                      rightval shift        24     
 
 State 7:
           assign ::= leftval EQ * rightval
           rightval ::= * ID
+          rightval ::= * THIS DOT ID
           rightval ::= * NEW ID LP callparameterlist RP
           rightval ::= * INTEGER
           rightval ::= * STRING
 
-                            ID shift-reduce 25     rightval ::= ID
-                       INTEGER shift-reduce 27     rightval ::= INTEGER
-                        STRING shift-reduce 28     rightval ::= STRING
-                           NEW shift        32     
-                      rightval shift-reduce 22     assign ::= leftval EQ rightval
+                            ID shift-reduce 36     rightval ::= ID
+                       INTEGER shift-reduce 39     rightval ::= INTEGER
+                        STRING shift-reduce 40     rightval ::= STRING
+                           NEW shift        29     
+                          THIS shift        31     
+                      rightval shift-reduce 32     assign ::= leftval EQ rightval
 
 State 8:
           expr ::= * LP expr RP
@@ -131,11 +138,11 @@ State 8:
           expr ::= * INTEGER
           expr ::= * ID DOT ID
 
-                            ID shift        50     
+                            ID shift        49     
                             LP shift        8      
-                          TEXT shift-reduce 2      expr ::= TEXT
-                       INTEGER shift-reduce 3      expr ::= INTEGER
-                          expr shift        51     
+                          TEXT shift-reduce 4      expr ::= TEXT
+                       INTEGER shift-reduce 5      expr ::= INTEGER
+                          expr shift        50     
 
 State 9:
           expr ::= * LP expr RP
@@ -147,338 +154,328 @@ State 9:
           callidist ::= callidist * TEXT COMMA
           callidist ::= callidist * ID DOT ID COMMA
 
-                            ID shift        46     
+                            ID shift        45     
                             LP shift        8      
-                          TEXT shift        48     
-                       INTEGER shift        47     
-                          expr shift-reduce 9      callparameterlist ::= callidist expr
+                          TEXT shift        47     
+                       INTEGER shift        46     
+                          expr shift-reduce 11     callparameterlist ::= callidist expr
 
 State 10:
-          function ::= returntype ID LP parameterlist RP * functionbody
-          functionbody ::= * LD funcbodyitems RD
-
-                            LD shift        14     
-                  functionbody shift-reduce 32     function ::= returntype ID LP parameterlist RP functionbody
-
-State 11:
           function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP * functionbody
           functionbody ::= * LD funcbodyitems RD
 
-                            LD shift        14     
-                  functionbody shift-reduce 31     function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody
+                            LD shift        12     
+                  functionbody shift-reduce 24     function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody
+
+State 11:
+          javaclass ::= javaclass CLASS ID * javasinherit LD classitems RD
+          javasinherit ::= * EXTENDS ID
+     (46) javasinherit ::= *
+
+                       EXTENDS shift        22     
+                  javasinherit shift        57     
+                     {default} reduce       46     javasinherit ::=
 
 State 12:
-          javaclass ::= CLASS ID * javasinherit LD classitems RD
-          javasinherit ::= * EXTENDS ID
-     (43) javasinherit ::= *
-
-                       EXTENDS shift        25     
-                  javasinherit shift        58     
-                     {default} reduce       43     javasinherit ::=
-
-State 13:
-          function ::= returntype ID LP * parameterlist RP functionbody
-          parameterlist ::= * parameterlist INT|STRING ID
-     (41) parameterlist ::= *
-
-                 parameterlist shift        20     
-                     {default} reduce       41     parameterlist ::=
-
-State 14:
           functionbody ::= LD * funcbodyitems RD
           funcbodyitems ::= * funcbodyitems declarevar
           funcbodyitems ::= * funcbodyitems assign
           funcbodyitems ::= * funcbodyitems callexpr
           funcbodyitems ::= * funcbodyitems returnval
           funcbodyitems ::= * funcbodyitems sentence
-     (39) funcbodyitems ::= *
+     (31) funcbodyitems ::= *
 
                  funcbodyitems shift        1      
-                     {default} reduce       39     funcbodyitems ::=
+                     {default} reduce       31     funcbodyitems ::=
 
-State 15:
+State 13:
           function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP * parameterlist RP functionbody
           parameterlist ::= * parameterlist INT|STRING ID
-     (41) parameterlist ::= *
+     (44) parameterlist ::= *
 
-                 parameterlist shift        21     
-                     {default} reduce       41     parameterlist ::=
+                 parameterlist shift        18     
+                     {default} reduce       44     parameterlist ::=
 
-State 16:
-          declarevar ::= INT|STRING * declarevaritems SEMI
+State 14:
+          declarevar ::= INT|STRING * declarevaritems ID SEMI
           declarevaritems ::= * declarevaritems ID COMMA
           declarevaritems ::= * declarevaritems ID EQ INTEGER COMMA
           declarevaritems ::= * declarevaritems ID EQ ID COMMA
           declarevaritems ::= * declarevaritems ID EQ TEXT COMMA
           declarevaritems ::= * declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA
-     (21) declarevaritems ::= *
+     (23) declarevaritems ::= *
 
-               declarevaritems shift        24     
-                     {default} reduce       21     declarevaritems ::=
+               declarevaritems shift        56     
+                     {default} reduce       23     declarevaritems ::=
 
-State 17:
-          javaclass ::= CLASS ID javasinherit LD * classitems RD
+State 15:
+          javaclass ::= javaclass CLASS ID javasinherit LD * classitems RD
           classitems ::= * classitems declarevar
           classitems ::= * classitems function
-     (46) classitems ::= *
+     (49) classitems ::= *
 
                     classitems shift        2      
-                     {default} reduce       46     classitems ::=
+                     {default} reduce       49     classitems ::=
 
-State 18:
-          opcal ::= opcal INTEGER * PLUS|MULTI|DIVIDED|MINUS
-      (7) sentence ::= opcal INTEGER *
+State 16:
+          opcal ::= opcal INTEGER * PLUS|MULTI|DIVIDE|MINUS
+      (9) sentence ::= opcal INTEGER *
 
-                          PLUS shift-reduce 5      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDED|MINUS
-                         MULTI shift-reduce 5      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDED|MINUS
-                       DIVIDED shift-reduce 5      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDED|MINUS
-                         MINUS shift-reduce 5      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDED|MINUS
-                     {default} reduce       7      sentence ::= opcal INTEGER
+                          PLUS shift-reduce 7      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS
+                         MULTI shift-reduce 7      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS
+                        DIVIDE shift-reduce 7      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS
+                         MINUS shift-reduce 7      opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS
+                     {default} reduce       9      sentence ::= opcal INTEGER
 
-State 19:
+State 17:
           declarevaritems ::= declarevaritems ID EQ * INTEGER COMMA
           declarevaritems ::= declarevaritems ID EQ * ID COMMA
           declarevaritems ::= declarevaritems ID EQ * TEXT COMMA
           declarevaritems ::= declarevaritems ID EQ * NEW ID LP callparameterlist RP COMMA
 
-                            ID shift        55     
-                          TEXT shift        54     
-                       INTEGER shift        56     
-                           NEW shift        53     
+                            ID shift        54     
+                          TEXT shift        53     
+                       INTEGER shift        55     
+                           NEW shift        52     
 
-State 20:
-          function ::= returntype ID LP parameterlist * RP functionbody
-          parameterlist ::= parameterlist * INT|STRING ID
-
-                            RP shift        10     
-                           INT shift        28     
-                        STRING shift        28     
-
-State 21:
+State 18:
           function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist * RP functionbody
           parameterlist ::= parameterlist * INT|STRING ID
 
-                            RP shift        11     
-                           INT shift        28     
-                        STRING shift        28     
+                            RP shift        10     
+                           INT shift        23     
+                        STRING shift        23     
 
-State 22:
+State 19:
           function ::= PUBLIC|PROTECTED|PRIVATE * INT|STRING|VOID ID LP parameterlist RP functionbody
 
-                           INT shift        41     
-                        STRING shift        41     
-                          VOID shift        41     
+                           INT shift        40     
+                        STRING shift        40     
+                          VOID shift        40     
 
-State 23:
+State 20:
+          declarevar ::= INT|STRING declarevaritems ID * SEMI
           declarevaritems ::= declarevaritems ID * COMMA
           declarevaritems ::= declarevaritems ID * EQ INTEGER COMMA
           declarevaritems ::= declarevaritems ID * EQ ID COMMA
           declarevaritems ::= declarevaritems ID * EQ TEXT COMMA
           declarevaritems ::= declarevaritems ID * EQ NEW ID LP callparameterlist RP COMMA
 
-                         COMMA shift-reduce 16     declarevaritems ::= declarevaritems ID COMMA
-                            EQ shift        19     
+                          SEMI shift-reduce 17     declarevar ::= INT|STRING declarevaritems ID SEMI
+                         COMMA shift-reduce 18     declarevaritems ::= declarevaritems ID COMMA
+                            EQ shift        17     
+
+State 21:
+      (0) javabegin ::= javaclass *
+          javaclass ::= javaclass * CLASS ID javasinherit LD classitems RD
+
+                             $ reduce       0      javabegin ::= javaclass
+                         CLASS shift        58     
+
+State 22:
+          javasinherit ::= EXTENDS * ID
+
+                            ID shift-reduce 45     javasinherit ::= EXTENDS ID
+
+State 23:
+          parameterlist ::= parameterlist INT|STRING * ID
+
+                            ID shift-reduce 43     parameterlist ::= parameterlist INT|STRING ID
 
 State 24:
-          declarevar ::= INT|STRING declarevaritems * SEMI
+          returnval ::= RETURN rightval * SEMI
+
+                          SEMI shift-reduce 41     returnval ::= RETURN rightval SEMI
+
+State 25:
+          leftval ::= THIS DOT * ID
+
+                            ID shift-reduce 33     leftval ::= THIS DOT ID
+
+State 26:
+          leftval ::= THIS * DOT ID
+
+                           DOT shift        25     
+
+State 27:
+          rightval ::= NEW ID LP callparameterlist * RP
+
+                            RP shift-reduce 38     rightval ::= NEW ID LP callparameterlist RP
+
+State 28:
+          rightval ::= NEW ID * LP callparameterlist RP
+
+                            LP shift        3      
+
+State 29:
+          rightval ::= NEW * ID LP callparameterlist RP
+
+                            ID shift        28     
+
+State 30:
+          rightval ::= THIS DOT * ID
+
+                            ID shift-reduce 37     rightval ::= THIS DOT ID
+
+State 31:
+          rightval ::= THIS * DOT ID
+
+                           DOT shift        30     
+
+State 32:
+          assign ::= leftval * EQ rightval
+
+                            EQ shift        7      
+
+State 33:
+          callexpr ::= ID DOT ID LP callparameterlist RP * SEMI
+
+                          SEMI shift-reduce 10     callexpr ::= ID DOT ID LP callparameterlist RP SEMI
+
+State 34:
+          callexpr ::= ID DOT ID LP callparameterlist * RP SEMI
+
+                            RP shift        33     
+
+State 35:
+          callexpr ::= ID DOT ID * LP callparameterlist RP SEMI
+     (35) leftval ::= ID DOT ID *
+
+                            LP shift        4      
+                     {default} reduce       35     leftval ::= ID DOT ID
+
+State 36:
+          callexpr ::= ID DOT * ID LP callparameterlist RP SEMI
+          leftval ::= ID DOT * ID
+
+                            ID shift        35     
+
+State 37:
+          callexpr ::= ID * DOT ID LP callparameterlist RP SEMI
+     (34) leftval ::= ID *
+          leftval ::= ID * DOT ID
+
+                           DOT shift        36     
+                     {default} reduce       34     leftval ::= ID
+
+State 38:
+          opcal ::= opcal * INTEGER PLUS|MULTI|DIVIDE|MINUS
+          sentence ::= opcal * INTEGER
+
+                       INTEGER shift        16     
+
+State 39:
+          function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID * LP parameterlist RP functionbody
+
+                            LP shift        13     
+
+State 40:
+          function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID * ID LP parameterlist RP functionbody
+
+                            ID shift        39     
+
+State 41:
+          declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP * COMMA
+
+                         COMMA shift-reduce 22     declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA
+
+State 42:
+          declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist * RP COMMA
+
+                            RP shift        41     
+
+State 43:
+      (6) expr ::= ID DOT ID *
+          callidist ::= callidist ID DOT ID * COMMA
+
+                         COMMA shift-reduce 15     callidist ::= callidist ID DOT ID COMMA
+                     {default} reduce       6      expr ::= ID DOT ID
+
+State 44:
+          expr ::= ID DOT * ID
+          callidist ::= callidist ID DOT * ID COMMA
+
+                            ID shift        43     
+
+State 45:
+          expr ::= ID * DOT ID
+          callidist ::= callidist ID * DOT ID COMMA
+
+                           DOT shift        44     
+
+State 46:
+      (5) expr ::= INTEGER *
+          callidist ::= callidist INTEGER * COMMA
+
+                         COMMA shift-reduce 13     callidist ::= callidist INTEGER COMMA
+                     {default} reduce       5      expr ::= INTEGER
+
+State 47:
+      (4) expr ::= TEXT *
+          callidist ::= callidist TEXT * COMMA
+
+                         COMMA shift-reduce 14     callidist ::= callidist TEXT COMMA
+                     {default} reduce       4      expr ::= TEXT
+
+State 48:
+          expr ::= ID DOT * ID
+
+                            ID shift-reduce 6      expr ::= ID DOT ID
+
+State 49:
+          expr ::= ID * DOT ID
+
+                           DOT shift        48     
+
+State 50:
+          expr ::= LP expr * RP
+
+                            RP shift-reduce 3      expr ::= LP expr RP
+
+State 51:
+          declarevaritems ::= declarevaritems ID EQ NEW ID * LP callparameterlist RP COMMA
+
+                            LP shift        5      
+
+State 52:
+          declarevaritems ::= declarevaritems ID EQ NEW * ID LP callparameterlist RP COMMA
+
+                            ID shift        51     
+
+State 53:
+          declarevaritems ::= declarevaritems ID EQ TEXT * COMMA
+
+                         COMMA shift-reduce 21     declarevaritems ::= declarevaritems ID EQ TEXT COMMA
+
+State 54:
+          declarevaritems ::= declarevaritems ID EQ ID * COMMA
+
+                         COMMA shift-reduce 20     declarevaritems ::= declarevaritems ID EQ ID COMMA
+
+State 55:
+          declarevaritems ::= declarevaritems ID EQ INTEGER * COMMA
+
+                         COMMA shift-reduce 19     declarevaritems ::= declarevaritems ID EQ INTEGER COMMA
+
+State 56:
+          declarevar ::= INT|STRING declarevaritems * ID SEMI
           declarevaritems ::= declarevaritems * ID COMMA
           declarevaritems ::= declarevaritems * ID EQ INTEGER COMMA
           declarevaritems ::= declarevaritems * ID EQ ID COMMA
           declarevaritems ::= declarevaritems * ID EQ TEXT COMMA
           declarevaritems ::= declarevaritems * ID EQ NEW ID LP callparameterlist RP COMMA
 
-                            ID shift        23     
-                          SEMI shift-reduce 15     declarevar ::= INT|STRING declarevaritems SEMI
-
-State 25:
-          javasinherit ::= EXTENDS * ID
-
-                            ID shift-reduce 42     javasinherit ::= EXTENDS ID
-
-State 26:
-          function ::= returntype ID * LP parameterlist RP functionbody
-
-                            LP shift        13     
-
-State 27:
-          function ::= returntype * ID LP parameterlist RP functionbody
-
-                            ID shift        26     
-
-State 28:
-          parameterlist ::= parameterlist INT|STRING * ID
-
-                            ID shift-reduce 40     parameterlist ::= parameterlist INT|STRING ID
-
-State 29:
-          returnval ::= RETURN rightval * COMMA
-
-                         COMMA shift-reduce 29     returnval ::= RETURN rightval COMMA
-
-State 30:
-          rightval ::= NEW ID LP callparameterlist * RP
-
-                            RP shift-reduce 26     rightval ::= NEW ID LP callparameterlist RP
-
-State 31:
-          rightval ::= NEW ID * LP callparameterlist RP
-
-                            LP shift        3      
-
-State 32:
-          rightval ::= NEW * ID LP callparameterlist RP
-
-                            ID shift        31     
-
-State 33:
-          assign ::= leftval * EQ rightval
-
-                            EQ shift        7      
-
-State 34:
-          callexpr ::= ID DOT ID LP callparameterlist RP * SEMI
-
-                          SEMI shift-reduce 8      callexpr ::= ID DOT ID LP callparameterlist RP SEMI
-
-State 35:
-          callexpr ::= ID DOT ID LP callparameterlist * RP SEMI
-
-                            RP shift        34     
-
-State 36:
-          callexpr ::= ID DOT ID * LP callparameterlist RP SEMI
-     (24) leftval ::= ID DOT ID *
-
-                            LP shift        4      
-                     {default} reduce       24     leftval ::= ID DOT ID
-
-State 37:
-          callexpr ::= ID DOT * ID LP callparameterlist RP SEMI
-          leftval ::= ID DOT * ID
-
-                            ID shift        36     
-
-State 38:
-          callexpr ::= ID * DOT ID LP callparameterlist RP SEMI
-     (23) leftval ::= ID *
-          leftval ::= ID * DOT ID
-
-                           DOT shift        37     
-                     {default} reduce       23     leftval ::= ID
-
-State 39:
-          opcal ::= opcal * INTEGER PLUS|MULTI|DIVIDED|MINUS
-          sentence ::= opcal * INTEGER
-
-                       INTEGER shift        18     
-
-State 40:
-          function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID * LP parameterlist RP functionbody
-
-                            LP shift        15     
-
-State 41:
-          function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID * ID LP parameterlist RP functionbody
-
-                            ID shift        40     
-
-State 42:
-          declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP * COMMA
-
-                         COMMA shift-reduce 20     declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA
-
-State 43:
-          declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist * RP COMMA
-
-                            RP shift        42     
-
-State 44:
-      (4) expr ::= ID DOT ID *
-          callidist ::= callidist ID DOT ID * COMMA
-
-                         COMMA shift-reduce 13     callidist ::= callidist ID DOT ID COMMA
-                     {default} reduce       4      expr ::= ID DOT ID
-
-State 45:
-          expr ::= ID DOT * ID
-          callidist ::= callidist ID DOT * ID COMMA
-
-                            ID shift        44     
-
-State 46:
-          expr ::= ID * DOT ID
-          callidist ::= callidist ID * DOT ID COMMA
-
-                           DOT shift        45     
-
-State 47:
-      (3) expr ::= INTEGER *
-          callidist ::= callidist INTEGER * COMMA
-
-                         COMMA shift-reduce 11     callidist ::= callidist INTEGER COMMA
-                     {default} reduce       3      expr ::= INTEGER
-
-State 48:
-      (2) expr ::= TEXT *
-          callidist ::= callidist TEXT * COMMA
-
-                         COMMA shift-reduce 12     callidist ::= callidist TEXT COMMA
-                     {default} reduce       2      expr ::= TEXT
-
-State 49:
-          expr ::= ID DOT * ID
-
-                            ID shift-reduce 4      expr ::= ID DOT ID
-
-State 50:
-          expr ::= ID * DOT ID
-
-                           DOT shift        49     
-
-State 51:
-          expr ::= LP expr * RP
-
-                            RP shift-reduce 1      expr ::= LP expr RP
-
-State 52:
-          declarevaritems ::= declarevaritems ID EQ NEW ID * LP callparameterlist RP COMMA
-
-                            LP shift        5      
-
-State 53:
-          declarevaritems ::= declarevaritems ID EQ NEW * ID LP callparameterlist RP COMMA
-
-                            ID shift        52     
-
-State 54:
-          declarevaritems ::= declarevaritems ID EQ TEXT * COMMA
-
-                         COMMA shift-reduce 19     declarevaritems ::= declarevaritems ID EQ TEXT COMMA
-
-State 55:
-          declarevaritems ::= declarevaritems ID EQ ID * COMMA
-
-                         COMMA shift-reduce 18     declarevaritems ::= declarevaritems ID EQ ID COMMA
-
-State 56:
-          declarevaritems ::= declarevaritems ID EQ INTEGER * COMMA
-
-                         COMMA shift-reduce 17     declarevaritems ::= declarevaritems ID EQ INTEGER COMMA
+                            ID shift        20     
 
 State 57:
-      (0) javaclass ::= CLASS ID javasinherit LD classitems RD *
+          javaclass ::= javaclass CLASS ID javasinherit * LD classitems RD
 
-                             $ reduce       0      javaclass ::= CLASS ID javasinherit LD classitems RD
+                            LD shift        15     
 
 State 58:
-          javaclass ::= CLASS ID javasinherit * LD classitems RD
+          javaclass ::= javaclass CLASS * ID javasinherit LD classitems RD
 
-                            LD shift        17     
-
-State 59:
-          javaclass ::= CLASS * ID javasinherit LD classitems RD
-
-                            ID shift        12     
+                            ID shift        11     
 
 ----------------------------------------------------
 Symbols:
@@ -494,7 +491,7 @@ Symbols:
     9: DOT
    10: PLUS
    11: MULTI
-   12: DIVIDED
+   12: DIVIDE
    13: MINUS
    14: SEMI
    15: COMMA
@@ -502,30 +499,31 @@ Symbols:
    17: STRING
    18: EQ
    19: NEW
-   20: RETURN
-   21: PUBLIC
-   22: PROTECTED
-   23: PRIVATE
-   24: VOID
-   25: EXTENDS
-   26: error:
-   27: javaclass: CLASS
-   28: javasinherit: <lambda> EXTENDS
-   29: classitems: <lambda> INT STRING PUBLIC PROTECTED PRIVATE
-   30: expr: ID LP TEXT INTEGER
-   31: opcal: <lambda> INTEGER
-   32: sentence: INTEGER
-   33: callexpr: ID
-   34: callparameterlist: <lambda> ID LP TEXT INTEGER
-   35: callidist: <lambda> ID TEXT INTEGER
-   36: declarevar: INT STRING
-   37: declarevaritems: <lambda> ID
-   38: assign: ID
-   39: leftval: ID
-   40: rightval: ID INTEGER STRING NEW
-   41: returnval: RETURN
-   42: function: PUBLIC PROTECTED PRIVATE
-   43: parameterlist: <lambda> INT STRING
-   44: functionbody: LD
-   45: returntype:
-   46: funcbodyitems: <lambda> ID INTEGER INT STRING RETURN
+   20: PUBLIC
+   21: PROTECTED
+   22: PRIVATE
+   23: VOID
+   24: THIS
+   25: RETURN
+   26: EXTENDS
+   27: error:
+   28: javabegin: <lambda> CLASS
+   29: javaclass: <lambda> CLASS
+   30: javasinherit: <lambda> EXTENDS
+   31: classitems: <lambda> INT STRING PUBLIC PROTECTED PRIVATE
+   32: expr: ID LP TEXT INTEGER
+   33: opcal: <lambda> INTEGER
+   34: sentence: INTEGER
+   35: callexpr: ID
+   36: callparameterlist: <lambda> ID LP TEXT INTEGER
+   37: callidist: <lambda> ID TEXT INTEGER
+   38: declarevar: INT STRING
+   39: declarevaritems: <lambda> ID
+   40: function: PUBLIC PROTECTED PRIVATE
+   41: parameterlist: <lambda> INT STRING
+   42: functionbody: LD
+   43: funcbodyitems: <lambda> ID INTEGER INT STRING THIS RETURN
+   44: assign: ID THIS
+   45: returnval: RETURN
+   46: leftval: ID THIS
+   47: rightval: ID INTEGER STRING NEW THIS

@@ -125,7 +125,7 @@ static const unsigned char aiClass[] = {
 static const unsigned char aKWHash[127] = {
   /*       1   2     3     4    5     6     7    8     9    10   11   12   13*/
   /* 1*/  0  ,  3  , 0  ,  0  , 0  ,  7  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 12*/
-  /* 2*/  0  ,  0  , 0  ,  0  , 0  ,  0  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 25*/
+  /* 2*/  0  ,  10  , 0  ,  0  , 0  ,  0  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 25*/
   /* 3*/  0  ,  0  , 0  ,  0  , 0  ,  0  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 38*/
   /* 4*/  0  ,  0  , 0  ,  0  , 0  ,  0  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 51*/
   /* 5*/  0  ,  0  , 0  ,  0  , 0  ,  0  ,  0  , 0  ,  0  , 0  , 0  ,  0  ,   0  ,    /* 64*/
@@ -140,34 +140,34 @@ static const unsigned char aKWNext[7] = {
     0,   0,   0,   0,   0,   0,   0,
 };
 
-static const unsigned char aKWLen[10] = {
+static const unsigned char aKWLen[11] = {
     5,   3,   3,   6,
     6,   7,   9,   6,
-    7,   4
+    7,   4,   4
 };
 //HC_TASK,HC_DATA,HC_CHART,HC_OR,HC_AND,HC_BEGIN,HC_END
 /* aKWOffset[i] is the index into zKWText[] of the start of
  ** the text for the i-th keyword. */
-static const unsigned short int aKWOffset[10] = {
+static const unsigned short int aKWOffset[11] = {
     0,   5,    8,  11,  
     17,  23,  30,  39,
-    45,  52
+    45,  52,  56
 };
 //HC_TASK,HC_DATA,HC_CHART,HC_OR,HC_AND,HC_BEGIN,HC_END
-static const unsigned char aKWCode[10] = {
+static const unsigned char aKWCode[11] = {
     HC_CLASS,         HC_NEW,         HC_INT,          HC_STRING,
     HC_PUBLIC,        HC_PRIVATE,     HC_PROTECTED,    HC_RETURN, 
-    HC_EXTENDS,       HC_VOID
+    HC_EXTENDS,       HC_VOID,        HC_THIS
 };
 
 /* Hash score: 214 */
 /* zKWText[] encodes 950 bytes of keyword text in 50 bytes */
 /*   task data chart or and begin end       */
 
-static const char zKWText[56] = {
+static const char zKWText[60] = {
     'C','L','A','S','S','N','E','W','I','N','T','S','T','R','I','N','G','P','U','B','L','I','C','P','R','I','V',
     'A','T','E','P','R','O','T','E','C','T','E','D','R','E','T','U','R','N','E','X','T','E','N','D','S','V','O',
-    'I','D'
+    'I','D','T','H','I','S'
 };
 int keywordCode(const char *z, int n, int *pType);
 int javaGetToken(const unsigned char *z, int *tokenType){
@@ -426,6 +426,9 @@ void printTokenType(int tokenType){
         break;
       case HC_DIVIDE:
         printf("HC_DIVIDE\n");
+        break;
+      case HC_THIS:
+        printf("HC_THIS\n");
         break;
       default:
         printf("invalild\n");

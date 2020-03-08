@@ -3,6 +3,13 @@
 %extra_argument {JavaParser *pParse}
 %token_prefix HC_
 
+%include {
+	#include "simple_java.h"
+	#include <assert.h>
+	#include <stdlib.h>
+}
+
+
 /*
 类声明
 */
@@ -38,11 +45,29 @@
 6.返回值
 */
 
+%syntax_error {
+	char *errSyntaxMsg = (char *)malloc(TOKEN.n);
+	memcpy(errSyntaxMsg,(void*)TOKEN.z,TOKEN.n);
+	printf("near %s syntax error！\n",errSyntaxMsg);
+	free(errSyntaxMsg);
+}
+
 //类声明
-javaclass ::= CLASS ID(A) javasinherit(B) LD classitems(C) RD.{
+javabegin ::= javaclass(A).{
+	printf("begin\n");
+} 
+
+javaclass(A) ::= javaclass(B) CLASS ID(C) javasinherit(D) LD classitems(E) RD.{
 	//createClass(pParse,A,B,C);
 	printf("275\n");
 }
+
+javaclass ::= .{
+	printf("7766\n");
+}
+
+
+
 
 //基础语句
 expr(A) ::= LP expr(B) RP.{
@@ -62,7 +87,7 @@ expr(A) ::= ID(B) DOT ID(C).{
 	printf("55\n");
 }
 //四则运算
-opcal(A) ::= opcal(B) INTEGER(C) PLUS|MULTI|DIVIDED|MINUS(OP).{
+opcal(A) ::= opcal(B) INTEGER(C) PLUS|MULTI|DIVIDE|MINUS(OP).{
 	printf("91\n");
 }
 opcal(A) ::= .{
@@ -100,7 +125,7 @@ callidist(A) ::= .{
 }
 
 //变量声明
-declarevar(A) ::= INT|STRING(B) declarevaritems SEMI.{
+declarevar(A) ::= INT|STRING(B) declarevaritems ID(C) SEMI.{
 	printf("142\n");
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
@@ -124,50 +149,8 @@ declarevaritems(A) ::= .{
 	printf("163\n");
 }
 
-//赋值
-assign ::= leftval(B) EQ rightval(C).{
-	//assignExpr(B,C);
-	printf("169\n");
-}
-
-leftval ::= ID(B).{
-	//A = B;
-	printf("174\n");
-}
-leftval(A) ::= ID(B) DOT ID(C).{
-	//A =  getProperty(B,C);
-	printf("178\n");
-}
-rightval(A) ::= ID(B).{
-	//A = B;
-	printf("182\n");
-}
-rightval ::= NEW ID(B) LP callparameterlist(C) RP.{
-   //A = newInit(B,C);
-	printf("186\n");
-}
-rightval(A) ::= INTEGER(B).{
-	//A = B;
-	printf("190\n");
-}
-rightval(A) ::= STRING(B).{
-	printf("193\n");
-}
-
-returnval(A) ::= RETURN rightval(B) COMMA.{
-	printf("199\n");
-}
-returnval(A) ::= RETURN COMMA.{
-	printf("206\n");
-}
-
 //类方法
 function(A) ::= PUBLIC|PROTECTED|PRIVATE(B) INT|STRING|VOID(C) ID(D) LP parameterlist(E) RP functionbody(F).{
-	//A = addFunctionToClass(pParse,B,C,D,E,F);
-	printf("213\n");
-}
-
-function(A) ::= returntype(C) ID(D) LP parameterlist(E) RP functionbody(F).{
 	//A = addFunctionToClass(pParse,B,C,D,E,F);
 	printf("213\n");
 }
@@ -198,6 +181,53 @@ funcbodyitems(A) ::= funcbodyitems sentence.{
 funcbodyitems(A) ::= .{
 	//A = 0;
 	printf("243\n");
+}
+//赋值
+assign ::= leftval(B) EQ rightval(C).{
+	//assignExpr(B,C);
+	printf("169\n");
+}
+
+leftval ::= THIS(B) DOT ID.{
+	//A = B;
+	printf("174\n");
+}
+
+leftval ::= ID(B).{
+	//A = B;
+	printf("174\n");
+}
+leftval(A) ::= ID(B) DOT ID(C).{
+	//A =  getProperty(4B,C);
+	printf("178\n");
+}
+rightval(A) ::= ID(B).{
+	//A = B;
+	printf("182\n");
+}
+
+rightval(A) ::= THIS(B) DOT ID.{
+	//A = B;
+	printf("182\n");
+}
+
+rightval ::= NEW ID(B) LP callparameterlist(C) RP.{
+   //A = newInit(B,C);
+	printf("186\n");
+}
+rightval(A) ::= INTEGER(B).{
+	//A = B;
+	printf("190\n");
+}
+rightval(A) ::= STRING(B).{
+	printf("193\n");
+}
+
+returnval(A) ::= RETURN rightval(B) SEMI.{
+	printf("199\n");
+}
+returnval(A) ::= RETURN SEMI.{
+	printf("206\n");
 }
 
 parameterlist(A) ::= parameterlist(B) INT|STRING(C) ID(D).{
