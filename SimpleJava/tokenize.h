@@ -18,7 +18,6 @@ return
 extends
 void
 */
-
 #define HC_CLASS                            1
 #define HC_ID                               2
 #define HC_LD                               3
@@ -33,12 +32,12 @@ void
 #define HC_INT                             12
 #define HC_STRING                          13
 #define HC_EQ                              14
-#define HC_NEW                             15
-#define HC_PUBLIC                          16
-#define HC_PROTECTED                       17
-#define HC_PRIVATE                         18
-#define HC_VOID                            19
-#define HC_THIS                            20
+#define HC_PUBLIC                          15
+#define HC_PROTECTED                       16
+#define HC_PRIVATE                         17
+#define HC_VOID                            18
+#define HC_THIS                            19
+#define HC_NEW                             20
 #define HC_RETURN                          21
 #define HC_EXTENDS                         22
 

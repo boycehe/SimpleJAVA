@@ -66,6 +66,7 @@ javaclass ::= javaclass CLASS ID(B) javasinherit(C) LD classitems(D) RD.{
 }
 
 javaclass ::= .{}
+%type expr {JavaExpr*}
 expr(A) ::= ID(B).{
 	printf("rule--->\t333333333\n");
 	A = tokenToExpr(B,@B);
@@ -110,18 +111,18 @@ callparameterlist(A) ::= .{
 
 callidist(A) ::= callidist(B) INTEGER(C) COMMA.{
 	printf("rule--->\tbbbbbbbbb\n");
-	Expr *expr = tokenToExpr(C,@C);
+	JavaExpr *expr = tokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,C);
 }
 
 callidist(A) ::= callidist(B) TEXT(C) COMMA.{
 	printf("rule--->\tccccccccccc\n");
-	Expr *expr = tokenToExpr(C,@C);
+	JavaExpr *expr = tokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,expr);
 }
 callidist(A) ::= callidist(B) ID(C) DOT ID(D) COMMA.{
 	printf("rule--->\tddddddddddd\n");
-	Expr *expr = instanceGetProperty(C,D);
+	JavaExpr *expr = instanceGetProperty(C,D);
 	A = addTokenToCallParameterList(B,expr);
 }
 callidist(A) ::= .{
@@ -138,28 +139,28 @@ declarevar(A) ::= INT|STRING(B) declarevaritems(C) ID(D) SEMI.{
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
 	printf("rule--->\tggggggggg\n");
-	Expr *expr = tokenToExpr(C,@C);
+	JavaExpr *expr = tokenToExpr(C,@C);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ INTEGER(D) COMMA.{
 	printf("rule--->\thhhhhhhhh\n");
-    Expr *leftExpr = tokenToExpr(C,@C);
-    Expr *rightExpr = tokenToExpr(D,@D);
-    Expr *expr = assginmentExpr(leftExpr,rightExpr);
+    JavaExpr *leftExpr = tokenToExpr(C,@C);
+    JavaExpr *rightExpr = tokenToExpr(D,@D);
+    JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ ID(D) COMMA.{
 	printf("rule--->\tiiiiiiiiiiiii\n");
-    Expr *leftExpr = tokenToExpr(C,@C);
-    Expr *rightExpr = tokenToExpr(D,@D);
-    Expr *expr = assginmentExpr(leftExpr,rightExpr);
+    JavaExpr *leftExpr = tokenToExpr(C,@C);
+    JavaExpr *rightExpr = tokenToExpr(D,@D);
+    JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ TEXT(D) COMMA.{
 	printf("rule--->\tjjjjjjjjjjjjj\n");
-    Expr *leftExpr = tokenToExpr(C,@C);
-    Expr *rightExpr = tokenToExpr(D,@D);
-    Expr *expr = assginmentExpr(leftExpr,rightExpr);
+    JavaExpr *leftExpr = tokenToExpr(C,@C);
+    JavaExpr *rightExpr = tokenToExpr(D,@D);
+    JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
     A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= .{
@@ -196,7 +197,7 @@ funcbodyitems(A) ::= funcbodyitems(B) callexpr(C).{
 	printf("rule--->\tnnnnnnnnnnnnn\n");
 	A = addExprToList(B,C);
 }
-funcbodyitems(A) ::= funcbodyitems returnval.{
+funcbodyitems(A) ::= funcbodyitems(B) returnval(C).{
 	printf("rule--->\tpppppppppppppp\n");
 	A = addExprToList(B,C);
 }
@@ -238,7 +239,7 @@ rightval(A) ::= ID(B).{
 	A = tokenToExpr(B,@B);
 }
 
-rightval(A) ::= THIS(B) DOT ID.{
+rightval(A) ::= THIS(B) DOT ID(C).{
 	printf("rule--->\txxxxxxxxxxxxxxxx\n");
 	A =  instanceGetProperty(B,C);
 }
