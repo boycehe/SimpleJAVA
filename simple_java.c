@@ -23,10 +23,13 @@
 ** input grammar file:
 */
 #include <stdio.h>
-#include "simple_java.h"
-#include <assert.h>
-#include <stdlib.h>
 /************ Begin %include sections from the grammar ************************/
+#line 6 "simple_java.y"
+
+	#include "simple_java.h"
+	#include <assert.h>
+	#include <stdlib.h>
+#line 33 "simple_java.c"
 /**************** End of %include directives **********************************/
 /* These constants specify the various numeric values for terminal symbols
 ** in a format understandable to "makeheaders".  This section is blank unless
@@ -86,7 +89,7 @@
 #endif
 /************* Begin control #defines *****************************************/
 #define YYCODETYPE unsigned char
-#define YYNOCODE 49
+#define YYNOCODE 43
 #define YYACTIONTYPE unsigned char
 typedef union {
   int yyinit;
@@ -98,16 +101,16 @@ typedef union {
 #define ParseARG_SDECL JavaParser *pParse;
 #define ParseARG_FETCH JavaParser *pParse = yypParser->pParse
 #define ParseARG_STORE yypParser->pParse = pParse
-#define YYNSTATE             59
-#define YYNRULE              50
-#define YY_MAX_SHIFT         58
-#define YY_MIN_SHIFTREDUCE   96
-#define YY_MAX_SHIFTREDUCE   145
-#define YY_MIN_REDUCE        146
-#define YY_MAX_REDUCE        195
-#define YY_ERROR_ACTION      196
-#define YY_ACCEPT_ACTION     197
-#define YY_NO_ACTION         198
+#define YYNSTATE             57
+#define YYNRULE              48
+#define YY_MAX_SHIFT         56
+#define YY_MIN_SHIFTREDUCE   90
+#define YY_MAX_SHIFTREDUCE   137
+#define YY_MIN_REDUCE        138
+#define YY_MAX_REDUCE        185
+#define YY_ERROR_ACTION      186
+#define YY_ACCEPT_ACTION     187
+#define YY_NO_ACTION         188
 /************* End control #defines *******************************************/
 
 /* The yyzerominor constant is used to initialize instances of
@@ -179,64 +182,62 @@ static const YYMINORTYPE yyzerominor = { 0 };
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (122)
+#define YY_ACTTAB_COUNT (116)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */    38,  126,  124,  158,   37,  122,  121,   24,  132,  197,
- /*    10 */    21,  123,  125,   32,  135,  143,   97,  144,   14,   14,
- /*    20 */   138,   27,    9,  136,   50,   29,   26,    6,   14,   14,
- /*    30 */    31,  132,   19,   19,   19,   49,  128,  135,    8,  107,
- /*    40 */   100,  101,   12,  120,   45,   22,  136,    8,   29,   47,
- /*    50 */    46,   34,    9,   31,   57,  103,  103,  103,  103,   54,
- /*    60 */    10,    1,   42,    9,   53,   55,   40,   40,  146,   58,
- /*    70 */    23,   23,   18,   40,  113,  114,   52,   56,   17,    2,
- /*    80 */   141,  139,  129,  137,   25,   30,   28,  134,    3,  133,
- /*    90 */     7,  106,   33,    4,   35,   13,   39,  118,   36,   16,
- /*   100 */   111,   41,   43,  102,    5,   44,   51,   48,  109,   99,
- /*   110 */    20,   11,  110,   15,  148,  148,  148,  117,  148,  148,
- /*   120 */   116,  115,
+ /*     0 */    18,   48,  113,  116,   45,   44,  114,  187,   21,   24,
+ /*    10 */    14,   14,  115,  117,   33,   91,  105,  106,   26,    7,
+ /*    20 */    17,  148,  124,   14,   14,  128,  127,   19,   19,   19,
+ /*    30 */   130,   23,  135,  124,  136,   29,  128,  127,   10,   12,
+ /*    40 */    31,   23,   23,   32,   52,   99,   29,   51,   53,  120,
+ /*    50 */   112,   31,  138,   56,   39,    4,   55,   50,   27,    9,
+ /*    60 */    41,   41,   35,    9,   37,    9,   22,   41,   43,    9,
+ /*    70 */     1,  133,   16,   54,  131,  129,    2,  121,   25,  126,
+ /*    80 */    28,    3,  125,   30,  119,   38,  140,   40,  140,   98,
+ /*    90 */    34,    8,   97,   36,   13,  140,  140,   46,    5,  110,
+ /*   100 */    42,  140,  140,  101,  102,  103,   47,   49,    6,  109,
+ /*   110 */    20,   11,  108,   15,  140,  107,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */    33,   34,   35,    6,    2,   38,    4,   47,    2,   28,
- /*    10 */    29,   44,   45,   46,    8,   38,    4,   40,   16,   17,
- /*    20 */    14,   36,   37,   17,   32,   19,   24,   25,   16,   17,
- /*    30 */    24,    2,   20,   21,   22,    2,   47,    8,    5,   32,
- /*    40 */     7,    8,    3,   42,    2,   26,   17,    5,   19,    7,
- /*    50 */     8,   36,   37,   24,   30,   10,   11,   12,   13,    2,
- /*    60 */     6,   43,   36,   37,    7,    8,   16,   17,    0,    1,
- /*    70 */    16,   17,   41,   23,   14,   15,   19,   39,   18,   31,
- /*    80 */     2,    2,    2,   14,    9,    9,    2,    6,    5,    2,
- /*    90 */    18,   14,    6,    5,    2,    5,    2,   15,    9,    8,
- /*   100 */    15,    6,    2,    2,    5,    9,    2,    9,   15,    6,
- /*   110 */     2,    2,   15,    3,   48,   48,   48,   15,   48,   48,
- /*   120 */    15,   15,
+ /*     0 */     2,    2,    4,   29,    5,    6,   32,   24,   25,   41,
+ /*    10 */    12,   13,   38,   39,   40,    4,   10,   11,   20,   21,
+ /*    20 */    14,    9,    2,   12,   13,    5,    6,   16,   17,   18,
+ /*    30 */    10,    2,   32,    2,   34,   15,    5,    6,    9,    3,
+ /*    40 */    20,   12,   13,   41,    2,   28,   15,    5,    6,    2,
+ /*    50 */    36,   20,    0,    1,    7,    8,   26,   15,   30,   31,
+ /*    60 */    12,   13,   30,   31,   30,   31,   22,   19,   30,   31,
+ /*    70 */    37,    2,   35,   33,    2,   10,   27,    2,    7,    9,
+ /*    80 */     2,    8,    2,    7,   10,    2,   42,    2,   42,   10,
+ /*    90 */     9,   14,   10,    9,    8,   42,   42,    2,    8,   11,
+ /*   100 */     9,   42,   42,   11,   11,   11,    7,    2,    8,   11,
+ /*   110 */     2,    2,   11,    3,   42,   11,
 };
-#define YY_SHIFT_USE_DFLT (-4)
-#define YY_SHIFT_COUNT (58)
-#define YY_SHIFT_MIN   (-3)
+#define YY_SHIFT_USE_DFLT (-3)
+#define YY_SHIFT_COUNT (56)
+#define YY_SHIFT_MIN   (-2)
 #define YY_SHIFT_MAX   (110)
 static const signed char yy_shift_ofst[] = {
- /*     0 */    -4,    2,   12,   -3,   -3,   -3,    6,   29,   33,   42,
- /*    10 */    39,   19,   -4,   -4,   -4,   -4,   45,   57,   54,   50,
- /*    20 */    60,   68,   78,   79,   69,   80,   75,   81,   83,   84,
- /*    30 */    87,   76,   72,   77,   86,   88,   92,   89,   91,   90,
- /*    40 */    94,   82,   95,   85,  100,   96,   93,   97,  101,   98,
- /*    50 */   103,   99,  104,  102,  105,  106,  108,  110,  109,
+ /*     0 */    -3,   -2,   11,   12,   12,   12,   12,   20,   31,   -1,
+ /*    10 */    36,   44,   -3,   -3,   -3,   -3,   29,   42,   47,   48,
+ /*    20 */     6,   52,   69,   72,   65,   75,   71,   70,   73,   78,
+ /*    30 */    80,   76,   74,   77,   79,   81,   82,   84,   90,   83,
+ /*    40 */    86,   85,   88,   91,   92,   93,   94,   95,   99,  100,
+ /*    50 */   105,   98,  101,  104,  108,  110,  109,
 };
-#define YY_REDUCE_USE_DFLT (-41)
+#define YY_REDUCE_USE_DFLT (-33)
 #define YY_REDUCE_COUNT (15)
-#define YY_REDUCE_MIN   (-40)
-#define YY_REDUCE_MAX   (48)
+#define YY_REDUCE_MIN   (-32)
+#define YY_REDUCE_MAX   (49)
 static const signed char yy_reduce_ofst[] = {
- /*     0 */   -19,  -33,  -23,  -15,   15,   26,  -40,  -11,   -8,    7,
- /*    10 */     1,   24,   18,   31,   38,   48,
+ /*     0 */   -17,  -26,    0,   28,   32,   34,   38,  -32,    2,   17,
+ /*    10 */    14,   30,   33,   37,   40,   49,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */   148,  154,  196,  162,  162,  162,  196,  196,  196,  196,
- /*    10 */   196,  192,  177,  190,  169,  195,  155,  196,  196,  196,
- /*    20 */   196,  196,  196,  196,  196,  196,  196,  196,  196,  196,
- /*    30 */   196,  196,  196,  196,  196,  181,  196,  180,  196,  196,
- /*    40 */   196,  196,  196,  152,  196,  196,  151,  150,  196,  196,
- /*    50 */   196,  196,  196,  196,  196,  196,  196,  196,  196,
+ /*     0 */   140,  186,  186,  152,  152,  152,  152,  186,  186,  186,
+ /*    10 */   186,  182,  166,  180,  159,  185,  186,  186,  170,  186,
+ /*    20 */   186,  186,  186,  186,  186,  186,  186,  186,  186,  186,
+ /*    30 */   186,  186,  186,  186,  186,  186,  186,  186,  171,  186,
+ /*    40 */   186,  186,  186,  186,  143,  142,  144,  186,  141,  186,
+ /*    50 */   186,  186,  186,  186,  186,  186,  186,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
@@ -339,17 +340,16 @@ void ParseTrace(FILE *TraceFILE, char *zTracePrompt){
 ** are required.  The following table supplies these names */
 static const char *const yyTokenName[] = { 
   "$",             "CLASS",         "ID",            "LD",          
-  "RD",            "LP",            "RP",            "TEXT",        
-  "INTEGER",       "DOT",           "PLUS",          "MULTI",       
-  "DIVIDE",        "MINUS",         "SEMI",          "COMMA",       
+  "RD",            "TEXT",          "INTEGER",       "DOT",         
+  "LP",            "RP",            "SEMI",          "COMMA",       
   "INT",           "STRING",        "EQ",            "NEW",         
   "PUBLIC",        "PROTECTED",     "PRIVATE",       "VOID",        
   "THIS",          "RETURN",        "EXTENDS",       "error",       
   "javabegin",     "javaclass",     "javasinherit",  "classitems",  
-  "expr",          "opcal",         "sentence",      "callexpr",    
-  "callparameterlist",  "callidist",     "declarevar",    "declarevaritems",
-  "function",      "parameterlist",  "functionbody",  "funcbodyitems",
-  "assign",        "returnval",     "leftval",       "rightval",    
+  "expr",          "callexpr",      "callparameterlist",  "callidist",   
+  "declarevar",    "declarevaritems",  "function",      "parameterlist",
+  "functionbody",  "funcbodyitems",  "assign",        "returnval",   
+  "leftval",       "rightval",    
 };
 #endif /* NDEBUG */
 
@@ -360,53 +360,51 @@ static const char *const yyRuleName[] = {
  /*   0 */ "javabegin ::= javaclass",
  /*   1 */ "javaclass ::= javaclass CLASS ID javasinherit LD classitems RD",
  /*   2 */ "javaclass ::=",
- /*   3 */ "expr ::= LP expr RP",
+ /*   3 */ "expr ::= ID",
  /*   4 */ "expr ::= TEXT",
  /*   5 */ "expr ::= INTEGER",
  /*   6 */ "expr ::= ID DOT ID",
- /*   7 */ "opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS",
- /*   8 */ "opcal ::=",
- /*   9 */ "sentence ::= opcal INTEGER",
- /*  10 */ "callexpr ::= ID DOT ID LP callparameterlist RP SEMI",
- /*  11 */ "callparameterlist ::= callidist expr",
- /*  12 */ "callparameterlist ::=",
- /*  13 */ "callidist ::= callidist INTEGER COMMA",
- /*  14 */ "callidist ::= callidist TEXT COMMA",
- /*  15 */ "callidist ::= callidist ID DOT ID COMMA",
- /*  16 */ "callidist ::=",
- /*  17 */ "declarevar ::= INT|STRING declarevaritems ID SEMI",
- /*  18 */ "declarevaritems ::= declarevaritems ID COMMA",
- /*  19 */ "declarevaritems ::= declarevaritems ID EQ INTEGER COMMA",
- /*  20 */ "declarevaritems ::= declarevaritems ID EQ ID COMMA",
- /*  21 */ "declarevaritems ::= declarevaritems ID EQ TEXT COMMA",
- /*  22 */ "declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA",
- /*  23 */ "declarevaritems ::=",
- /*  24 */ "function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody",
- /*  25 */ "functionbody ::= LD funcbodyitems RD",
- /*  26 */ "funcbodyitems ::= funcbodyitems declarevar",
- /*  27 */ "funcbodyitems ::= funcbodyitems assign",
- /*  28 */ "funcbodyitems ::= funcbodyitems callexpr",
- /*  29 */ "funcbodyitems ::= funcbodyitems returnval",
- /*  30 */ "funcbodyitems ::= funcbodyitems sentence",
- /*  31 */ "funcbodyitems ::=",
- /*  32 */ "assign ::= leftval EQ rightval",
- /*  33 */ "leftval ::= THIS DOT ID",
- /*  34 */ "leftval ::= ID",
- /*  35 */ "leftval ::= ID DOT ID",
- /*  36 */ "rightval ::= ID",
- /*  37 */ "rightval ::= THIS DOT ID",
- /*  38 */ "rightval ::= NEW ID LP callparameterlist RP",
- /*  39 */ "rightval ::= INTEGER",
- /*  40 */ "rightval ::= STRING",
- /*  41 */ "returnval ::= RETURN rightval SEMI",
- /*  42 */ "returnval ::= RETURN SEMI",
- /*  43 */ "parameterlist ::= parameterlist INT|STRING ID",
- /*  44 */ "parameterlist ::=",
- /*  45 */ "javasinherit ::= EXTENDS ID",
- /*  46 */ "javasinherit ::=",
- /*  47 */ "classitems ::= classitems declarevar",
- /*  48 */ "classitems ::= classitems function",
- /*  49 */ "classitems ::=",
+ /*   7 */ "callexpr ::= ID DOT ID LP callparameterlist RP SEMI",
+ /*   8 */ "callexpr ::= ID LP callparameterlist RP SEMI",
+ /*   9 */ "callparameterlist ::= callidist expr",
+ /*  10 */ "callparameterlist ::=",
+ /*  11 */ "callidist ::= callidist INTEGER COMMA",
+ /*  12 */ "callidist ::= callidist TEXT COMMA",
+ /*  13 */ "callidist ::= callidist ID DOT ID COMMA",
+ /*  14 */ "callidist ::=",
+ /*  15 */ "declarevar ::= INT|STRING declarevaritems ID SEMI",
+ /*  16 */ "declarevaritems ::= declarevaritems ID COMMA",
+ /*  17 */ "declarevaritems ::= declarevaritems ID EQ INTEGER COMMA",
+ /*  18 */ "declarevaritems ::= declarevaritems ID EQ ID COMMA",
+ /*  19 */ "declarevaritems ::= declarevaritems ID EQ TEXT COMMA",
+ /*  20 */ "declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA",
+ /*  21 */ "declarevaritems ::=",
+ /*  22 */ "function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody",
+ /*  23 */ "functionbody ::= LD funcbodyitems RD",
+ /*  24 */ "funcbodyitems ::= funcbodyitems declarevar",
+ /*  25 */ "funcbodyitems ::= funcbodyitems assign",
+ /*  26 */ "funcbodyitems ::= funcbodyitems callexpr",
+ /*  27 */ "funcbodyitems ::= funcbodyitems returnval",
+ /*  28 */ "funcbodyitems ::=",
+ /*  29 */ "assign ::= leftval EQ rightval SEMI",
+ /*  30 */ "leftval ::= ID ID",
+ /*  31 */ "leftval ::= THIS DOT ID",
+ /*  32 */ "leftval ::= ID",
+ /*  33 */ "leftval ::= ID DOT ID",
+ /*  34 */ "rightval ::= ID",
+ /*  35 */ "rightval ::= THIS DOT ID",
+ /*  36 */ "rightval ::= NEW ID LP callparameterlist RP",
+ /*  37 */ "rightval ::= INTEGER",
+ /*  38 */ "rightval ::= TEXT",
+ /*  39 */ "returnval ::= RETURN rightval SEMI",
+ /*  40 */ "returnval ::= RETURN SEMI",
+ /*  41 */ "parameterlist ::= parameterlist INT|STRING|ID ID",
+ /*  42 */ "parameterlist ::=",
+ /*  43 */ "javasinherit ::= EXTENDS ID",
+ /*  44 */ "javasinherit ::=",
+ /*  45 */ "classitems ::= classitems declarevar",
+ /*  46 */ "classitems ::= classitems function",
+ /*  47 */ "classitems ::=",
 };
 #endif /* NDEBUG */
 
@@ -735,56 +733,54 @@ static const struct {
   YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
   unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
+  { 24, 1 },
+  { 25, 7 },
+  { 25, 0 },
   { 28, 1 },
+  { 28, 1 },
+  { 28, 1 },
+  { 28, 3 },
   { 29, 7 },
-  { 29, 0 },
-  { 32, 3 },
-  { 32, 1 },
-  { 32, 1 },
-  { 32, 3 },
-  { 33, 3 },
-  { 33, 0 },
-  { 34, 2 },
-  { 35, 7 },
-  { 36, 2 },
-  { 36, 0 },
-  { 37, 3 },
-  { 37, 3 },
-  { 37, 5 },
-  { 37, 0 },
-  { 38, 4 },
-  { 39, 3 },
-  { 39, 5 },
-  { 39, 5 },
-  { 39, 5 },
-  { 39, 9 },
-  { 39, 0 },
-  { 40, 7 },
-  { 42, 3 },
-  { 43, 2 },
-  { 43, 2 },
-  { 43, 2 },
-  { 43, 2 },
-  { 43, 2 },
-  { 43, 0 },
-  { 44, 3 },
-  { 46, 3 },
-  { 46, 1 },
-  { 46, 3 },
-  { 47, 1 },
-  { 47, 3 },
-  { 47, 5 },
-  { 47, 1 },
-  { 47, 1 },
-  { 45, 3 },
-  { 45, 2 },
-  { 41, 3 },
-  { 41, 0 },
+  { 29, 5 },
   { 30, 2 },
   { 30, 0 },
-  { 31, 2 },
-  { 31, 2 },
+  { 31, 3 },
+  { 31, 3 },
+  { 31, 5 },
   { 31, 0 },
+  { 32, 4 },
+  { 33, 3 },
+  { 33, 5 },
+  { 33, 5 },
+  { 33, 5 },
+  { 33, 9 },
+  { 33, 0 },
+  { 34, 7 },
+  { 36, 3 },
+  { 37, 2 },
+  { 37, 2 },
+  { 37, 2 },
+  { 37, 2 },
+  { 37, 0 },
+  { 38, 4 },
+  { 40, 2 },
+  { 40, 3 },
+  { 40, 1 },
+  { 40, 3 },
+  { 41, 1 },
+  { 41, 3 },
+  { 41, 5 },
+  { 41, 1 },
+  { 41, 1 },
+  { 39, 3 },
+  { 39, 2 },
+  { 35, 3 },
+  { 35, 0 },
+  { 26, 2 },
+  { 26, 0 },
+  { 27, 2 },
+  { 27, 2 },
+  { 27, 0 },
 };
 
 static void yy_accept(yyParser*);  /* Forward Declaration */
@@ -825,34 +821,34 @@ static void yy_reduce(
   */
 /********** Begin reduce actions **********************************************/
       case 0: /* javabegin ::= javaclass */
-#line 51 "simple_java.y"
+#line 56 "simple_java.y"
 {
 	printf("begin\n");
 }
-#line 832 "simple_java.c"
+#line 831 "simple_java.c"
         break;
       case 1: /* javaclass ::= javaclass CLASS ID javasinherit LD classitems RD */
-#line 55 "simple_java.y"
+#line 60 "simple_java.y"
 {
 	//createClass(pParse,yygotominor.yy0,yymsp[-6].minor.yy0,yymsp[-4].minor.yy0);
 	printf("275\n");
 }
-#line 840 "simple_java.c"
+#line 839 "simple_java.c"
         break;
       case 2: /* javaclass ::= */
-#line 60 "simple_java.y"
+#line 65 "simple_java.y"
 {
+	
 	printf("7766\n");
 }
 #line 847 "simple_java.c"
         break;
-      case 3: /* expr ::= LP expr RP */
-#line 68 "simple_java.y"
+      case 3: /* expr ::= ID */
+#line 69 "simple_java.y"
 {
-	//yygotominor.yy0 = yymsp[-1].minor.yy0;
-	printf("52\n");
+	printf("700\n");
 }
-#line 855 "simple_java.c"
+#line 854 "simple_java.c"
         break;
       case 4: /* expr ::= TEXT */
 #line 72 "simple_java.y"
@@ -860,7 +856,7 @@ static void yy_reduce(
 	//yygotominor.yy0 = yymsp[0].minor.yy0;
 	printf("53\n");
 }
-#line 863 "simple_java.c"
+#line 862 "simple_java.c"
         break;
       case 5: /* expr ::= INTEGER */
 #line 76 "simple_java.y"
@@ -868,328 +864,314 @@ static void yy_reduce(
 	//yygotominor.yy0 = yymsp[0].minor.yy0;
 	printf("54\n");
 }
-#line 871 "simple_java.c"
+#line 870 "simple_java.c"
         break;
       case 6: /* expr ::= ID DOT ID */
 #line 81 "simple_java.y"
 {
 	printf("55\n");
 }
-#line 878 "simple_java.c"
+#line 877 "simple_java.c"
         break;
-      case 7: /* opcal ::= opcal INTEGER PLUS|MULTI|DIVIDE|MINUS */
+      case 7: /* callexpr ::= ID DOT ID LP callparameterlist RP SEMI */
 #line 85 "simple_java.y"
-{
-	printf("91\n");
-}
-#line 885 "simple_java.c"
-        break;
-      case 8: /* opcal ::= */
-#line 88 "simple_java.y"
-{
-	printf("95\n");
-}
-#line 892 "simple_java.c"
-        break;
-      case 9: /* sentence ::= opcal INTEGER */
-#line 92 "simple_java.y"
-{
-	printf("107\n");
-}
-#line 899 "simple_java.c"
-        break;
-      case 10: /* callexpr ::= ID DOT ID LP callparameterlist RP SEMI */
-#line 98 "simple_java.y"
 {
 	printf("116\n");
 }
-#line 906 "simple_java.c"
+#line 884 "simple_java.c"
         break;
-      case 11: /* callparameterlist ::= callidist expr */
-#line 101 "simple_java.y"
+      case 8: /* callexpr ::= ID LP callparameterlist RP SEMI */
+#line 88 "simple_java.y"
+{
+	printf("abccc\n");
+}
+#line 891 "simple_java.c"
+        break;
+      case 9: /* callparameterlist ::= callidist expr */
+#line 91 "simple_java.y"
 {
 	printf("119\n");
 }
-#line 913 "simple_java.c"
+#line 898 "simple_java.c"
         break;
-      case 12: /* callparameterlist ::= */
-#line 104 "simple_java.y"
+      case 10: /* callparameterlist ::= */
+#line 94 "simple_java.y"
 {
 	printf("123\n");
 }
-#line 920 "simple_java.c"
+#line 905 "simple_java.c"
         break;
-      case 13: /* callidist ::= callidist INTEGER COMMA */
-#line 108 "simple_java.y"
+      case 11: /* callidist ::= callidist INTEGER COMMA */
+#line 98 "simple_java.y"
 {
 	printf("127\n");
 }
-#line 927 "simple_java.c"
+#line 912 "simple_java.c"
         break;
-      case 14: /* callidist ::= callidist TEXT COMMA */
-#line 111 "simple_java.y"
+      case 12: /* callidist ::= callidist TEXT COMMA */
+#line 101 "simple_java.y"
 {
 	printf("130\n");
 }
-#line 934 "simple_java.c"
+#line 919 "simple_java.c"
         break;
-      case 15: /* callidist ::= callidist ID DOT ID COMMA */
-#line 114 "simple_java.y"
+      case 13: /* callidist ::= callidist ID DOT ID COMMA */
+#line 104 "simple_java.y"
 {
 	printf("133\n");
 }
-#line 941 "simple_java.c"
+#line 926 "simple_java.c"
         break;
-      case 16: /* callidist ::= */
-#line 117 "simple_java.y"
+      case 14: /* callidist ::= */
+#line 107 "simple_java.y"
 {
 	//yygotominor.yy0 = 0;
 	printf("137\n");
 }
-#line 949 "simple_java.c"
+#line 934 "simple_java.c"
         break;
-      case 17: /* declarevar ::= INT|STRING declarevaritems ID SEMI */
-#line 123 "simple_java.y"
+      case 15: /* declarevar ::= INT|STRING declarevaritems ID SEMI */
+#line 113 "simple_java.y"
 {
 	printf("142\n");
 }
-#line 956 "simple_java.c"
+#line 941 "simple_java.c"
         break;
-      case 18: /* declarevaritems ::= declarevaritems ID COMMA */
-#line 126 "simple_java.y"
+      case 16: /* declarevaritems ::= declarevaritems ID COMMA */
+#line 116 "simple_java.y"
 {
 	printf("149\n");
 }
-#line 963 "simple_java.c"
+#line 948 "simple_java.c"
         break;
-      case 19: /* declarevaritems ::= declarevaritems ID EQ INTEGER COMMA */
-#line 129 "simple_java.y"
+      case 17: /* declarevaritems ::= declarevaritems ID EQ INTEGER COMMA */
+#line 119 "simple_java.y"
 {
 	printf("152\n");
 }
-#line 970 "simple_java.c"
+#line 955 "simple_java.c"
         break;
-      case 20: /* declarevaritems ::= declarevaritems ID EQ ID COMMA */
-      case 21: /* declarevaritems ::= declarevaritems ID EQ TEXT COMMA */ yytestcase(yyruleno==21);
-#line 132 "simple_java.y"
+      case 18: /* declarevaritems ::= declarevaritems ID EQ ID COMMA */
+      case 19: /* declarevaritems ::= declarevaritems ID EQ TEXT COMMA */ yytestcase(yyruleno==19);
+#line 122 "simple_java.y"
 {
 	printf("155\n");
 }
-#line 978 "simple_java.c"
+#line 963 "simple_java.c"
         break;
-      case 22: /* declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA */
-#line 138 "simple_java.y"
+      case 20: /* declarevaritems ::= declarevaritems ID EQ NEW ID LP callparameterlist RP COMMA */
+#line 128 "simple_java.y"
 {
 	printf("158\n");
 }
-#line 985 "simple_java.c"
+#line 970 "simple_java.c"
         break;
-      case 23: /* declarevaritems ::= */
-#line 142 "simple_java.y"
+      case 21: /* declarevaritems ::= */
+#line 132 "simple_java.y"
 {
 	//yygotominor.yy0 = 0;
 	printf("163\n");
 }
-#line 993 "simple_java.c"
+#line 978 "simple_java.c"
         break;
-      case 24: /* function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody */
-#line 148 "simple_java.y"
+      case 22: /* function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody */
+#line 138 "simple_java.y"
 {
 	//yygotominor.yy0 = addFunctionToClass(pParse,yymsp[-6].minor.yy0,yymsp[-5].minor.yy0,yymsp[-4].minor.yy0,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 	printf("213\n");
 }
-#line 1001 "simple_java.c"
+#line 986 "simple_java.c"
         break;
-      case 25: /* functionbody ::= LD funcbodyitems RD */
-#line 153 "simple_java.y"
+      case 23: /* functionbody ::= LD funcbodyitems RD */
+#line 143 "simple_java.y"
 {
 	//yygotominor.yy0 = yymsp[-1].minor.yy0;
 	printf("228\n");
 }
-#line 1009 "simple_java.c"
+#line 994 "simple_java.c"
         break;
-      case 26: /* funcbodyitems ::= funcbodyitems declarevar */
-#line 158 "simple_java.y"
+      case 24: /* funcbodyitems ::= funcbodyitems declarevar */
+#line 148 "simple_java.y"
 {
 	printf("232\n");
 }
-#line 1016 "simple_java.c"
+#line 1001 "simple_java.c"
         break;
-      case 27: /* funcbodyitems ::= funcbodyitems assign */
-#line 162 "simple_java.y"
+      case 25: /* funcbodyitems ::= funcbodyitems assign */
+#line 152 "simple_java.y"
 {
 	printf("236\n");
 }
-#line 1023 "simple_java.c"
+#line 1008 "simple_java.c"
         break;
-      case 28: /* funcbodyitems ::= funcbodyitems callexpr */
-#line 165 "simple_java.y"
+      case 26: /* funcbodyitems ::= funcbodyitems callexpr */
+#line 155 "simple_java.y"
 {
 	printf("239\n");
 }
-#line 1030 "simple_java.c"
+#line 1015 "simple_java.c"
         break;
-      case 29: /* funcbodyitems ::= funcbodyitems returnval */
-#line 168 "simple_java.y"
+      case 27: /* funcbodyitems ::= funcbodyitems returnval */
+#line 158 "simple_java.y"
 {
 	printf("240\n");
 }
-#line 1037 "simple_java.c"
+#line 1022 "simple_java.c"
         break;
-      case 30: /* funcbodyitems ::= funcbodyitems sentence */
-#line 172 "simple_java.y"
-{
-	printf("250\n");
-}
-#line 1044 "simple_java.c"
-        break;
-      case 31: /* funcbodyitems ::= */
-#line 176 "simple_java.y"
+      case 28: /* funcbodyitems ::= */
+#line 163 "simple_java.y"
 {
 	//yygotominor.yy0 = 0;
 	printf("243\n");
 }
-#line 1052 "simple_java.c"
+#line 1030 "simple_java.c"
         break;
-      case 32: /* assign ::= leftval EQ rightval */
-#line 181 "simple_java.y"
+      case 29: /* assign ::= leftval EQ rightval SEMI */
+#line 168 "simple_java.y"
 {
-	//assignExpr(yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
+	//assignExpr(yymsp[-3].minor.yy0,yymsp[-1].minor.yy0);
 	printf("169\n");
 }
-#line 1060 "simple_java.c"
+#line 1038 "simple_java.c"
         break;
-      case 33: /* leftval ::= THIS DOT ID */
-#line 186 "simple_java.y"
+      case 30: /* leftval ::= ID ID */
+#line 173 "simple_java.y"
+{
+	printf("1677\n");
+}
+#line 1045 "simple_java.c"
+        break;
+      case 31: /* leftval ::= THIS DOT ID */
+#line 177 "simple_java.y"
 {
 	//A = yymsp[-2].minor.yy0;
 	printf("174\n");
 }
-#line 1068 "simple_java.c"
+#line 1053 "simple_java.c"
         break;
-      case 34: /* leftval ::= ID */
-#line 191 "simple_java.y"
+      case 32: /* leftval ::= ID */
+#line 182 "simple_java.y"
 {
 	//A = yymsp[0].minor.yy0;
 	printf("174\n");
 }
-#line 1076 "simple_java.c"
+#line 1061 "simple_java.c"
         break;
-      case 35: /* leftval ::= ID DOT ID */
-#line 195 "simple_java.y"
+      case 33: /* leftval ::= ID DOT ID */
+#line 186 "simple_java.y"
 {
 	//yygotominor.yy0 =  getProperty(4B,yymsp[0].minor.yy0);
 	printf("178\n");
 }
-#line 1084 "simple_java.c"
+#line 1069 "simple_java.c"
         break;
-      case 36: /* rightval ::= ID */
-#line 199 "simple_java.y"
+      case 34: /* rightval ::= ID */
+#line 190 "simple_java.y"
 {
 	//yygotominor.yy0 = yymsp[0].minor.yy0;
 	printf("182\n");
 }
-#line 1092 "simple_java.c"
+#line 1077 "simple_java.c"
         break;
-      case 37: /* rightval ::= THIS DOT ID */
-#line 204 "simple_java.y"
+      case 35: /* rightval ::= THIS DOT ID */
+#line 195 "simple_java.y"
 {
 	//yygotominor.yy0 = yymsp[-2].minor.yy0;
 	printf("182\n");
 }
-#line 1100 "simple_java.c"
+#line 1085 "simple_java.c"
         break;
-      case 38: /* rightval ::= NEW ID LP callparameterlist RP */
-#line 209 "simple_java.y"
+      case 36: /* rightval ::= NEW ID LP callparameterlist RP */
+#line 200 "simple_java.y"
 {
    //A = newInit(yymsp[-3].minor.yy0,yymsp[-1].minor.yy0);
 	printf("186\n");
 }
-#line 1108 "simple_java.c"
+#line 1093 "simple_java.c"
         break;
-      case 39: /* rightval ::= INTEGER */
-#line 213 "simple_java.y"
+      case 37: /* rightval ::= INTEGER */
+#line 204 "simple_java.y"
 {
 	//yygotominor.yy0 = yymsp[0].minor.yy0;
 	printf("190\n");
 }
-#line 1116 "simple_java.c"
+#line 1101 "simple_java.c"
         break;
-      case 40: /* rightval ::= STRING */
-#line 217 "simple_java.y"
+      case 38: /* rightval ::= TEXT */
+#line 208 "simple_java.y"
 {
 	printf("193\n");
 }
-#line 1123 "simple_java.c"
+#line 1108 "simple_java.c"
         break;
-      case 41: /* returnval ::= RETURN rightval SEMI */
-#line 221 "simple_java.y"
+      case 39: /* returnval ::= RETURN rightval SEMI */
+#line 212 "simple_java.y"
 {
 	printf("199\n");
 }
-#line 1130 "simple_java.c"
+#line 1115 "simple_java.c"
         break;
-      case 42: /* returnval ::= RETURN SEMI */
-#line 224 "simple_java.y"
+      case 40: /* returnval ::= RETURN SEMI */
+#line 215 "simple_java.y"
 {
 	printf("206\n");
 }
-#line 1137 "simple_java.c"
+#line 1122 "simple_java.c"
         break;
-      case 43: /* parameterlist ::= parameterlist INT|STRING ID */
-#line 228 "simple_java.y"
+      case 41: /* parameterlist ::= parameterlist INT|STRING|ID ID */
+#line 219 "simple_java.y"
 {
 	printf("265\n");
 }
-#line 1144 "simple_java.c"
+#line 1129 "simple_java.c"
         break;
-      case 44: /* parameterlist ::= */
-#line 231 "simple_java.y"
+      case 42: /* parameterlist ::= */
+#line 222 "simple_java.y"
 {
 	//yygotominor.yy0 = 0.
 	printf("269\n");
 }
-#line 1152 "simple_java.c"
+#line 1137 "simple_java.c"
         break;
-      case 45: /* javasinherit ::= EXTENDS ID */
-#line 236 "simple_java.y"
+      case 43: /* javasinherit ::= EXTENDS ID */
+#line 227 "simple_java.y"
 {
 	//yygotominor.yy0 = yymsp[0].minor.yy0;
 	printf("280\n");
 }
-#line 1160 "simple_java.c"
+#line 1145 "simple_java.c"
         break;
-      case 46: /* javasinherit ::= */
-#line 240 "simple_java.y"
+      case 44: /* javasinherit ::= */
+#line 231 "simple_java.y"
 {
     //yygotominor.yy0 = 0;
 	printf("284\n");
 }
-#line 1168 "simple_java.c"
+#line 1153 "simple_java.c"
         break;
-      case 47: /* classitems ::= classitems declarevar */
-#line 245 "simple_java.y"
+      case 45: /* classitems ::= classitems declarevar */
+#line 236 "simple_java.y"
 {
     //	yygotominor.yy0 = dressedClassBodyWithVars(yymsp[-1].minor.yy0,yymsp[0].minor.yy0);
 	printf("289\n");
 }
-#line 1176 "simple_java.c"
+#line 1161 "simple_java.c"
         break;
-      case 48: /* classitems ::= classitems function */
-#line 250 "simple_java.y"
+      case 46: /* classitems ::= classitems function */
+#line 241 "simple_java.y"
 {
 //	yygotominor.yy0 = dressedClassBodyWithFunc(yymsp[-1].minor.yy0,yymsp[0].minor.yy0);
 	printf("294\n");
 }
-#line 1184 "simple_java.c"
+#line 1169 "simple_java.c"
         break;
-      case 49: /* classitems ::= */
-#line 255 "simple_java.y"
+      case 47: /* classitems ::= */
+#line 246 "simple_java.y"
 {
 //	yygotominor.yy0 = 0.
 	printf("299\n");
 }
-#line 1192 "simple_java.c"
+#line 1177 "simple_java.c"
         break;
       default:
         break;
@@ -1255,13 +1237,13 @@ static void yy_syntax_error(
   ParseARG_FETCH;
 #define TOKEN (yyminor.yy0)
 /************ Begin %syntax_error code ****************************************/
-#line 43 "simple_java.y"
+#line 48 "simple_java.y"
 
 	char *errSyntaxMsg = (char *)malloc(TOKEN.n);
 	memcpy(errSyntaxMsg,(void*)TOKEN.z,TOKEN.n);
 	printf("near %s syntax error！\n",errSyntaxMsg);
 	free(errSyntaxMsg);
-#line 1264 "simple_java.c"
+#line 1249 "simple_java.c"
 /************ End %syntax_error code ******************************************/
   ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }

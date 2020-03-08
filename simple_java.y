@@ -62,17 +62,12 @@ javaclass(A) ::= javaclass(B) CLASS ID(C) javasinherit(D) LD classitems(E) RD.{
 	printf("275\n");
 }
 
-javaclass ::= .{
+javaclass(A) ::= .{
+	
 	printf("7766\n");
 }
-
-
-
-
-//基础语句
-expr(A) ::= LP expr(B) RP.{
-	//A = B;
-	printf("52\n");
+expr(A) ::= ID(B).{
+	printf("700\n");
 }
 expr(A) ::= TEXT(B).{
 	//A = B;
@@ -86,22 +81,12 @@ expr(A) ::= INTEGER(B).{
 expr(A) ::= ID(B) DOT ID(C).{
 	printf("55\n");
 }
-//四则运算
-opcal(A) ::= opcal(B) INTEGER(C) PLUS|MULTI|DIVIDE|MINUS(OP).{
-	printf("91\n");
-}
-opcal(A) ::= .{
-	printf("95\n");
-}
-
-sentence(A) ::= opcal(B) INTEGER(C).{
-	printf("107\n");
-}
-
-
 //方法调用 入参类型 text，int 类属性，赞不支持返回值入参
 callexpr(A) ::= ID(B) DOT ID(C) LP callparameterlist(D) RP SEMI.{
 	printf("116\n");
+}
+callexpr(A) ::= ID(B) LP callparameterlist(D) RP SEMI.{
+	printf("abccc\n");
 }
 callparameterlist(A) ::= callidist(B) expr(C).{
 	printf("119\n");
@@ -125,7 +110,7 @@ callidist(A) ::= .{
 }
 
 //变量声明
-declarevar(A) ::= INT|STRING(B) declarevaritems ID(C) SEMI.{
+declarevar(A) ::= INT|STRING declarevaritems ID(C) SEMI.{
 	printf("142\n");
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
@@ -174,18 +159,19 @@ funcbodyitems(A) ::= funcbodyitems returnval.{
 	printf("240\n");
 }
 
-funcbodyitems(A) ::= funcbodyitems sentence.{
-	printf("250\n");
-}
 
 funcbodyitems(A) ::= .{
 	//A = 0;
 	printf("243\n");
 }
 //赋值
-assign ::= leftval(B) EQ rightval(C).{
+assign ::= leftval(B) EQ rightval(C) SEMI.{
 	//assignExpr(B,C);
 	printf("169\n");
+}
+
+leftval ::= ID(A) ID(B).{
+	printf("1677\n");
 }
 
 leftval ::= THIS(B) DOT ID.{
@@ -219,7 +205,7 @@ rightval(A) ::= INTEGER(B).{
 	//A = B;
 	printf("190\n");
 }
-rightval(A) ::= STRING(B).{
+rightval(A) ::= TEXT(B).{
 	printf("193\n");
 }
 
@@ -230,7 +216,7 @@ returnval(A) ::= RETURN SEMI.{
 	printf("206\n");
 }
 
-parameterlist(A) ::= parameterlist(B) INT|STRING(C) ID(D).{
+parameterlist(A) ::= parameterlist(B) INT|STRING|ID(C) ID(D).{
 	printf("265\n");
 }
 parameterlist(A) ::= .{

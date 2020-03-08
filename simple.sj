@@ -5,9 +5,8 @@ class Person {
 	String birthday;
 	
 }
-
 class Student extends Person {
-	
+
 	int number;
 	int grade;
 	String currentStudyLesson;
@@ -34,5 +33,6 @@ class Student extends Person {
 		stud.study("english");
 		printf(stud.age);
 		printf(stud.currentStudyLesson);
-	}
+	}	
+	
 }

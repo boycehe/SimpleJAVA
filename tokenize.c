@@ -207,7 +207,7 @@ int javaGetToken(const unsigned char *z, int *tokenType){
                     }
                 }
             }
-            if( c=='\'' ){
+            if( c=='\'' || c=='\"'){
                 *tokenType = HC_TEXT;
                 return i+1;
             }else if( c!=0 ){
@@ -283,22 +283,6 @@ int javaGetToken(const unsigned char *z, int *tokenType){
         }
         case CC_RP:{
             *tokenType = HC_RP;
-            return 1;
-        }
-        case CC_PLUS:{
-            *tokenType = HC_PLUS;
-            return 1;
-        }
-        case CC_MINUS:{
-            *tokenType = HC_MINUS;
-            return 1;
-        }
-        case CC_MULTI:{
-            *tokenType = HC_MULTI;
-            return 1;
-        }
-        case CC_DIVIDE:{
-            *tokenType = HC_DIVIDE;
             return 1;
         }
         default: {
@@ -414,18 +398,6 @@ void printTokenType(int tokenType){
         break;
       case HC_FLOAT:
         printf("HC_FLOAT\n");
-        break;
-      case HC_PLUS:
-        printf("HC_PLUS\n");  
-        break;
-      case HC_MINUS:
-        printf("HC_MINUS\n");  
-        break;
-      case HC_MULTI:
-        printf("HC_MULTI\n");
-        break;
-      case HC_DIVIDE:
-        printf("HC_DIVIDE\n");
         break;
       case HC_THIS:
         printf("HC_THIS\n");
