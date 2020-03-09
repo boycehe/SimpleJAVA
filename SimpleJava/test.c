@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "tokenize.h"
 #include "simple_java.h"
+#include "semantic.h"
 #include "simple_java_foundation.h"
 #include <string.h>
 #include <sys/stat.h>
@@ -11,7 +12,7 @@ void showToken(const unsigned char *sourcecode);
 void testToken();
 int main(int argc, char *argv[]) {
 	
-	const char *sjfile = "simple.sj";
+	const char *sjfile = "/Users/heboyce/Desktop/Study/LearnCompilers/SimpleJAVA/SimpleJava/simple.sj";
 	FILE *fp = fopen(sjfile, "r");
 	struct stat statbuf;
 	stat(sjfile,&statbuf);
@@ -29,6 +30,8 @@ int main(int argc, char *argv[]) {
 void showToken(const unsigned char *sourcecode){
 	
 	void* pParser = ParseAlloc(malloc);
+    JavaParser *pParse = (JavaParser *)malloc(sizeof(JavaParser));
+    pParse->entryFunc = 0;
 	int tokenType;
 	int len = javaGetToken(sourcecode, &tokenType);
 	while (tokenType != HC_ILLEGAL) {
@@ -38,7 +41,7 @@ void showToken(const unsigned char *sourcecode){
 		token.n = len;
 		
 		if (tokenType != HC_SPACE) {
-		 	Parse(pParser,tokenType,token,0);
+		 	Parse(pParser,tokenType,token,pParse);
 			printf("token:\t");
 			for (int i = 0; i < len; i++) {
 				printf("%c",sourcecode[i]);
@@ -59,11 +62,13 @@ void showToken(const unsigned char *sourcecode){
 	Token endToken;
 	endToken.z = 0;
 	endToken.n = 0;
-	Parse(pParser,0,endToken,0);
-	
+	Parse(pParser,0,endToken,pParse);
 	ParseFree(pParser, free);
-	//printf("source code:%s",sourcecode);
-	
+    javaRun(pParse);
+    
+    
+    
+
 }
 
 void testToken(){

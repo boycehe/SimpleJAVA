@@ -65,7 +65,9 @@ javaclass ::= javaclass CLASS ID(B) javasinherit(C) LD classitems(D) RD.{
 	createClass(pParse,B,C,D);
 }
 
-javaclass ::= .{}
+javaclass ::= .{
+    printf("javaclass nil\n");
+}
 %type expr {JavaExpr*}
 expr(A) ::= ID(B).{
 	printf("rule--->\t333333333\n");
@@ -173,7 +175,7 @@ declarevaritems(A) ::= .{
 %type function {JavaFunction *}
 function(A) ::= PUBLIC|PROTECTED|PRIVATE(B) INT|STRING|VOID(C) ID(D) LP parameterlist(E) RP functionbody(F).{
 	printf("rule--->\tlllllllllllll\n");
-	A = createFunction(@B,@C,D,E,F);
+	A = createFunction(pParse,@B,@C,D,E,F);
 }
 
 %type funcbodyitems {JavaExprList *}
@@ -295,7 +297,12 @@ classitems(A) ::= classitems(B) declarevar(C).{
 
 classitems(A) ::= classitems(B) function(C).{
 	printf("rule--->\tIIIIIIIIIIII\n");
-	A = dressedClassBodyWithFunc(B,C);
+    if(C != 0){
+        A = dressedClassBodyWithFunc(B,C);
+    }else{
+        A = B;
+    }
+	
 }
 
 classitems(A) ::= .{

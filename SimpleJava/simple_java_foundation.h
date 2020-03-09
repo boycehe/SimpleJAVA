@@ -46,11 +46,12 @@ enum JavaAccessType {
 
 enum ExprType {
     ExprType_ASSGIN = 0,
-    ExprType_CLSVAR = 1,
+    ExprType_VAR = 1,
     ExprType_THISTOKEN = 2,
     ExprType_NEW = 3,
     ExprType_RETURN = 4,
-    ExprType_DECLARE = 5
+    ExprType_DECLARE = 5,
+    ExprType_CLSINSTANCE = 6
 };
 
 enum JavaType {
@@ -113,13 +114,17 @@ struct JavaExpr{
     ExprType type;
     int     declareType;
 	Token 	*token;
+    int      tokenType;
 	Token 	*propertyToken;
     Token   *varToken;
+    Token   *valueToken;
+    int      valueTokenType;
     CallTokensList *callParList;
     JavaExpr *assginLeftExpr;
     JavaExpr *assginRightExpr;
     JavaExpr **exprs;
     JavaExpr *returnExpr;
+    MetaJavaClass *clsInstance;
     unsigned char exprLen;
     unsigned char exprCapity;
 
@@ -164,7 +169,8 @@ struct JavaParser {
 	
 	 MetaJavaClass **classes;
 	 unsigned clsLen;
-	
+     JavaFunction *entryFunc;
+     JavaClassItems *clsItems;
 };
 
 #endif
