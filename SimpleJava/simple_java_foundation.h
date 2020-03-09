@@ -50,6 +50,7 @@ enum ExprType {
     ExprType_THISTOKEN = 2,
     ExprType_NEW = 3,
     ExprType_RETURN = 4,
+    ExprType_DECLARE = 5
 };
 
 enum JavaType {
@@ -110,6 +111,7 @@ struct JavaParameter{
 struct JavaExpr{
 	
     ExprType type;
+    int     declareType;
 	Token 	*token;
 	Token 	*propertyToken;
     Token   *varToken;

@@ -128,6 +128,32 @@ JavaExpr *addDeclarevarItem(JavaExpr *declareExpr,JavaExpr *itemExpr){
     return declareExpr;
 }
 
+JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,int tokenType){
+    
+    if (declareExpr == NULL) {
+        declareExpr = (JavaExpr *)malloc(sizeof(JavaExpr));
+        declareExpr->exprs = (JavaExpr **)malloc(sizeof(JavaExpr*)*10);
+        declareExpr->exprLen = 0;
+        declareExpr->exprCapity = 10;
+    }
+    
+    if (declareExpr->exprCapity <= declareExpr->exprLen) {
+        declareExpr->exprs = (JavaExpr **)realloc(declareExpr->exprs, declareExpr->exprCapity + 10);
+        declareExpr->exprCapity += 10;
+    }
+    
+    declareExpr->type = ExprType_DECLARE;
+    declareExpr->declareType = tokenType;
+    JavaExpr *itemExpr = tokenToExpr(token, tokenType);
+    memcpy((declareExpr->exprs + declareExpr->exprLen), &itemExpr, sizeof(JavaExpr *));
+    declareExpr->exprLen++;
+    
+    return declareExpr;
+    
+    
+    
+}
+
 JavaFunction *createFunction(JavaAccessType accessType,int returnType,Token token,JavaParameterlist *parameters,JavaExprList *functionBody){
     
     JavaFunction *func = (JavaFunction *)malloc(sizeof(JavaFunction));

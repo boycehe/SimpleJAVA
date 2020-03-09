@@ -16,4 +16,4 @@ JavaExpr *newClsInstance(Token clsToken);
 JavaExpr *returnExpr(JavaExpr *expr);
 JavaParameterlist *addParameter(JavaParameterlist *paramList,int tokenType,Token token);
 JavaClassItems *dressedClassBodyWithVars(JavaClassItems *clsItem,JavaExpr*varExpr);
-
+JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,int tokenType);

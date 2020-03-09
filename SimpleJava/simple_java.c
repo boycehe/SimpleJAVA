@@ -917,7 +917,7 @@ static void yy_reduce(
 {
 	printf("rule--->\tbbbbbbbbb\n");
 	JavaExpr *expr = tokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
-	yygotominor.yy39 = addTokenToCallParameterList(yymsp[-2].minor.yy39,yymsp[-1].minor.yy0);
+	yygotominor.yy39 = addTokenToCallParameterList(yymsp[-2].minor.yy39,expr);
 }
 #line 923 "simple_java.c"
         break;
@@ -951,7 +951,7 @@ static void yy_reduce(
 #line 136 "simple_java.y"
 {
 	printf("rule--->\tfffffffffff\n");
-	yygotominor.yy16 = finishDeclareVars(yymsp[-3].major,yymsp[-2].minor.yy16,yymsp[-1].minor.yy0);
+	yygotominor.yy16 = finishDeclareVars(yymsp[-3].major,yymsp[-2].minor.yy16,yymsp[-1].minor.yy0,yymsp[-1].major);
 }
 #line 957 "simple_java.c"
         break;
@@ -1009,7 +1009,7 @@ static void yy_reduce(
 #line 174 "simple_java.y"
 {
 	printf("rule--->\tlllllllllllll\n");
-	yygotominor.yy40 = createFunction(yymsp[-6].major,yymsp[-5].minor.yy0,yymsp[-4].minor.yy0,yymsp[-2].minor.yy2,yymsp[0].minor.yy52);
+	yygotominor.yy40 = createFunction(yymsp[-6].major,yymsp[-5].major,yymsp[-4].minor.yy0,yymsp[-2].minor.yy2,yymsp[0].minor.yy52);
 }
 #line 1015 "simple_java.c"
         break;
@@ -1049,7 +1049,7 @@ static void yy_reduce(
 #line 200 "simple_java.y"
 {
 	printf("rule--->\tpppppppppppppp\n");
-	yygotominor.yy52 = addExprToList(yymsp[-1].minor.yy52,yymsp[0].minor.yy0);
+	yygotominor.yy52 = addExprToList(yymsp[-1].minor.yy52,yymsp[0].minor.yy17);
 }
 #line 1055 "simple_java.c"
         break;
@@ -1121,7 +1121,7 @@ static void yy_reduce(
 #line 247 "simple_java.y"
 {
 	printf("rule--->\tyyyyyyyyyyyyyy\n");
-   yygotominor.yy17 = newClsInstance(yymsp[-2].minor.yy0,C);
+   yygotominor.yy17 = newClsInstance(yymsp[-2].minor.yy0);
 }
 #line 1127 "simple_java.c"
         break;
@@ -1145,7 +1145,7 @@ static void yy_reduce(
 #line 260 "simple_java.y"
 {
 	printf("rule--->\tBBBBBBBBBBBBBBBB\n");
-	yygotominor.yy0 = returnExpr(yymsp[-1].minor.yy17);
+	yygotominor.yy17 = returnExpr(yymsp[-1].minor.yy17);
 }
 #line 1151 "simple_java.c"
         break;
@@ -1153,7 +1153,7 @@ static void yy_reduce(
 #line 264 "simple_java.y"
 {
 	printf("rule--->\tCCCCCCCCCCCCCCCCCC\n");
-	yygotominor.yy0 = 0;
+	yygotominor.yy17 = 0;
 }
 #line 1159 "simple_java.c"
         break;
@@ -1169,7 +1169,7 @@ static void yy_reduce(
 #line 273 "simple_java.y"
 {
 	printf("rule--->\tEEEEEEEEEEEEEEEEE\n");
-	yygotominor.yy2 = 0.
+	yygotominor.yy2 = 0;
 }
 #line 1175 "simple_java.c"
         break;
@@ -1212,7 +1212,7 @@ static void yy_reduce(
 #line 301 "simple_java.y"
 {
 	printf("rule--->\tJJJJJJJJJJJJJJJ\n");
-	yygotominor.yy1 = 0.
+	yygotominor.yy1 = 0;
 }
 #line 1218 "simple_java.c"
         break;

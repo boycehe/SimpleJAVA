@@ -112,7 +112,7 @@ callparameterlist(A) ::= .{
 callidist(A) ::= callidist(B) INTEGER(C) COMMA.{
 	printf("rule--->\tbbbbbbbbb\n");
 	JavaExpr *expr = tokenToExpr(C,@C);
-	A = addTokenToCallParameterList(B,C);
+	A = addTokenToCallParameterList(B,expr);
 }
 
 callidist(A) ::= callidist(B) TEXT(C) COMMA.{
@@ -135,7 +135,7 @@ callidist(A) ::= .{
 %type declarevaritems {JavaExpr*}
 declarevar(A) ::= INT|STRING(B) declarevaritems(C) ID(D) SEMI.{
 	printf("rule--->\tfffffffffff\n");
-	A = finishDeclareVars(@B,C,D);
+	A = finishDeclareVars(@B,C,D,@D);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
 	printf("rule--->\tggggggggg\n");
@@ -173,7 +173,7 @@ declarevaritems(A) ::= .{
 %type function {JavaFunction *}
 function(A) ::= PUBLIC|PROTECTED|PRIVATE(B) INT|STRING|VOID(C) ID(D) LP parameterlist(E) RP functionbody(F).{
 	printf("rule--->\tlllllllllllll\n");
-	A = createFunction(@B,C,D,E,F);
+	A = createFunction(@B,@C,D,E,F);
 }
 
 %type funcbodyitems {JavaExprList *}
@@ -246,7 +246,7 @@ rightval(A) ::= THIS(B) DOT ID(C).{
 
 rightval(A) ::= NEW ID(B) LP RP.{
 	printf("rule--->\tyyyyyyyyyyyyyy\n");
-   A = newClsInstance(B,C);
+   A = newClsInstance(B);
 }
 rightval(A) ::= INTEGER(B).{
 	printf("rule--->\tzzzzzzzzzzzzzzzzzzz\n");
@@ -256,7 +256,7 @@ rightval(A) ::= TEXT(B).{
 	printf("rule--->\tAAAAAAAAAAAAAAA\n");
 	A = tokenToExpr(B,@B);
 }
-
+%type returnval {JavaExpr *}
 returnval(A) ::= RETURN rightval(B) SEMI.{
 	printf("rule--->\tBBBBBBBBBBBBBBBB\n");
 	A = returnExpr(B);
@@ -272,7 +272,7 @@ parameterlist(A) ::= parameterlist(B) INT|STRING|ID(C) ID(D).{
 }
 parameterlist(A) ::= .{
 	printf("rule--->\tEEEEEEEEEEEEEEEEE\n");
-	A = 0.
+	A = 0;
 }
 
 javasinherit(A) ::= EXTENDS ID(B).{
@@ -300,7 +300,7 @@ classitems(A) ::= classitems(B) function(C).{
 
 classitems(A) ::= .{
 	printf("rule--->\tJJJJJJJJJJJJJJJ\n");
-	A = 0.
+	A = 0;
 }
 
 
