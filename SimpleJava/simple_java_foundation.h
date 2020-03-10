@@ -45,13 +45,16 @@ enum JavaAccessType {
 };
 
 enum ExprType {
-    ExprType_ASSGIN = 0,
-    ExprType_VAR = 1,
-    ExprType_THISTOKEN = 2,
-    ExprType_NEW = 3,
-    ExprType_RETURN = 4,
-    ExprType_DECLARE = 5,
-    ExprType_CLSINSTANCE = 6
+    ExprType_TOKEN = 0,
+    ExprType_ASSGIN = 1,
+    ExprType_VAR = 2,
+    ExprType_THISTOKEN = 3,
+    ExprType_NEW = 4,
+    ExprType_RETURN = 5,
+    ExprType_DECLARE = 6,
+    ExprType_CLSINSTANCE = 7,
+    ExprType_CONSTANT = 8,
+    ExprType_CALL = 9
 };
 
 enum JavaType {
@@ -168,7 +171,8 @@ struct JavaClassBody {
 struct JavaParser {
 	
 	 MetaJavaClass **classes;
-	 unsigned clsLen;
+     unsigned char clsCapity;
+	 unsigned char clsLen;
      JavaFunction *entryFunc;
      JavaClassItems *clsItems;
 };

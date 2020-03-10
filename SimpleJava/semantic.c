@@ -12,10 +12,52 @@ Token *pointToken(Token token){
 	return ntoken;
 }
 
+JavaExpr *initExpr(){
+    
+    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    expr->type = 0;
+    expr->declareType = HC_ILLEGAL;
+    expr->token = 0;
+    expr->tokenType = HC_ILLEGAL;
+    expr->propertyToken = 0;
+    expr->varToken = 0;
+    expr->valueToken = 0;
+    expr->valueTokenType = HC_ILLEGAL;
+    expr->callParList = 0;
+    expr->assginLeftExpr = 0;
+    expr->assginRightExpr = 0;
+    expr->exprs = 0;
+    expr->returnExpr = 0;
+    expr->clsInstance = 0;
+    expr->exprLen = 0;
+    expr->exprCapity =0;
+    
+    return expr;
+    
+}
+
+JavaExpr *varTokenToExpr(Token token ,int type){
+    
+    JavaExpr *expr = initExpr();
+   
+    if (type == HC_INTEGER || type == HC_TEXT) {
+        expr->type = ExprType_CONSTANT;
+        expr->token = pointToken(token);
+        expr->tokenType = type;
+    }else{
+        expr->type = ExprType_VAR;
+        expr->varToken = pointToken(token);
+    }
+    
+    return expr;
+    
+}
+
 JavaExpr *tokenToExpr(Token token ,int op){
-	JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
 	expr->token = pointToken(token);
 	expr->tokenType = op;
+    expr->type = ExprType_TOKEN;
 	return  expr;
 }
 
@@ -44,21 +86,37 @@ void createClass(JavaParser *parser,Token clsToken,Token parentClasToken,JavaCla
         parser = (JavaParser *)malloc(sizeof(JavaParser));
     }
     
+    if (clsToken.n == 0) {
+        return;
+    }
+    
     MetaJavaClass *cls = (MetaJavaClass *)malloc(sizeof(MetaJavaClass));
     if (parentClasToken.n != 0 && parentClasToken.z != NULL) {
        cls->superClass = findClssWithToken(parser, parentClasToken);
     }
-    
+    cls->clsName = (char *)malloc(sizeof(char)*(clsToken.n+1));
+    memcpy(cls->clsName, clsToken.z, clsToken.n);
     cls->clsItems = clsItems;
+    if (parser->clsLen + 1 >= parser->clsCapity) {
+        parser->classes = (MetaJavaClass **)realloc(parser->classes, sizeof(MetaJavaClass*)*(parser->clsCapity+10));
+        parser->clsCapity += 10;
+    }
+    
+    memcpy((parser->classes + parser->clsLen), &cls, sizeof(MetaJavaClass*));
+    parser->clsLen++;
     
 }
 
-JavaExpr *instanceGetProperty(Token token,Token propertyToken){
+JavaExpr *instanceGetProperty(int tokenType,Token token,Token propertyToken){
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
+    if (tokenType == HC_THIS) {
+        expr->type = ExprType_THISTOKEN;
+    }else{
+        expr->type = ExprType_VAR;
+    }
     expr->token = pointToken(token);
-    expr->propertyToken = pointToken(propertyToken);
-
+    expr->varToken = pointToken(propertyToken);
     return expr;
     
 }
@@ -66,8 +124,8 @@ JavaExpr *instanceGetProperty(Token token,Token propertyToken){
 JavaExpr *dressedCallExpr(Token clsInstanceToken,Token funcNameToken,CallTokensList *parameterList){
     
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
-    
+    JavaExpr *expr = initExpr();
+    expr->type = ExprType_CALL;
     if (clsInstanceToken.n > 0 && clsInstanceToken.z != NULL) {
         expr->token = pointToken(clsInstanceToken);
         expr->propertyToken = pointToken(funcNameToken);
@@ -102,7 +160,7 @@ CallTokensList *addTokenToCallParameterList(CallTokensList *parameterList,JavaEx
 
 JavaExpr *assginmentExpr(JavaExpr *leftExpr,JavaExpr *rightExpr){
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
     expr->type = ExprType_ASSGIN;
     expr->assginLeftExpr = leftExpr;
     expr->assginRightExpr = rightExpr;
@@ -113,7 +171,7 @@ JavaExpr *assginmentExpr(JavaExpr *leftExpr,JavaExpr *rightExpr){
 JavaExpr *addDeclarevarItem(JavaExpr *declareExpr,JavaExpr *itemExpr){
     
     if (declareExpr == NULL) {
-        declareExpr = (JavaExpr *)malloc(sizeof(JavaExpr));
+        declareExpr = initExpr();
         declareExpr->exprs = (JavaExpr **)malloc(sizeof(JavaExpr*)*10);
         declareExpr->exprLen = 0;
         declareExpr->exprCapity = 10;
@@ -125,6 +183,7 @@ JavaExpr *addDeclarevarItem(JavaExpr *declareExpr,JavaExpr *itemExpr){
     }
     
     memcpy((declareExpr->exprs + declareExpr->exprLen), &itemExpr, sizeof(JavaExpr *));
+
     declareExpr->exprLen++;
     
     return declareExpr;
@@ -133,7 +192,7 @@ JavaExpr *addDeclarevarItem(JavaExpr *declareExpr,JavaExpr *itemExpr){
 JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,int tokenType){
     
     if (declareExpr == NULL) {
-        declareExpr = (JavaExpr *)malloc(sizeof(JavaExpr));
+        declareExpr = initExpr();
         declareExpr->exprs = (JavaExpr **)malloc(sizeof(JavaExpr*)*10);
         declareExpr->exprLen = 0;
         declareExpr->exprCapity = 10;
@@ -145,14 +204,11 @@ JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,in
     }
     
     declareExpr->type = ExprType_DECLARE;
-    declareExpr->declareType = tokenType;
-    JavaExpr *itemExpr = tokenToExpr(token, tokenType);
+    declareExpr->declareType = declareType;
+    JavaExpr *itemExpr = varTokenToExpr(token, tokenType);
     memcpy((declareExpr->exprs + declareExpr->exprLen), &itemExpr, sizeof(JavaExpr *));
     declareExpr->exprLen++;
-    
     return declareExpr;
-    
-    
     
 }
 
@@ -198,7 +254,7 @@ JavaExprList *addExprToList(JavaExprList *exprList,JavaExpr *expr){
 
 JavaExpr *declareClassVar(Token clsToken,Token clsVar){
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
     expr->type = ExprType_VAR;
     expr->declareType = HC_ID;
     expr->token = pointToken(clsToken);
@@ -209,7 +265,7 @@ JavaExpr *declareClassVar(Token clsToken,Token clsVar){
 
 JavaExpr *getClassProperty(Token token){
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
     expr->token = pointToken(token);
     expr->type = ExprType_THISTOKEN;
     return expr;
@@ -218,7 +274,7 @@ JavaExpr *getClassProperty(Token token){
 
 JavaExpr *newClsInstance(Token clsToken){
     
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
     expr->type = ExprType_NEW;
     expr->token = pointToken(clsToken);
     return expr;
@@ -226,7 +282,7 @@ JavaExpr *newClsInstance(Token clsToken){
 }
 
 JavaExpr *returnExpr(JavaExpr *expr){
-    JavaExpr *returnExpr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *returnExpr = initExpr();
     returnExpr->type = ExprType_RETURN;
     returnExpr->returnExpr = expr;
     return expr;
@@ -308,9 +364,9 @@ JavaClassItems *dressedClassBodyWithFunc(JavaClassItems *clsItem,JavaFunction*ja
 }
 
 JavaExpr *parameterToExpr(JavaParameter *parmaeter){
-    JavaExpr *expr = (JavaExpr *)malloc(sizeof(JavaExpr));
+    JavaExpr *expr = initExpr();
     expr->type = ExprType_VAR;
-    expr->token = parmaeter->token;
+    expr->varToken = parmaeter->token;
     expr->declareType = parmaeter->type;
     return expr;
 }
@@ -343,10 +399,16 @@ JavaExpr *findClassInstanceVarExpr(MetaJavaClass *clsInstance ,Token *varToken){
     for (int i = 0; i < clsInstance->clsItems->declareVarList->len; i++) {
                    
          JavaExpr *clsInstanceVar = *(clsInstance->clsItems->declareVarList->exprs + i);
+        
+        for (int j = 0; j < clsInstanceVar->exprLen; j++) {
+            JavaExpr *varExpr = *(clsInstanceVar->exprs + j);
+            if (equalToken(varExpr->varToken, varToken) == 1) {
+                findVarExpr = clsInstanceVar;
+                break;
+            }
+        }
                    
-         if (equalToken(clsInstanceVar->token, varToken) == 1) {
-            findVarExpr = clsInstanceVar;
-         }
+        
                    
     }
                
@@ -359,6 +421,61 @@ JavaExpr *findClassInstanceVarExpr(MetaJavaClass *clsInstance ,Token *varToken){
     }
     
     return 0;
+}
+
+JavaFunction *findInstanceFunc(MetaJavaClass *classInstance,Token *funcToken){
+    
+    if (classInstance->clsItems == 0 || classInstance->clsItems->functions == 0) {
+        return 0;
+    }
+    
+    JavaFunction *func = 0;
+    
+    for (int i = 0; i < classInstance->clsItems->functions->len; i++) {
+        
+        JavaFunction *localFunc = *(classInstance->clsItems->functions->funcs + i);
+        
+        if (strncmp(funcToken->z, localFunc->name, funcToken->n) != 0) {
+            continue;
+        }
+        
+        func = localFunc;
+    
+    }
+    
+    if (func == 0 && classInstance->superClass != 0) {
+        return findInstanceFunc(classInstance->superClass, funcToken);
+    }
+
+    return func;
+    
+};
+
+JavaFunction *findClsFunc(JavaExprList *exprlist,Token *clsToken,Token *funcToken){
+                          
+    JavaFunction *func = 0;
+                          
+    for (int i = 0; i < exprlist->len; i++) {
+                                 
+        JavaExpr *expr = *(exprlist->exprs + i);
+        if (expr->type != ExprType_CLSINSTANCE) {
+            continue;
+        }
+                                     
+        if (equalToken(clsToken, expr->token) != 1) {
+            continue;
+        }
+                                     
+        if (expr->clsInstance->clsItems == NULL || expr->clsInstance->clsItems->functions == NULL) {
+            return 0;
+        }
+                                     
+        func = findInstanceFunc(expr->clsInstance,funcToken);
+                                     
+    }
+                          
+     return func;
+                          
 }
 
 JavaExpr *findVarExpr(JavaExprList *exprlist,Token *clsToken,Token *varToken){
@@ -375,33 +492,51 @@ JavaExpr *findVarExpr(JavaExprList *exprlist,Token *clsToken,Token *varToken){
     
             JavaExpr *expr = *(exprlist->exprs + i);
             
-            if (equalToken(expr->token, varToken) == 1) {
+            if (equalToken(expr->varToken, varToken) == 1) {
                 findVarExpr = expr;
                 break;
             }
         
         }
         
-    }else{
+    }else if(varToken == 0){
         
         for (int i = 0; i < exprlist->len; i++) {
-        
+            
             JavaExpr *expr = *(exprlist->exprs + i);
             if (expr->type != ExprType_CLSINSTANCE) {
                 continue;
             }
-            
-            if (strncmp(expr->clsInstance->clsName, clsToken->z, clsToken->n) != 0) {
+                
+            if (equalToken(clsToken, expr->varToken) != 1) {
                 continue;
             }
+        
+            findVarExpr = expr;
+            break;
+                
+        }
+        
+        
+    }else{
+    
+        for (int i = 0; i < exprlist->len; i++) {
             
+            JavaExpr *expr = *(exprlist->exprs + i);
+            if (expr->type != ExprType_CLSINSTANCE) {
+                continue;
+            }
+                
+            if (equalToken(clsToken, expr->varToken) != 1) {
+                continue;
+            }
+                
             if (expr->clsInstance->clsItems == NULL || expr->clsInstance->clsItems->declareVarList == NULL) {
                 return 0;
             }
-            
+                
             findVarExpr = findClassInstanceVarExpr(expr->clsInstance,varToken);
-            
-
+                
         }
         
     }
@@ -409,20 +544,74 @@ JavaExpr *findVarExpr(JavaExprList *exprlist,Token *clsToken,Token *varToken){
     return findVarExpr;
 }
 
-JavaClassItems *copyClassItems(JavaClassItems *clsItems){
+
+Token *copyToken(Token *oldToken){
     
-    return 0;
+    if (oldToken == 0) {
+        return 0;
+    }
+    
+    Token *newToken = (Token *)malloc(sizeof(Token));
+    newToken->z = (const unsigned char *)malloc(oldToken->n+1);
+    memset(newToken->z, '\0', oldToken->n);
+    memcpy(newToken->z, oldToken->z, oldToken->n);
+    return newToken;
 }
 
-JavaFunctionList *copyFunctionList(JavaFunctionList *functionList){
-    return 0;
+
+JavaExpr *copyExpr(JavaExpr *oldExpr){
+    
+    JavaExpr *newExpr = initExpr();
+    newExpr->type = oldExpr->type;
+    newExpr->declareType = oldExpr->declareType;
+    newExpr->token = copyToken(oldExpr->token);
+    newExpr->tokenType = oldExpr->tokenType;
+    newExpr->varToken = copyToken(oldExpr->varToken);
+    newExpr->valueToken = copyToken(oldExpr->valueToken);
+    newExpr->valueTokenType = oldExpr->valueTokenType;
+    
+    return newExpr;
+    
 }
 
 JavaExprList *copyExprList(JavaExprList *exprList){
-    return 0;
+    
+    JavaExprList *newExprList = (JavaExprList *)malloc(sizeof(JavaExprList));
+    newExprList->len = exprList->len;
+    newExprList->capity = exprList->len;
+    newExprList->exprs = (JavaExpr **)malloc(sizeof(JavaExpr*)*exprList->len);
+    
+    
+    for (int i = 0; i < exprList->len; i++) {
+        
+        JavaExpr *oldExpr = copyExpr(*(exprList->exprs+i));
+        memcpy((newExprList->exprs + i), &oldExpr, sizeof(JavaExpr *));
+        
+    }
+    
+    return exprList;
+    
 }
 
+JavaClassItems *copyClassItems(JavaClassItems *clsItems){
+    
+    JavaClassItems *newClsItems = (JavaClassItems *)malloc(sizeof(JavaClassItems));
+    newClsItems->functions = clsItems->functions;
+    newClsItems->declareVarList = copyExprList(clsItems->declareVarList);
+    
+    return newClsItems;
+}
 
+MetaJavaClass *instanceClass(MetaJavaClass *clss){
+    
+    MetaJavaClass *cls = (MetaJavaClass *)malloc(sizeof(MetaJavaClass));
+    cls->clsName = clss->clsName;
+    cls->clsItems = copyClassItems(clss->clsItems);
+    if (clss->superClass != 0) {
+        cls->superClass = instanceClass(clss->superClass);
+    }
+    return cls;
+};
 
 MetaJavaClass *newInstanceClass(JavaParser *parser, Token *clsToken){
     
@@ -431,29 +620,10 @@ MetaJavaClass *newInstanceClass(JavaParser *parser, Token *clsToken){
     if (metaCls == 0) {
         return 0;
     }
-    
-    MetaJavaClass *cls = (MetaJavaClass *)malloc(sizeof(MetaJavaClass));
-    cls->clsName = (char *)malloc(sizeof(clsToken->n+1));
-    memset(cls->clsName, '\0', sizeof(clsToken->n+1));
-    memcpy(cls->clsName, clsToken->z, clsToken->n);
-    
-    /*
-     struct JavaClassItems {
-         
-         JavaFunctionList *functions;
-         JavaExprList *declareVarList;
-         
-     };
-     */
-    
-    cls->clsItems = (JavaClassItems *)malloc(sizeof(JavaClassItems));
-    
-    
-    
-    return cls;
-    
-    
-}
+    return instanceClass(metaCls);
+
+};
+
 
 JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenList,JavaFunction *func){
     
@@ -511,59 +681,183 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                 JavaExpr *leftExpr = expr->assginLeftExpr;
                 JavaExpr *rightExpr = expr->assginRightExpr;
                 
-                if (leftExpr->tokenType == HC_ID) {
-                    JavaExpr *clsInstaceVar = (JavaExpr *)malloc(sizeof(JavaExpr));
+                if (leftExpr->type == ExprType_VAR && leftExpr->declareType == HC_ID) {
+                    JavaExpr *clsInstaceVar = initExpr();
                     clsInstaceVar->type = ExprType_CLSINSTANCE;
-                    clsInstaceVar->clsInstance = (MetaJavaClass *)malloc(sizeof(MetaJavaClass));
-                    MetaJavaClass *cls = findClssWithToken(parser, *leftExpr->token);
+                    clsInstaceVar->token = leftExpr->token;
+                    clsInstaceVar->varToken = leftExpr->varToken;
+                   
+                    MetaJavaClass *cls = newInstanceClass(parser, leftExpr->token);
                     if (cls == NULL) {
                         char *errormsg = (char *)malloc(sizeof(char)*(leftExpr->token->n+1));
                         memset(errormsg, '\0', (leftExpr->token->n+1));
                         memcpy(errormsg, leftExpr->token->z, leftExpr->token->n);
                         printf("Undefined clss %s",errormsg);
                         free(errormsg);
-                        return NULL;
+                        return 0;
                     }
-                    clsInstaceVar->clsInstance->superClass = cls->superClass;
-                    clsInstaceVar->clsInstance->clsName = cls->clsName;
+                    clsInstaceVar->clsInstance = cls;
                     memcpy((tmpVarList->exprs+tmpVarList->len), &clsInstaceVar, sizeof(JavaExpr*));
                     tmpVarList->len++;
+                }else if(leftExpr->type == ExprType_THISTOKEN){
+                    
+                    JavaExpr *existExpr = findClassInstanceVarExpr(cls,leftExpr->token);
+                    if (rightExpr->type == ExprType_CLSINSTANCE) {
+                       JavaExpr *rightVarExpr = findVarExpr(tmpVarList, rightExpr->token, rightExpr->propertyToken);
+                       existExpr->valueTokenType = rightVarExpr->valueTokenType;
+                       existExpr->valueToken = rightExpr->valueToken;
+                    }else if (rightExpr->type == ExprType_VAR){
+                        JavaExpr *rightVarExpr = findVarExpr(tmpVarList, 0, rightExpr->token);
+                        existExpr->valueTokenType = rightVarExpr->valueTokenType;
+                        existExpr->valueToken = rightVarExpr->valueToken;
+                    }else if (rightExpr->type == ExprType_CONSTANT){
+                        existExpr->valueTokenType = rightExpr->tokenType;
+                        existExpr->valueToken = rightExpr->token;
+                    }
+                    
                 }else{
                     
+                   JavaExpr *existExpr = findVarExpr(tmpVarList, leftExpr->token, leftExpr->varToken);
+                    if (existExpr == 0) {
+                        printf("undefine var %s",leftExpr->token->z);
+                        return 0;
+                    }
                     
-                    
-                    
+                    //类属性
+                   if (rightExpr->type == ExprType_CLSINSTANCE) {
+                       JavaExpr *rightVarExpr = findVarExpr(tmpVarList, rightExpr->token, rightExpr->propertyToken);
+                       existExpr->valueTokenType = rightVarExpr->valueTokenType;
+                       existExpr->valueToken = rightExpr->valueToken;
+                    }else if (rightExpr->type == ExprType_VAR){
+                        JavaExpr *rightVarExpr = findVarExpr(tmpVarList, 0, rightExpr->token);
+                        existExpr->valueTokenType = rightVarExpr->valueTokenType;
+                        existExpr->valueToken = rightVarExpr->valueToken;
+                    }else if (rightExpr->type == ExprType_CONSTANT){
+                        existExpr->valueTokenType = rightExpr->tokenType;
+                        existExpr->valueToken = rightExpr->token;
+                    }
                 }
                 
-                
-                
             }
                 continue;
-            case ExprType_VAR:
+            case ExprType_CALL:
             {
-                
+                if (expr->propertyToken != 0) {
+                    JavaExpr *classVarExpr = findVarExpr(tmpVarList, 0, expr->token);
+                    if (classVarExpr == 0) {
+                        printf("undefined var %s",expr->token->z);
+                        return 0;
+                    }
+                    JavaFunction *func = findInstanceFunc(classVarExpr->clsInstance, expr->propertyToken);
+                    runFunc(parser, classVarExpr->clsInstance, expr->callParList, func);
+                }else{
+                    
+                    if (strncmp("printf", expr->token->z, expr->token->n) == 0) {
+                        if (expr->callParList->len != 1) {
+                            printf("printf only support 1 argument!\n");
+                        }
+                        
+                        JavaExpr *pExpr = *(expr->callParList->exprs);
+                        
+                        if (pExpr->type == ExprType_VAR) {
+                            
+                            if (pExpr->token != 0) {
+                                JavaExpr *varEx = findVarExpr(tmpVarList, pExpr->token, pExpr->varToken);
+                                if (varEx != 0) {
+                                    printf("%s\n",varEx->valueToken->z);
+                                }else{
+                                    printf("undefined var %s.%s",pExpr->token->z,pExpr->varToken->z);
+                                }
+                            }else{
+                                JavaExpr *varEx = findVarExpr(tmpVarList, 0, pExpr->varToken);
+                                if (varEx != 0) {
+                                    printf("%s\n",varEx->varToken->z);
+                                }else{
+                                    printf("undefined var %s.%s",pExpr->token->z,pExpr->varToken->z);
+                                }
+                            }
+                            
+                        }else if (pExpr->type == ExprType_CONSTANT){
+                            
+                            if (pExpr->token != 0) {
+                                printf("%s",pExpr->token->z);
+                            }else{
+                                printf("prinf error!\n");
+                            }
+                              
+                        }else if (pExpr->type == ExprType_THISTOKEN){
+                            JavaExpr *varEx = findClassInstanceVarExpr(cls, pExpr->varToken);
+                            if (varEx != 0) {
+                                printf("%s\n",varEx->varToken->z);
+                            }else{
+                                printf("undefined var %s.%s",pExpr->token->z,pExpr->varToken->z);
+                            }
+                        }
+                        
+    
+                    }
+                }
             }
                 continue;
-            case ExprType_THISTOKEN:
-            {
+            case ExprType_DECLARE:{
+             
+                if (expr->exprs == 0 || expr->exprLen == 0) {
+                    continue;
+                }
                 
-            }
-                continue;
-            case ExprType_NEW:
-            {
+                for (int i = 0; i < expr->exprLen; i++) {
+            
+                    JavaExpr *localExpr = *(expr->exprs + i);
+                    if (localExpr->type == ExprType_TOKEN) {
+                        JavaExpr *varExpr = initExpr();
+                        varExpr->type = ExprType_VAR;
+                        varExpr->declareType = expr->declareType;
+                        varExpr->token = localExpr->token;
+                        varExpr->tokenType = localExpr->tokenType;
+                        memcpy((tmpVarList->exprs+tmpVarList->len), &varExpr, sizeof(JavaExpr*));
+                        tmpVarList->len++;
+                    }else if(localExpr->type == ExprType_ASSGIN){
+                        
+                        JavaExpr *leftExpr = localExpr->assginLeftExpr;
+                        JavaExpr *rightExpr = localExpr->assginRightExpr;
+                    
+                        JavaExpr *varExpr = initExpr();
+                        varExpr->type = ExprType_VAR;
+                        varExpr->declareType = expr->declareType;
+                        varExpr->token = leftExpr->token;
+                        varExpr->tokenType = leftExpr->tokenType;
+                        
+                         if (rightExpr->type == ExprType_CLSINSTANCE) {
+                             JavaExpr *rightVarExpr = findVarExpr(tmpVarList, rightExpr->token, rightExpr->propertyToken);
+                             varExpr->valueTokenType = rightVarExpr->valueTokenType;
+                             varExpr->valueToken = rightExpr->valueToken;
+                         }else if (rightExpr->type == ExprType_VAR){
+                             JavaExpr *rightVarExpr = findVarExpr(tmpVarList, 0, rightExpr->token);
+                             varExpr->valueTokenType = rightVarExpr->valueTokenType;
+                             varExpr->valueToken = rightVarExpr->valueToken;
+                         }else if (rightExpr->type == ExprType_CONSTANT){
+                             varExpr->valueTokenType = rightExpr->tokenType;
+                             varExpr->valueToken = rightExpr->token;
+                         }
+                
+                    }
+                    
+            
+                }
+                
                 
             }
                 continue;
             case ExprType_RETURN:
             {
-                
+                return expr;
             }
                 break;
             default:
             {
                 printf("invaild secentence!\n");
             }
-                break;
+                continue;
         }
         
         

@@ -14,6 +14,10 @@ int main(int argc, char *argv[]) {
 	
 	const char *sjfile = "/Users/heboyce/Desktop/Study/LearnCompilers/SimpleJAVA/SimpleJava/simple.sj";
 	FILE *fp = fopen(sjfile, "r");
+    if (fp==0) {
+        printf("can't read file\n");
+        return 0;
+    }
 	struct stat statbuf;
 	stat(sjfile,&statbuf);
 	long fileSize = statbuf.st_size;
@@ -31,13 +35,18 @@ void showToken(const unsigned char *sourcecode){
 	
 	void* pParser = ParseAlloc(malloc);
     JavaParser *pParse = (JavaParser *)malloc(sizeof(JavaParser));
-    pParse->entryFunc = 0;
+    pParse->entryFunc  = 0;
+    pParse->clsCapity  = 10;
+    pParse->classes    = (MetaJavaClass **)malloc(sizeof(MetaJavaClass *)*10);
+    pParse->clsLen     = 0;
 	int tokenType;
 	int len = javaGetToken(sourcecode, &tokenType);
 	while (tokenType != HC_ILLEGAL) {
 			
 		Token token ;
-		token.z = sourcecode;
+        char *z = (char*)malloc(len+1);
+        memset(z, '\0', len+1);
+		token.z = memcpy(z, sourcecode, len);
 		token.n = len;
 		
 		if (tokenType != HC_SPACE) {

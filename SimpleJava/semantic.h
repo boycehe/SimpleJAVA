@@ -3,7 +3,8 @@
 
 void createClass(JavaParser *parser,Token clsToken,Token parentClasToken,JavaClassItems *clsBody);
 JavaExpr *tokenToExpr(Token token ,int op);
-JavaExpr *instanceGetProperty(Token token,Token propertyToken);
+JavaExpr *varTokenToExpr(Token token ,int type);
+JavaExpr *instanceGetProperty(int tokenType,Token token,Token propertyToken);
 JavaExpr *dressedCallExpr(Token clsInstanceToken,Token funcNameToken,CallTokensList *parameterList);
 CallTokensList *addTokenToCallParameterList(CallTokensList *parameterList,JavaExpr *expr);
 JavaExpr *assginmentExpr(JavaExpr *leftExpr,JavaExpr *rightExpr);

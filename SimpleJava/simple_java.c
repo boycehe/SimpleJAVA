@@ -855,7 +855,7 @@ static void yy_reduce(
 #line 72 "simple_java.y"
 {
 	printf("rule--->\t333333333\n");
-	yygotominor.yy16 = tokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy16 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 861 "simple_java.c"
         break;
@@ -863,7 +863,7 @@ static void yy_reduce(
 #line 76 "simple_java.y"
 {
 	printf("rule--->\t4444444444\n");
-	yygotominor.yy16 = tokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy16 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 869 "simple_java.c"
         break;
@@ -871,7 +871,7 @@ static void yy_reduce(
 #line 80 "simple_java.y"
 {
 	printf("rule--->\t555555555\n");
-	yygotominor.yy16 = tokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy16 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 877 "simple_java.c"
         break;
@@ -879,7 +879,7 @@ static void yy_reduce(
 #line 85 "simple_java.y"
 {
 	printf("rule--->\t6666666666\n");
-	yygotominor.yy16 =  instanceGetProperty(yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
+	yygotominor.yy16 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 }
 #line 885 "simple_java.c"
         break;
@@ -940,7 +940,7 @@ static void yy_reduce(
 #line 125 "simple_java.y"
 {
 	printf("rule--->\tddddddddddd\n");
-	JavaExpr *expr = instanceGetProperty(yymsp[-3].minor.yy0,yymsp[-1].minor.yy0);
+	JavaExpr *expr = instanceGetProperty(yymsp[-3].major,yymsp[-3].minor.yy0,yymsp[-1].minor.yy0);
 	yygotominor.yy39 = addTokenToCallParameterList(yymsp[-4].minor.yy39,expr);
 }
 #line 947 "simple_java.c"
@@ -965,7 +965,7 @@ static void yy_reduce(
 #line 142 "simple_java.y"
 {
 	printf("rule--->\tggggggggg\n");
-	JavaExpr *expr = tokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
+	JavaExpr *expr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
 	yygotominor.yy16 = addDeclarevarItem(yymsp[-2].minor.yy16,expr);
 }
 #line 972 "simple_java.c"
@@ -974,8 +974,8 @@ static void yy_reduce(
 #line 147 "simple_java.y"
 {
 	printf("rule--->\thhhhhhhhh\n");
-    JavaExpr *leftExpr = tokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
-    JavaExpr *rightExpr = tokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
+    JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
+    JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	yygotominor.yy16 = addDeclarevarItem(yymsp[-4].minor.yy16,expr);
 }
@@ -985,8 +985,8 @@ static void yy_reduce(
 #line 154 "simple_java.y"
 {
 	printf("rule--->\tiiiiiiiiiiiii\n");
-    JavaExpr *leftExpr = tokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
-    JavaExpr *rightExpr = tokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
+    JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
+    JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	yygotominor.yy16 = addDeclarevarItem(yymsp[-4].minor.yy16,expr);
 }
@@ -996,8 +996,8 @@ static void yy_reduce(
 #line 161 "simple_java.y"
 {
 	printf("rule--->\tjjjjjjjjjjjjj\n");
-    JavaExpr *leftExpr = tokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
-    JavaExpr *rightExpr = tokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
+    JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
+    JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
     yygotominor.yy16 = addDeclarevarItem(yymsp[-4].minor.yy16,expr);
 }
@@ -1103,7 +1103,7 @@ static void yy_reduce(
 #line 235 "simple_java.y"
 {
 	printf("rule--->\tvvvvvvvvvvvvvvvvvv\n");
-	yygotominor.yy17 =  instanceGetProperty(yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
+	yygotominor.yy17 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 }
 #line 1109 "simple_java.c"
         break;
@@ -1119,7 +1119,7 @@ static void yy_reduce(
 #line 244 "simple_java.y"
 {
 	printf("rule--->\txxxxxxxxxxxxxxxx\n");
-	yygotominor.yy17 =  instanceGetProperty(yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
+	yygotominor.yy17 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 }
 #line 1125 "simple_java.c"
         break;
@@ -1135,7 +1135,7 @@ static void yy_reduce(
 #line 253 "simple_java.y"
 {
 	printf("rule--->\tzzzzzzzzzzzzzzzzzzz\n");
-	yygotominor.yy17 = tokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy17 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 1141 "simple_java.c"
         break;
@@ -1143,7 +1143,7 @@ static void yy_reduce(
 #line 257 "simple_java.y"
 {
 	printf("rule--->\tAAAAAAAAAAAAAAA\n");
-	yygotominor.yy17 = tokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy17 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 1149 "simple_java.c"
         break;
