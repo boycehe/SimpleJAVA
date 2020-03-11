@@ -20,9 +20,10 @@ class Student extends Person {
 	}
  
     public int ageOfMajority(){
-        return 18;
+        int m1 = 19;
+        return m1;
     }
-	
+
 	public void main() {
 		
 		Student stud = new Student();

@@ -191,7 +191,7 @@ JavaExpr *addDeclarevarItem(JavaExpr *declareExpr,JavaExpr *itemExpr){
     return declareExpr;
 }
 
-JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,int tokenType){
+JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,JavaExpr *expr){
     
     if (declareExpr == NULL) {
         declareExpr = initExpr();
@@ -207,8 +207,8 @@ JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,in
     
     declareExpr->type = ExprType_DECLARE;
     declareExpr->declareType = declareType;
-    JavaExpr *itemExpr = varTokenToExpr(token, tokenType);
-    memcpy((declareExpr->exprs + declareExpr->exprLen), &itemExpr, sizeof(JavaExpr *));
+
+    memcpy((declareExpr->exprs + declareExpr->exprLen), &expr, sizeof(JavaExpr *));
     declareExpr->exprLen++;
     return declareExpr;
     
@@ -876,6 +876,9 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                              varExpr->valueTokenType = rightExpr->tokenType;
                              varExpr->valueToken = rightExpr->token;
                          }
+                        
+                        memcpy((tmpVarList->exprs+tmpVarList->len), &varExpr, sizeof(JavaExpr*));
+                        tmpVarList->len++;
                 
                     }
                     
@@ -890,7 +893,21 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                 if (expr->returnExpr->type == ExprType_CONSTANT) {
                     expr->valueToken = expr->returnExpr->token;
                     expr->valueTokenType = expr->returnExpr->tokenType;
+                } else if(expr->returnExpr->type == ExprType_VAR){
+                    JavaExpr *rightVarExpr = findVarExpr(tmpVarList, expr->returnExpr->token, expr->returnExpr->propertyToken);
+                    if (rightVarExpr == 0) {
+                        printf("undefined var %s\n",expr->returnExpr->varToken->z);
+                    }else{
+                        expr->valueToken = rightVarExpr->valueToken;
+                        expr->valueTokenType = rightVarExpr->valueTokenType;
+                    }
+                   
+                }else if (expr->returnExpr->type == ExprType_CLSINSTANCE){
+                    JavaExpr *rightVarExpr = findVarExpr(tmpVarList, expr->returnExpr->token, expr->returnExpr->propertyToken);
+                    expr->valueTokenType = rightVarExpr->valueTokenType;
+                    expr->valueToken = rightVarExpr->valueToken;
                 }
+
                 return expr;
             }
                 break;

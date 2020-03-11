@@ -18,6 +18,6 @@ JavaExpr *returnExpr(JavaExpr *expr);
 JavaParameterlist *addParameter(JavaParameterlist *paramList,int tokenType,Token token);
 JavaClassItems *dressedClassBodyWithVars(JavaClassItems *clsItem,JavaExpr*varExpr);
 JavaClassItems *dressedClassBodyWithFunc(JavaClassItems *clsItem,JavaFunction*javaFunc);
-JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,Token token,int tokenType);
+JavaExpr *finishDeclareVars(int declareType,JavaExpr *declareExpr,JavaExpr *expr);
 
 void javaRun(JavaParser *parser);

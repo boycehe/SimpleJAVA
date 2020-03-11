@@ -139,10 +139,34 @@ callidist(A) ::= .{
 //变量声明
 %type declarevar {JavaExpr*}
 %type declarevaritems {JavaExpr*}
-declarevar(A) ::= INT|STRING(B) declarevaritems(C) ID(D) SEMI.{
+%type declareexpr {JavaExpr*}
+declarevar(A) ::= INT|STRING(B) declarevaritems(C) declareexpr(D) SEMI.{
 	printf("rule--->\tfffffffffff\n");
-	A = finishDeclareVars(@B,C,D,@D);
+	A = finishDeclareVars(@B,C,D);
 }
+
+declareexpr(A) ::= ID(B).{
+    A = varTokenToExpr(B,@B);
+}
+
+declareexpr(A) ::= ID(B) EQ INTEGER(C).{
+    JavaExpr *leftExpr = varTokenToExpr(B,@B);
+    JavaExpr *rightExpr = varTokenToExpr(C,@C);
+    A = assginmentExpr(leftExpr,rightExpr);
+}
+
+declareexpr(A) ::= ID(B) EQ ID(C).{
+    JavaExpr *leftExpr = varTokenToExpr(B,@B);
+    JavaExpr *rightExpr = varTokenToExpr(C,@C);
+    A = assginmentExpr(leftExpr,rightExpr);
+}
+
+declareexpr(A) ::= ID(B) EQ TEXT(C).{
+    JavaExpr *leftExpr = varTokenToExpr(B,@B);
+    JavaExpr *rightExpr = varTokenToExpr(C,@C);
+    A = assginmentExpr(leftExpr,rightExpr);
+}
+
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
 	printf("rule--->\tggggggggg\n");
 	JavaExpr *expr = varTokenToExpr(C,@C);
