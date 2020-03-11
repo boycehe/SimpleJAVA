@@ -25,9 +25,9 @@ void
 #define HC_TEXT                             5
 #define HC_INTEGER                          6
 #define HC_DOT                              7
-#define HC_LP                               8
-#define HC_RP                               9
-#define HC_SEMI                            10
+#define HC_SEMI                             8
+#define HC_LP                               9
+#define HC_RP                              10
 #define HC_COMMA                           11
 #define HC_INT                             12
 #define HC_STRING                          13

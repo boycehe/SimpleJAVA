@@ -88,9 +88,13 @@ expr(A) ::= ID(B) DOT ID(C).{
 }
 //方法调用 入参类型 text，int 类属性，赞不支持返回值入参
 %type callexpr {JavaExpr*}
-callexpr(A) ::= ID(B) DOT ID(C) LP callparameterlist(D) RP SEMI.{
+%type callNoSemi {JavaExpr*}
+callexpr(A) ::= callNoSemi(B) SEMI.{
 	printf("rule--->\t777777777777\n");
-	A = dressedCallExpr(B,C,D);
+    A = B;
+}
+callNoSemi(A) ::= ID(B) DOT ID(C) LP callparameterlist(D) RP.{
+    A = dressedCallExpr(B,C,D);
 }
 callexpr(A) ::= ID(B) LP callparameterlist(C) RP SEMI.{
 	printf("rule--->\t888888888\n");
@@ -113,13 +117,13 @@ callparameterlist(A) ::= .{
 
 callidist(A) ::= callidist(B) INTEGER(C) COMMA.{
 	printf("rule--->\tbbbbbbbbb\n");
-	JavaExpr *expr = tokenToExpr(C,@C);
+	JavaExpr *expr = varTokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,expr);
 }
 
 callidist(A) ::= callidist(B) TEXT(C) COMMA.{
 	printf("rule--->\tccccccccccc\n");
-	JavaExpr *expr = tokenToExpr(C,@C);
+	JavaExpr *expr = varTokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,expr);
 }
 callidist(A) ::= callidist(B) ID(C) DOT ID(D) COMMA.{
@@ -230,7 +234,7 @@ leftval(A) ::= THIS DOT ID(C).{
 
 leftval(A) ::= ID(B).{
 	printf("rule--->\tuuuuuuuuuuuuuu\n");
-	A = tokenToExpr(B,@B);
+	A = varTokenToExpr(B,@B);
 }
 leftval(A) ::= ID(B) DOT ID(C).{
 	printf("rule--->\tvvvvvvvvvvvvvvvvvv\n");
@@ -238,12 +242,16 @@ leftval(A) ::= ID(B) DOT ID(C).{
 }
 rightval(A) ::= ID(B).{
 	printf("rule--->\twwwwwwwwwwwwwww\n");
-	A = tokenToExpr(B,@B);
+	A = varTokenToExpr(B,@B);
 }
 
 rightval(A) ::= THIS(B) DOT ID(C).{
 	printf("rule--->\txxxxxxxxxxxxxxxx\n");
 	A =  instanceGetProperty(@B,B,C);
+}
+
+rightval(A) ::= callNoSemi(B).{
+    A = B;
 }
 
 rightval(A) ::= NEW ID(B) LP RP.{
