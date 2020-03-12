@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "tokenize.h"
-#include "simple_java.h"
+#include "simple_java_parser.h"
 #include "semantic.h"
 #include "simple_java_foundation.h"
 #include <string.h>

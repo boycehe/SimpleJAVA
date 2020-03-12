@@ -42,6 +42,7 @@ State 2:
           callNoSemi ::= * ID DOT ID LP callparameterlist RP
           rightval ::= * ID
           rightval ::= * THIS DOT ID
+          rightval ::= * ID DOT ID
           rightval ::= * callNoSemi
           rightval ::= * NEW ID LP RP
           rightval ::= * INTEGER
@@ -50,12 +51,12 @@ State 2:
           returnval ::= RETURN * SEMI
 
                             ID shift        34     
-                          TEXT shift-reduce 43     rightval ::= TEXT
-                       INTEGER shift-reduce 42     rightval ::= INTEGER
-                          SEMI shift-reduce 45     returnval ::= RETURN SEMI
+                          TEXT shift-reduce 44     rightval ::= TEXT
+                       INTEGER shift-reduce 43     rightval ::= INTEGER
+                          SEMI shift-reduce 46     returnval ::= RETURN SEMI
                           THIS shift        30     
                            NEW shift        28     
-                    callNoSemi shift-reduce 40     rightval ::= callNoSemi
+                    callNoSemi shift-reduce 41     rightval ::= callNoSemi
                       rightval shift        23     
 
 State 3:
@@ -71,25 +72,26 @@ State 3:
                         PUBLIC shift        17     
                      PROTECTED shift        17     
                        PRIVATE shift        17     
-                    declarevar shift-reduce 50     classitems ::= classitems declarevar
-                      function shift-reduce 51     classitems ::= classitems function
+                    declarevar shift-reduce 51     classitems ::= classitems declarevar
+                      function shift-reduce 52     classitems ::= classitems function
 
 State 4:
           callNoSemi ::= * ID DOT ID LP callparameterlist RP
           assign ::= leftval EQ * rightval SEMI
           rightval ::= * ID
           rightval ::= * THIS DOT ID
+          rightval ::= * ID DOT ID
           rightval ::= * callNoSemi
           rightval ::= * NEW ID LP RP
           rightval ::= * INTEGER
           rightval ::= * TEXT
 
                             ID shift        34     
-                          TEXT shift-reduce 43     rightval ::= TEXT
-                       INTEGER shift-reduce 42     rightval ::= INTEGER
+                          TEXT shift-reduce 44     rightval ::= TEXT
+                       INTEGER shift-reduce 43     rightval ::= INTEGER
                           THIS shift        30     
                            NEW shift        28     
-                    callNoSemi shift-reduce 40     rightval ::= callNoSemi
+                    callNoSemi shift-reduce 41     rightval ::= callNoSemi
                       rightval shift        31     
 
 State 5:
@@ -159,11 +161,11 @@ State 9:
 State 10:
           javaclass ::= javaclass CLASS ID * javasinherit LD classitems RD
           javasinherit ::= * EXTENDS ID
-     (49) javasinherit ::= *
+     (50) javasinherit ::= *
 
                        EXTENDS shift        21     
                   javasinherit shift        53     
-                     {default} reduce       49     javasinherit ::=
+                     {default} reduce       50     javasinherit ::=
 
 State 11:
           functionbody ::= LD * funcbodyitems RD
@@ -179,10 +181,10 @@ State 11:
 State 12:
           function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP * parameterlist RP functionbody
           parameterlist ::= * parameterlist INT|STRING|ID ID
-     (47) parameterlist ::= *
+     (48) parameterlist ::= *
 
                  parameterlist shift        15     
-                     {default} reduce       47     parameterlist ::=
+                     {default} reduce       48     parameterlist ::=
 
 State 13:
           declarevar ::= INT|STRING * declarevaritems declareexpr SEMI
@@ -199,10 +201,10 @@ State 14:
           javaclass ::= javaclass CLASS ID javasinherit LD * classitems RD
           classitems ::= * classitems declarevar
           classitems ::= * classitems function
-     (52) classitems ::= *
+     (53) classitems ::= *
 
                     classitems shift        3      
-                     {default} reduce       52     classitems ::=
+                     {default} reduce       53     classitems ::=
 
 State 15:
           function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist * RP functionbody
@@ -268,17 +270,17 @@ State 20:
 State 21:
           javasinherit ::= EXTENDS * ID
 
-                            ID shift-reduce 48     javasinherit ::= EXTENDS ID
+                            ID shift-reduce 49     javasinherit ::= EXTENDS ID
 
 State 22:
           parameterlist ::= parameterlist INT|STRING|ID * ID
 
-                            ID shift-reduce 46     parameterlist ::= parameterlist INT|STRING|ID ID
+                            ID shift-reduce 47     parameterlist ::= parameterlist INT|STRING|ID ID
 
 State 23:
           returnval ::= RETURN rightval * SEMI
 
-                          SEMI shift-reduce 44     returnval ::= RETURN rightval SEMI
+                          SEMI shift-reduce 45     returnval ::= RETURN rightval SEMI
 
 State 24:
           leftval ::= THIS DOT * ID
@@ -293,7 +295,7 @@ State 25:
 State 26:
           rightval ::= NEW ID LP * RP
 
-                            RP shift-reduce 41     rightval ::= NEW ID LP RP
+                            RP shift-reduce 42     rightval ::= NEW ID LP RP
 
 State 27:
           rightval ::= NEW ID * LP RP
@@ -322,17 +324,21 @@ State 31:
 
 State 32:
           callNoSemi ::= ID DOT ID * LP callparameterlist RP
+     (40) rightval ::= ID DOT ID *
 
                             LP shift        6      
+                     {default} reduce       40     rightval ::= ID DOT ID
 
 State 33:
           callNoSemi ::= ID DOT * ID LP callparameterlist RP
+          rightval ::= ID DOT * ID
 
                             ID shift        32     
 
 State 34:
           callNoSemi ::= ID * DOT ID LP callparameterlist RP
      (38) rightval ::= ID *
+          rightval ::= ID * DOT ID
 
                            DOT shift        33     
                      {default} reduce       38     rightval ::= ID

@@ -861,8 +861,8 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                         JavaExpr *varExpr = initExpr();
                         varExpr->type = ExprType_VAR;
                         varExpr->declareType = expr->declareType;
-                        varExpr->token = leftExpr->token;
-                        varExpr->tokenType = leftExpr->tokenType;
+                        varExpr->varToken = leftExpr->varToken;
+                    
                         
                          if (rightExpr->type == ExprType_CLSINSTANCE) {
                              JavaExpr *rightVarExpr = findVarExpr(tmpVarList, rightExpr->token, rightExpr->propertyToken);
@@ -894,10 +894,10 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                     expr->valueToken = expr->returnExpr->token;
                     expr->valueTokenType = expr->returnExpr->tokenType;
                 } else if(expr->returnExpr->type == ExprType_VAR){
-                    JavaExpr *rightVarExpr = findVarExpr(tmpVarList, expr->returnExpr->token, expr->returnExpr->propertyToken);
+                    JavaExpr *rightVarExpr = findVarExpr(tmpVarList, expr->returnExpr->token, expr->returnExpr->varToken);
                     if (rightVarExpr == 0) {
                         printf("undefined var %s\n",expr->returnExpr->varToken->z);
-                    }else{
+                    }else {
                         expr->valueToken = rightVarExpr->valueToken;
                         expr->valueTokenType = rightVarExpr->valueTokenType;
                     }
@@ -906,6 +906,27 @@ JavaExpr *runFunc(JavaParser *parser,MetaJavaClass *cls,CallTokensList *tokenLis
                     JavaExpr *rightVarExpr = findVarExpr(tmpVarList, expr->returnExpr->token, expr->returnExpr->propertyToken);
                     expr->valueTokenType = rightVarExpr->valueTokenType;
                     expr->valueToken = rightVarExpr->valueToken;
+                }else if (expr->returnExpr->type == ExprType_THISTOKEN){
+                    JavaExpr *rightVarExpr = findClassInstanceVarExpr(cls, expr->returnExpr->varToken);
+                    expr->valueTokenType = rightVarExpr->valueTokenType;
+                    expr->valueToken = rightVarExpr->valueToken;
+                }else if (expr->returnExpr->type == ExprType_CALL){
+                    JavaExpr *classVarExpr = findVarExpr(tmpVarList, 0, expr->returnExpr->token);
+                    if (classVarExpr == 0) {
+                        printf("undefined var %s",expr->token->z);
+                        return 0;
+                    }
+                    JavaFunction *func = findInstanceFunc(classVarExpr->clsInstance, expr->returnExpr->propertyToken);
+                    JavaExpr *reExpr = runFunc(parser, classVarExpr->clsInstance, expr->returnExpr->callParList, func);
+                    if (reExpr== 0) {
+                        return 0;
+                    }
+                    expr->valueToken = reExpr->valueToken;
+                    expr->valueTokenType = reExpr->valueTokenType;
+                    
+                }else if (expr->returnExpr->type == ExprType_NEW){
+                    printf("can't return class instance!\n");
+                    return 0;
                 }
 
                 return expr;

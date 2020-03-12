@@ -1,20 +1,22 @@
-#include "tokenize.h"
-#include "simple_java_foundation.h"
-
-#ifndef YYMALLOCARGTYPE
-# define YYMALLOCARGTYPE size_t
-#endif
-#define ParseTOKENTYPE Token
-#define ParseARG_PDECL ,JavaParser *pParse
-
-void *ParseAlloc(void *(*mallocProc)(YYMALLOCARGTYPE));
-void Parse(
-			  void *yyp,                   /* The parser */
-			  int yymajor,                 /* The major token code number */
-			  ParseTOKENTYPE yyminor       /* The value for the token */
-			  ParseARG_PDECL               /* Optional %extra_argument parameter */
-);
-void ParseFree(
-					void *p,                    /* The parser to be deleted */
-					void (*freeProc)(void*)     /* Function used to reclaim memory */
-);
+#define HC_CLASS                            1
+#define HC_ID                               2
+#define HC_LD                               3
+#define HC_RD                               4
+#define HC_TEXT                             5
+#define HC_INTEGER                          6
+#define HC_DOT                              7
+#define HC_SEMI                             8
+#define HC_LP                               9
+#define HC_RP                              10
+#define HC_COMMA                           11
+#define HC_INT                             12
+#define HC_STRING                          13
+#define HC_EQ                              14
+#define HC_PUBLIC                          15
+#define HC_PROTECTED                       16
+#define HC_PRIVATE                         17
+#define HC_VOID                            18
+#define HC_THIS                            19
+#define HC_NEW                             20
+#define HC_RETURN                          21
+#define HC_EXTENDS                         22

@@ -8,6 +8,7 @@
 	#include <assert.h>
 	#include <stdlib.h>
     #include "semantic.h"
+    #include "simple_java_parser.h"
 }
 
 
@@ -271,6 +272,11 @@ rightval(A) ::= ID(B).{
 
 rightval(A) ::= THIS(B) DOT ID(C).{
 	printf("rule--->\txxxxxxxxxxxxxxxx\n");
+	A =  instanceGetProperty(@B,B,C);
+}
+
+rightval(A) ::= ID(B) DOT ID(C).{
+	printf("rule--->\tfafafafafa\n");
 	A =  instanceGetProperty(@B,B,C);
 }
 

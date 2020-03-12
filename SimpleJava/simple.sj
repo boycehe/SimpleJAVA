@@ -18,10 +18,13 @@ class Student extends Person {
 	public void updateNumber(int num){
 		this.number = num;
 	}
- 
+    public int getTestAge(){
+        return 200;
+    }
     public int ageOfMajority(){
-        int m1 = 19;
+        int m1 = 123;
         return m1;
+        
     }
 
 	public void main() {
