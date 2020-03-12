@@ -31,7 +31,7 @@
 	#include <stdlib.h>
     #include "semantic.h"
     #include "simple_java_parser.h"
-#line 34 "simple_java.c"
+#line 35 "simple_java.c"
 /**************** End of %include directives **********************************/
 /* These constants specify the various numeric values for terminal symbols
 ** in a format understandable to "makeheaders".  This section is blank unless
@@ -845,16 +845,15 @@ static void yy_reduce(
   */
 /********** Begin reduce actions **********************************************/
       case 0: /* javabegin ::= javaclass */
-#line 59 "simple_java.y"
+#line 60 "simple_java.y"
 {
-	printf("0000000\n");
+
 }
-#line 852 "simple_java.c"
+#line 853 "simple_java.c"
         break;
       case 1: /* javaclass ::= javaclass CLASS ID javasinherit LD classitems RD */
-#line 63 "simple_java.y"
+#line 64 "simple_java.y"
 {
-	printf("rule--->\t1111111\n");
 	createClass(pParse,yymsp[-4].minor.yy0,yymsp[-3].minor.yy0,yymsp[-1].minor.yy77);
 }
 #line 860 "simple_java.c"
@@ -862,409 +861,289 @@ static void yy_reduce(
       case 2: /* javaclass ::= */
 #line 68 "simple_java.y"
 {
-    printf("javaclass nil\n");
+  
 }
 #line 867 "simple_java.c"
         break;
       case 3: /* expr ::= ID */
+      case 4: /* expr ::= TEXT */ yytestcase(yyruleno==4);
+      case 5: /* expr ::= INTEGER */ yytestcase(yyruleno==5);
 #line 72 "simple_java.y"
 {
-	printf("rule--->\t333333333\n");
 	yygotominor.yy4 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
-#line 875 "simple_java.c"
+#line 876 "simple_java.c"
         break;
-      case 4: /* expr ::= TEXT */
-#line 76 "simple_java.y"
+      case 6: /* expr ::= ID DOT ID */
+#line 82 "simple_java.y"
 {
-	printf("rule--->\t4444444444\n");
-	yygotominor.yy4 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
+	yygotominor.yy4 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 }
 #line 883 "simple_java.c"
         break;
-      case 5: /* expr ::= INTEGER */
-#line 80 "simple_java.y"
-{
-	printf("rule--->\t555555555\n");
-	yygotominor.yy4 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
-}
-#line 891 "simple_java.c"
-        break;
-      case 6: /* expr ::= ID DOT ID */
-#line 85 "simple_java.y"
-{
-	printf("rule--->\t6666666666\n");
-	yygotominor.yy4 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
-}
-#line 899 "simple_java.c"
-        break;
       case 7: /* callexpr ::= callNoSemi SEMI */
-#line 92 "simple_java.y"
+#line 88 "simple_java.y"
 {
-	printf("rule--->\t777777777777\n");
     yygotominor.yy4 = yymsp[-1].minor.yy4;
 }
-#line 907 "simple_java.c"
+#line 890 "simple_java.c"
         break;
       case 8: /* callNoSemi ::= ID DOT ID LP callparameterlist RP */
-#line 96 "simple_java.y"
+#line 91 "simple_java.y"
 {
     yygotominor.yy4 = dressedCallExpr(yymsp[-5].minor.yy0,yymsp[-3].minor.yy0,yymsp[-1].minor.yy19);
 }
-#line 914 "simple_java.c"
+#line 897 "simple_java.c"
         break;
       case 9: /* callexpr ::= ID LP callparameterlist RP SEMI */
-#line 99 "simple_java.y"
+#line 94 "simple_java.y"
 {
-	printf("rule--->\t888888888\n");
 	Token token;
 	token.z = 0;
 	token.n = 0;
 	yygotominor.yy4 = dressedCallExpr(token,yymsp[-4].minor.yy0,yymsp[-2].minor.yy19);
 }
-#line 925 "simple_java.c"
+#line 907 "simple_java.c"
         break;
       case 10: /* callparameterlist ::= callidist expr */
-#line 108 "simple_java.y"
+#line 102 "simple_java.y"
 {
-	printf("rule--->\t999999999\n");
 	yygotominor.yy19 = addTokenToCallParameterList(yymsp[-1].minor.yy19,yymsp[0].minor.yy4);
 }
-#line 933 "simple_java.c"
+#line 914 "simple_java.c"
         break;
       case 11: /* callparameterlist ::= */
-#line 113 "simple_java.y"
+      case 15: /* callidist ::= */ yytestcase(yyruleno==15);
+#line 106 "simple_java.y"
 {
-	printf("rule--->\taaaaaaaaaa\n");
 	yygotominor.yy19 = 0;
 }
-#line 941 "simple_java.c"
+#line 922 "simple_java.c"
         break;
       case 12: /* callidist ::= callidist INTEGER COMMA */
-#line 118 "simple_java.y"
+      case 13: /* callidist ::= callidist TEXT COMMA */ yytestcase(yyruleno==13);
+#line 110 "simple_java.y"
 {
-	printf("rule--->\tbbbbbbbbb\n");
 	JavaExpr *expr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
 	yygotominor.yy19 = addTokenToCallParameterList(yymsp[-2].minor.yy19,expr);
 }
-#line 950 "simple_java.c"
-        break;
-      case 13: /* callidist ::= callidist TEXT COMMA */
-#line 124 "simple_java.y"
-{
-	printf("rule--->\tccccccccccc\n");
-	JavaExpr *expr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
-	yygotominor.yy19 = addTokenToCallParameterList(yymsp[-2].minor.yy19,expr);
-}
-#line 959 "simple_java.c"
+#line 931 "simple_java.c"
         break;
       case 14: /* callidist ::= callidist ID DOT ID COMMA */
-#line 129 "simple_java.y"
+#line 119 "simple_java.y"
 {
-	printf("rule--->\tddddddddddd\n");
 	JavaExpr *expr = instanceGetProperty(yymsp[-3].major,yymsp[-3].minor.yy0,yymsp[-1].minor.yy0);
 	yygotominor.yy19 = addTokenToCallParameterList(yymsp[-4].minor.yy19,expr);
 }
-#line 968 "simple_java.c"
-        break;
-      case 15: /* callidist ::= */
-#line 134 "simple_java.y"
-{
-	printf("rule--->\teeeeeeeeeeee\n");
-	yygotominor.yy19 = 0;
-}
-#line 976 "simple_java.c"
+#line 939 "simple_java.c"
         break;
       case 16: /* declarevar ::= INT|STRING declarevaritems declareexpr SEMI */
-#line 143 "simple_java.y"
+#line 131 "simple_java.y"
 {
-	printf("rule--->\tfffffffffff\n");
 	yygotominor.yy4 = finishDeclareVars(yymsp[-3].major,yymsp[-2].minor.yy4,yymsp[-1].minor.yy4);
 }
-#line 984 "simple_java.c"
+#line 946 "simple_java.c"
         break;
       case 17: /* declareexpr ::= ID */
-#line 148 "simple_java.y"
+#line 135 "simple_java.y"
 {
     yygotominor.yy4 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
-#line 991 "simple_java.c"
+#line 953 "simple_java.c"
         break;
       case 18: /* declareexpr ::= ID EQ INTEGER */
       case 19: /* declareexpr ::= ID EQ ID */ yytestcase(yyruleno==19);
       case 20: /* declareexpr ::= ID EQ TEXT */ yytestcase(yyruleno==20);
-#line 152 "simple_java.y"
+#line 139 "simple_java.y"
 {
     JavaExpr *leftExpr = varTokenToExpr(yymsp[-2].minor.yy0,yymsp[-2].major);
     JavaExpr *rightExpr = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
     yygotominor.yy4 = assginmentExpr(leftExpr,rightExpr);
 }
-#line 1002 "simple_java.c"
+#line 964 "simple_java.c"
         break;
       case 21: /* declarevaritems ::= declarevaritems ID COMMA */
-#line 170 "simple_java.y"
+#line 157 "simple_java.y"
 {
-	printf("rule--->\tggggggggg\n");
 	JavaExpr *expr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
 	yygotominor.yy4 = addDeclarevarItem(yymsp[-2].minor.yy4,expr);
 }
-#line 1011 "simple_java.c"
+#line 972 "simple_java.c"
         break;
       case 22: /* declarevaritems ::= declarevaritems ID EQ INTEGER COMMA */
-#line 175 "simple_java.y"
+      case 23: /* declarevaritems ::= declarevaritems ID EQ ID COMMA */ yytestcase(yyruleno==23);
+#line 161 "simple_java.y"
 {
-	printf("rule--->\thhhhhhhhh\n");
     JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
     JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	yygotominor.yy4 = addDeclarevarItem(yymsp[-4].minor.yy4,expr);
 }
-#line 1022 "simple_java.c"
-        break;
-      case 23: /* declarevaritems ::= declarevaritems ID EQ ID COMMA */
-#line 182 "simple_java.y"
-{
-	printf("rule--->\tiiiiiiiiiiiii\n");
-    JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
-    JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
-    JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
-	yygotominor.yy4 = addDeclarevarItem(yymsp[-4].minor.yy4,expr);
-}
-#line 1033 "simple_java.c"
+#line 983 "simple_java.c"
         break;
       case 24: /* declarevaritems ::= declarevaritems ID EQ TEXT COMMA */
-#line 189 "simple_java.y"
+#line 173 "simple_java.y"
 {
-	printf("rule--->\tjjjjjjjjjjjjj\n");
     JavaExpr *leftExpr = varTokenToExpr(yymsp[-3].minor.yy0,yymsp[-3].major);
     JavaExpr *rightExpr = varTokenToExpr(yymsp[-1].minor.yy0,yymsp[-1].major);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
     yygotominor.yy4 = addDeclarevarItem(yymsp[-4].minor.yy4,expr);
 }
-#line 1044 "simple_java.c"
+#line 993 "simple_java.c"
         break;
       case 25: /* declarevaritems ::= */
-#line 196 "simple_java.y"
+#line 179 "simple_java.y"
 {
-	printf("rule--->\tkkkkkkkkkk\n");
 	yygotominor.yy4 = 0;
 }
-#line 1052 "simple_java.c"
+#line 1000 "simple_java.c"
         break;
       case 26: /* function ::= PUBLIC|PROTECTED|PRIVATE INT|STRING|VOID ID LP parameterlist RP functionbody */
-#line 204 "simple_java.y"
+#line 186 "simple_java.y"
 {
-	printf("rule--->\tlllllllllllll\n");
 	yygotominor.yy55 = createFunction(pParse,yymsp[-6].major,yymsp[-5].major,yymsp[-4].minor.yy0,yymsp[-2].minor.yy62,yymsp[0].minor.yy16);
 }
-#line 1060 "simple_java.c"
+#line 1007 "simple_java.c"
         break;
       case 27: /* functionbody ::= LD funcbodyitems RD */
+#line 193 "simple_java.y"
+{
+	yygotominor.yy16 = yymsp[-1].minor.yy16;
+}
+#line 1014 "simple_java.c"
+        break;
+      case 28: /* funcbodyitems ::= funcbodyitems declarevar */
+      case 30: /* funcbodyitems ::= funcbodyitems callexpr */ yytestcase(yyruleno==30);
+#line 197 "simple_java.y"
+{
+	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy4);
+}
+#line 1022 "simple_java.c"
+        break;
+      case 29: /* funcbodyitems ::= funcbodyitems assign */
+      case 31: /* funcbodyitems ::= funcbodyitems returnval */ yytestcase(yyruleno==31);
+#line 201 "simple_java.y"
+{
+	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy72);
+}
+#line 1030 "simple_java.c"
+        break;
+      case 32: /* funcbodyitems ::= */
 #line 212 "simple_java.y"
 {
-	printf("rule--->\tmmmmmmmmmmmmm\n");
-	yygotominor.yy16 = yymsp[-1].minor.yy16;
+	yygotominor.yy16 = 0;
+}
+#line 1037 "simple_java.c"
+        break;
+      case 33: /* assign ::= leftval EQ rightval SEMI */
+#line 219 "simple_java.y"
+{
+	yygotominor.yy72 = assginmentExpr(yymsp[-3].minor.yy72,yymsp[-1].minor.yy72);
+}
+#line 1044 "simple_java.c"
+        break;
+      case 34: /* leftval ::= ID ID */
+#line 223 "simple_java.y"
+{
+	yygotominor.yy72 = declareClassVar(yymsp[-1].minor.yy0,yymsp[0].minor.yy0);
+}
+#line 1051 "simple_java.c"
+        break;
+      case 35: /* leftval ::= THIS DOT ID */
+#line 227 "simple_java.y"
+{
+	yygotominor.yy72 = getClassProperty(yymsp[0].minor.yy0);
+}
+#line 1058 "simple_java.c"
+        break;
+      case 36: /* leftval ::= ID */
+      case 38: /* rightval ::= ID */ yytestcase(yyruleno==38);
+      case 43: /* rightval ::= INTEGER */ yytestcase(yyruleno==43);
+      case 44: /* rightval ::= TEXT */ yytestcase(yyruleno==44);
+#line 231 "simple_java.y"
+{
+	yygotominor.yy72 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
 }
 #line 1068 "simple_java.c"
         break;
-      case 28: /* funcbodyitems ::= funcbodyitems declarevar */
-#line 217 "simple_java.y"
-{
-	printf("rule--->\tnnnnnnnnnnnn\n");
-	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy4);
-}
-#line 1076 "simple_java.c"
-        break;
-      case 29: /* funcbodyitems ::= funcbodyitems assign */
-#line 222 "simple_java.y"
-{
-	printf("rule--->\tooooooooooooooo\n");
-	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy72);
-}
-#line 1084 "simple_java.c"
-        break;
-      case 30: /* funcbodyitems ::= funcbodyitems callexpr */
-#line 226 "simple_java.y"
-{
-	printf("rule--->\tnnnnnnnnnnnnn\n");
-	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy4);
-}
-#line 1092 "simple_java.c"
-        break;
-      case 31: /* funcbodyitems ::= funcbodyitems returnval */
-#line 230 "simple_java.y"
-{
-	printf("rule--->\tpppppppppppppp\n");
-	yygotominor.yy16 = addExprToList(yymsp[-1].minor.yy16,yymsp[0].minor.yy72);
-}
-#line 1100 "simple_java.c"
-        break;
-      case 32: /* funcbodyitems ::= */
-#line 236 "simple_java.y"
-{
-	printf("rule--->\tqqqqqqqqqq\n");
-	yygotominor.yy16 = 0;
-}
-#line 1108 "simple_java.c"
-        break;
-      case 33: /* assign ::= leftval EQ rightval SEMI */
-#line 244 "simple_java.y"
-{
-	printf("rule--->\trrrrrrrrrrrrr\n");
-	yygotominor.yy72 = assginmentExpr(yymsp[-3].minor.yy72,yymsp[-1].minor.yy72);
-}
-#line 1116 "simple_java.c"
-        break;
-      case 34: /* leftval ::= ID ID */
-#line 249 "simple_java.y"
-{
-	printf("rule--->\tsssssssssssssss\n");
-	yygotominor.yy72 = declareClassVar(yymsp[-1].minor.yy0,yymsp[0].minor.yy0);
-}
-#line 1124 "simple_java.c"
-        break;
-      case 35: /* leftval ::= THIS DOT ID */
-#line 254 "simple_java.y"
-{
-	printf("rule--->\tttttttttttttttttt\n");
-	yygotominor.yy72 = getClassProperty(yymsp[0].minor.yy0);
-}
-#line 1132 "simple_java.c"
-        break;
-      case 36: /* leftval ::= ID */
-#line 259 "simple_java.y"
-{
-	printf("rule--->\tuuuuuuuuuuuuuu\n");
-	yygotominor.yy72 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
-}
-#line 1140 "simple_java.c"
-        break;
       case 37: /* leftval ::= ID DOT ID */
-#line 263 "simple_java.y"
+      case 39: /* rightval ::= THIS DOT ID */ yytestcase(yyruleno==39);
+      case 40: /* rightval ::= ID DOT ID */ yytestcase(yyruleno==40);
+#line 234 "simple_java.y"
 {
-	printf("rule--->\tvvvvvvvvvvvvvvvvvv\n");
 	yygotominor.yy72 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
 }
-#line 1148 "simple_java.c"
-        break;
-      case 38: /* rightval ::= ID */
-#line 267 "simple_java.y"
-{
-	printf("rule--->\twwwwwwwwwwwwwww\n");
-	yygotominor.yy72 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
-}
-#line 1156 "simple_java.c"
-        break;
-      case 39: /* rightval ::= THIS DOT ID */
-#line 272 "simple_java.y"
-{
-	printf("rule--->\txxxxxxxxxxxxxxxx\n");
-	yygotominor.yy72 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
-}
-#line 1164 "simple_java.c"
-        break;
-      case 40: /* rightval ::= ID DOT ID */
-#line 277 "simple_java.y"
-{
-	printf("rule--->\tfafafafafa\n");
-	yygotominor.yy72 =  instanceGetProperty(yymsp[-2].major,yymsp[-2].minor.yy0,yymsp[0].minor.yy0);
-}
-#line 1172 "simple_java.c"
+#line 1077 "simple_java.c"
         break;
       case 41: /* rightval ::= callNoSemi */
-#line 282 "simple_java.y"
+#line 249 "simple_java.y"
 {
     yygotominor.yy72 = yymsp[0].minor.yy4;
 }
-#line 1179 "simple_java.c"
+#line 1084 "simple_java.c"
         break;
       case 42: /* rightval ::= NEW ID LP RP */
-#line 286 "simple_java.y"
+#line 253 "simple_java.y"
 {
-	printf("rule--->\tyyyyyyyyyyyyyy\n");
    yygotominor.yy72 = newClsInstance(yymsp[-2].minor.yy0);
 }
-#line 1187 "simple_java.c"
-        break;
-      case 43: /* rightval ::= INTEGER */
-#line 290 "simple_java.y"
-{
-	printf("rule--->\tzzzzzzzzzzzzzzzzzzz\n");
-	yygotominor.yy72 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
-}
-#line 1195 "simple_java.c"
-        break;
-      case 44: /* rightval ::= TEXT */
-#line 294 "simple_java.y"
-{
-	printf("rule--->\tAAAAAAAAAAAAAAA\n");
-	yygotominor.yy72 = varTokenToExpr(yymsp[0].minor.yy0,yymsp[0].major);
-}
-#line 1203 "simple_java.c"
+#line 1091 "simple_java.c"
         break;
       case 45: /* returnval ::= RETURN rightval SEMI */
-#line 299 "simple_java.y"
+#line 263 "simple_java.y"
 {
-	printf("rule--->\tBBBBBBBBBBBBBBBB\n");
 	yygotominor.yy72 = returnExpr(yymsp[-1].minor.yy72);
 }
-#line 1211 "simple_java.c"
+#line 1098 "simple_java.c"
         break;
       case 46: /* returnval ::= RETURN SEMI */
-#line 303 "simple_java.y"
+#line 266 "simple_java.y"
 {
-	printf("rule--->\tCCCCCCCCCCCCCCCCCC\n");
 	yygotominor.yy72 = 0;
 }
-#line 1219 "simple_java.c"
+#line 1105 "simple_java.c"
         break;
       case 47: /* parameterlist ::= parameterlist INT|STRING|ID ID */
-#line 308 "simple_java.y"
+#line 270 "simple_java.y"
 {
-	printf("rule--->\tDDDDDDDDDDDDDDDDDDDD\n");
 	yygotominor.yy62 = addParameter(yymsp[-2].minor.yy62,yymsp[-1].major,yymsp[0].minor.yy0);
 }
-#line 1227 "simple_java.c"
+#line 1112 "simple_java.c"
         break;
       case 48: /* parameterlist ::= */
-#line 312 "simple_java.y"
+#line 273 "simple_java.y"
 {
-	printf("rule--->\tEEEEEEEEEEEEEEEEE\n");
 	yygotominor.yy62 = 0;
 }
-#line 1235 "simple_java.c"
+#line 1119 "simple_java.c"
         break;
       case 49: /* javasinherit ::= EXTENDS ID */
-#line 317 "simple_java.y"
+#line 277 "simple_java.y"
 {
-	printf("rule--->\tFFFFFFFFFFFFFFFFF\n");
 	yygotominor.yy0 = yymsp[0].minor.yy0;
 }
-#line 1243 "simple_java.c"
+#line 1126 "simple_java.c"
         break;
       case 50: /* javasinherit ::= */
-#line 321 "simple_java.y"
+#line 280 "simple_java.y"
 {
-	printf("rule--->\tGGGGGGGGGGGGGG\n");
     Token token;
 	token.z = 0;
 	token.n = 0;
 	yygotominor.yy0 = token;
 }
-#line 1254 "simple_java.c"
+#line 1136 "simple_java.c"
         break;
       case 51: /* classitems ::= classitems declarevar */
-#line 330 "simple_java.y"
+#line 288 "simple_java.y"
 {
-	printf("rule--->\tHHHHHHHHHHHHHH\n");
   	yygotominor.yy77 = dressedClassBodyWithVars(yymsp[-1].minor.yy77,yymsp[0].minor.yy4);
 }
-#line 1262 "simple_java.c"
+#line 1143 "simple_java.c"
         break;
       case 52: /* classitems ::= classitems function */
-#line 335 "simple_java.y"
+#line 292 "simple_java.y"
 {
-	printf("rule--->\tIIIIIIIIIIII\n");
     if(yymsp[0].minor.yy55 != 0){
         yygotominor.yy77 = dressedClassBodyWithFunc(yymsp[-1].minor.yy77,yymsp[0].minor.yy55);
     }else{
@@ -1272,15 +1151,14 @@ static void yy_reduce(
     }
 	
 }
-#line 1275 "simple_java.c"
+#line 1155 "simple_java.c"
         break;
       case 53: /* classitems ::= */
-#line 345 "simple_java.y"
+#line 301 "simple_java.y"
 {
-	printf("rule--->\tJJJJJJJJJJJJJJJ\n");
 	yygotominor.yy77 = 0;
 }
-#line 1283 "simple_java.c"
+#line 1162 "simple_java.c"
         break;
       default:
         break;
@@ -1346,13 +1224,13 @@ static void yy_syntax_error(
   ParseARG_FETCH;
 #define TOKEN (yyminor.yy0)
 /************ Begin %syntax_error code ****************************************/
-#line 49 "simple_java.y"
+#line 50 "simple_java.y"
 
 	char *errSyntaxMsg = (char *)malloc(TOKEN.n);
 	memcpy(errSyntaxMsg,(void*)TOKEN.z,TOKEN.n);
-	printf("near %s syntax error！\n",errSyntaxMsg);
+	printf("error:near %s happen syntax error！\n",errSyntaxMsg);
 	free(errSyntaxMsg);
-#line 1355 "simple_java.c"
+#line 1234 "simple_java.c"
 /************ End %syntax_error code ******************************************/
   ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }

@@ -37,6 +37,7 @@ class Student extends Person {
 		stud.study("english");
 		printf(stud.age);
         printf(stud.sex);
+        printf(stud.number);
 		printf(stud.currentStudyLesson);
 	}	
 	

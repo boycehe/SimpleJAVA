@@ -50,7 +50,7 @@
 %syntax_error {
 	char *errSyntaxMsg = (char *)malloc(TOKEN.n);
 	memcpy(errSyntaxMsg,(void*)TOKEN.z,TOKEN.n);
-	printf("near %s syntax error！\n",errSyntaxMsg);
+	printf("error:near %s happen syntax error！\n",errSyntaxMsg);
 	free(errSyntaxMsg);
 }
 
@@ -58,47 +58,40 @@
 %type javabegin {MetaJavaClassList *}
 %type javaclass {MetaJavaClassList *}
 javabegin ::= javaclass.{
-	printf("0000000\n");
+
 } 
 
 javaclass ::= javaclass CLASS ID(B) javasinherit(C) LD classitems(D) RD.{
-	printf("rule--->\t1111111\n");
 	createClass(pParse,B,C,D);
 }
 
 javaclass ::= .{
-    printf("javaclass nil\n");
+  
 }
 %type expr {JavaExpr*}
 expr(A) ::= ID(B).{
-	printf("rule--->\t333333333\n");
 	A = varTokenToExpr(B,@B);
 }
 expr(A) ::= TEXT(B).{
-	printf("rule--->\t4444444444\n");
 	A = varTokenToExpr(B,@B);
 }
 expr(A) ::= INTEGER(B).{
-	printf("rule--->\t555555555\n");
 	A = varTokenToExpr(B,@B);
 }
 
 expr(A) ::= ID(B) DOT ID(C).{
-	printf("rule--->\t6666666666\n");
 	A =  instanceGetProperty(@B,B,C);
 }
 //方法调用 入参类型 text，int 类属性，赞不支持返回值入参
 %type callexpr {JavaExpr*}
 %type callNoSemi {JavaExpr*}
 callexpr(A) ::= callNoSemi(B) SEMI.{
-	printf("rule--->\t777777777777\n");
     A = B;
 }
 callNoSemi(A) ::= ID(B) DOT ID(C) LP callparameterlist(D) RP.{
     A = dressedCallExpr(B,C,D);
 }
 callexpr(A) ::= ID(B) LP callparameterlist(C) RP SEMI.{
-	printf("rule--->\t888888888\n");
 	Token token;
 	token.z = 0;
 	token.n = 0;
@@ -107,33 +100,27 @@ callexpr(A) ::= ID(B) LP callparameterlist(C) RP SEMI.{
 %type callparameterlist {CallTokensList *}
 %type callidist {CallTokensList *}
 callparameterlist(A) ::= callidist(B) expr(C).{
-	printf("rule--->\t999999999\n");
 	A = addTokenToCallParameterList(B,C);
 }
 
 callparameterlist(A) ::= .{
-	printf("rule--->\taaaaaaaaaa\n");
 	A = 0;
 }
 
 callidist(A) ::= callidist(B) INTEGER(C) COMMA.{
-	printf("rule--->\tbbbbbbbbb\n");
 	JavaExpr *expr = varTokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,expr);
 }
 
 callidist(A) ::= callidist(B) TEXT(C) COMMA.{
-	printf("rule--->\tccccccccccc\n");
 	JavaExpr *expr = varTokenToExpr(C,@C);
 	A = addTokenToCallParameterList(B,expr);
 }
 callidist(A) ::= callidist(B) ID(C) DOT ID(D) COMMA.{
-	printf("rule--->\tddddddddddd\n");
 	JavaExpr *expr = instanceGetProperty(@C,C,D);
 	A = addTokenToCallParameterList(B,expr);
 }
 callidist(A) ::= .{
-	printf("rule--->\teeeeeeeeeeee\n");
 	A = 0;
 }
 
@@ -142,7 +129,6 @@ callidist(A) ::= .{
 %type declarevaritems {JavaExpr*}
 %type declareexpr {JavaExpr*}
 declarevar(A) ::= INT|STRING(B) declarevaritems(C) declareexpr(D) SEMI.{
-	printf("rule--->\tfffffffffff\n");
 	A = finishDeclareVars(@B,C,D);
 }
 
@@ -169,33 +155,28 @@ declareexpr(A) ::= ID(B) EQ TEXT(C).{
 }
 
 declarevaritems(A) ::= declarevaritems(B) ID(C) COMMA.{
-	printf("rule--->\tggggggggg\n");
 	JavaExpr *expr = varTokenToExpr(C,@C);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ INTEGER(D) COMMA.{
-	printf("rule--->\thhhhhhhhh\n");
     JavaExpr *leftExpr = varTokenToExpr(C,@C);
     JavaExpr *rightExpr = varTokenToExpr(D,@D);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ ID(D) COMMA.{
-	printf("rule--->\tiiiiiiiiiiiii\n");
     JavaExpr *leftExpr = varTokenToExpr(C,@C);
     JavaExpr *rightExpr = varTokenToExpr(D,@D);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
 	A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= declarevaritems(B) ID(C) EQ TEXT(D) COMMA.{
-	printf("rule--->\tjjjjjjjjjjjjj\n");
     JavaExpr *leftExpr = varTokenToExpr(C,@C);
     JavaExpr *rightExpr = varTokenToExpr(D,@D);
     JavaExpr *expr = assginmentExpr(leftExpr,rightExpr);
     A = addDeclarevarItem(B,expr);
 }
 declarevaritems(A) ::= .{
-	printf("rule--->\tkkkkkkkkkk\n");
 	A = 0;
 }
 
@@ -203,7 +184,6 @@ declarevaritems(A) ::= .{
 //类方法
 %type function {JavaFunction *}
 function(A) ::= PUBLIC|PROTECTED|PRIVATE(B) INT|STRING|VOID(C) ID(D) LP parameterlist(E) RP functionbody(F).{
-	printf("rule--->\tlllllllllllll\n");
 	A = createFunction(pParse,@B,@C,D,E,F);
 }
 
@@ -211,31 +191,25 @@ function(A) ::= PUBLIC|PROTECTED|PRIVATE(B) INT|STRING|VOID(C) ID(D) LP paramete
 %type functionbody  {JavaExprList *}
 
 functionbody(A) ::= LD funcbodyitems(B) RD.{
-	printf("rule--->\tmmmmmmmmmmmmm\n");
 	A = B;
 }
 
 funcbodyitems(A) ::= funcbodyitems(B) declarevar(C).{
-	printf("rule--->\tnnnnnnnnnnnn\n");
 	A = addExprToList(B,C);
 }
 
 funcbodyitems(A) ::= funcbodyitems(B) assign(C).{
-	printf("rule--->\tooooooooooooooo\n");
 	A = addExprToList(B,C);
 }
 funcbodyitems(A) ::= funcbodyitems(B) callexpr(C).{
-	printf("rule--->\tnnnnnnnnnnnnn\n");
 	A = addExprToList(B,C);
 }
 funcbodyitems(A) ::= funcbodyitems(B) returnval(C).{
-	printf("rule--->\tpppppppppppppp\n");
 	A = addExprToList(B,C);
 }
 
 
 funcbodyitems(A) ::= .{
-	printf("rule--->\tqqqqqqqqqq\n");
 	A = 0;
 }
 //赋值
@@ -243,40 +217,32 @@ funcbodyitems(A) ::= .{
 %type rightval {JavaExpr *}
 %type assign {JavaExpr *}
 assign(A) ::= leftval(B) EQ rightval(C) SEMI.{
-	printf("rule--->\trrrrrrrrrrrrr\n");
 	A = assginmentExpr(B,C);
 }
 
 leftval(A) ::= ID(B) ID(C).{
-	printf("rule--->\tsssssssssssssss\n");
 	A = declareClassVar(B,C);
 }
 
 leftval(A) ::= THIS DOT ID(C).{
-	printf("rule--->\tttttttttttttttttt\n");
 	A = getClassProperty(C);
 }
 
 leftval(A) ::= ID(B).{
-	printf("rule--->\tuuuuuuuuuuuuuu\n");
 	A = varTokenToExpr(B,@B);
 }
 leftval(A) ::= ID(B) DOT ID(C).{
-	printf("rule--->\tvvvvvvvvvvvvvvvvvv\n");
 	A =  instanceGetProperty(@B,B,C);
 }
 rightval(A) ::= ID(B).{
-	printf("rule--->\twwwwwwwwwwwwwww\n");
 	A = varTokenToExpr(B,@B);
 }
 
 rightval(A) ::= THIS(B) DOT ID(C).{
-	printf("rule--->\txxxxxxxxxxxxxxxx\n");
 	A =  instanceGetProperty(@B,B,C);
 }
 
 rightval(A) ::= ID(B) DOT ID(C).{
-	printf("rule--->\tfafafafafa\n");
 	A =  instanceGetProperty(@B,B,C);
 }
 
@@ -285,42 +251,33 @@ rightval(A) ::= callNoSemi(B).{
 }
 
 rightval(A) ::= NEW ID(B) LP RP.{
-	printf("rule--->\tyyyyyyyyyyyyyy\n");
    A = newClsInstance(B);
 }
 rightval(A) ::= INTEGER(B).{
-	printf("rule--->\tzzzzzzzzzzzzzzzzzzz\n");
 	A = varTokenToExpr(B,@B);
 }
 rightval(A) ::= TEXT(B).{
-	printf("rule--->\tAAAAAAAAAAAAAAA\n");
 	A = varTokenToExpr(B,@B);
 }
 %type returnval {JavaExpr *}
 returnval(A) ::= RETURN rightval(B) SEMI.{
-	printf("rule--->\tBBBBBBBBBBBBBBBB\n");
 	A = returnExpr(B);
 }
 returnval(A) ::= RETURN SEMI.{
-	printf("rule--->\tCCCCCCCCCCCCCCCCCC\n");
 	A = 0;
 }
 %type parameterlist {JavaParameterlist *}
 parameterlist(A) ::= parameterlist(B) INT|STRING|ID(C) ID(D).{
-	printf("rule--->\tDDDDDDDDDDDDDDDDDDDD\n");
 	A = addParameter(B,@C,D);
 }
 parameterlist(A) ::= .{
-	printf("rule--->\tEEEEEEEEEEEEEEEEE\n");
 	A = 0;
 }
 
 javasinherit(A) ::= EXTENDS ID(B).{
-	printf("rule--->\tFFFFFFFFFFFFFFFFF\n");
 	A = B;
 }
 javasinherit(A) ::= .{
-	printf("rule--->\tGGGGGGGGGGGGGG\n");
     Token token;
 	token.z = 0;
 	token.n = 0;
@@ -329,12 +286,10 @@ javasinherit(A) ::= .{
 
 %type classitems {JavaClassItems *}
 classitems(A) ::= classitems(B) declarevar(C).{
-	printf("rule--->\tHHHHHHHHHHHHHH\n");
   	A = dressedClassBodyWithVars(B,C);
 }
 
 classitems(A) ::= classitems(B) function(C).{
-	printf("rule--->\tIIIIIIIIIIII\n");
     if(C != 0){
         A = dressedClassBodyWithFunc(B,C);
     }else{
@@ -344,7 +299,6 @@ classitems(A) ::= classitems(B) function(C).{
 }
 
 classitems(A) ::= .{
-	printf("rule--->\tJJJJJJJJJJJJJJJ\n");
 	A = 0;
 }
 

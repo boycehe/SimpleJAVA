@@ -51,13 +51,13 @@ void showToken(const unsigned char *sourcecode){
 		
 		if (tokenType != HC_SPACE) {
 		 	Parse(pParser,tokenType,token,pParse);
-			printf("token:\t");
-			for (int i = 0; i < len; i++) {
-				printf("%c",sourcecode[i]);
-			}
-			printf("\n");
-			printf("tokentype:\t");
-			printTokenType(tokenType);
+//			printf("token:\t");
+//			for (int i = 0; i < len; i++) {
+//				printf("%c",sourcecode[i]);
+//			}
+//			printf("\n");
+//			printf("tokentype:\t");
+//			printTokenType(tokenType);
 		}
 
 		sourcecode = &sourcecode[len];
