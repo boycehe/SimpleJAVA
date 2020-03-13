@@ -1,0 +1,312 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00DCD9AD2414F9EB00A95564 /* semantic.c in Sources */ = {isa = PBXBuildFile; fileRef = 00DCD9A02414F9EA00A95564 /* semantic.c */; };
+		00DCD9AE2414F9EB00A95564 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 00DCD9A32414F9EA00A95564 /* test.c */; };
+		00DCD9B02414F9EB00A95564 /* simple_java.c in Sources */ = {isa = PBXBuildFile; fileRef = 00DCD9A92414F9EB00A95564 /* simple_java.c */; };
+		00DCD9B12414F9EB00A95564 /* tokenize.c in Sources */ = {isa = PBXBuildFile; fileRef = 00DCD9AB2414F9EB00A95564 /* tokenize.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		00DCD9942414F95C00A95564 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00DCD9962414F95C00A95564 /* SimpleJava */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleJava; sourceTree = BUILT_PRODUCTS_DIR; };
+		00DCD9992414F95C00A95564 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		00DCD9A02414F9EA00A95564 /* semantic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = semantic.c; sourceTree = "<group>"; };
+		00DCD9A12414F9EA00A95564 /* simple.sj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple.sj; sourceTree = "<group>"; };
+		00DCD9A22414F9EA00A95564 /* simple_java.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_java.h; sourceTree = "<group>"; };
+		00DCD9A32414F9EA00A95564 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		00DCD9A42414F9EA00A95564 /* simple_java.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = simple_java.y; sourceTree = "<group>"; };
+		00DCD9A52414F9EA00A95564 /* simple_java.out */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple_java.out; sourceTree = "<group>"; };
+		00DCD9A62414F9EA00A95564 /* tokenize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tokenize.h; sourceTree = "<group>"; };
+		00DCD9A72414F9EA00A95564 /* simple_java_foundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_java_foundation.h; sourceTree = "<group>"; };
+		00DCD9A82414F9EB00A95564 /* test.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = test.dSYM; sourceTree = "<group>"; };
+		00DCD9A92414F9EB00A95564 /* simple_java.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simple_java.c; sourceTree = "<group>"; };
+		00DCD9AA2414F9EB00A95564 /* semantic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = semantic.h; sourceTree = "<group>"; };
+		00DCD9AB2414F9EB00A95564 /* tokenize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tokenize.c; sourceTree = "<group>"; };
+		00DCD9AC2414F9EB00A95564 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		00DCD9F32419D36C00A95564 /* simple_java_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_java_parser.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00DCD9932414F95C00A95564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00DCD98D2414F95C00A95564 = {
+			isa = PBXGroup;
+			children = (
+				00DCD9982414F95C00A95564 /* SimpleJava */,
+				00DCD9972414F95C00A95564 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		00DCD9972414F95C00A95564 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00DCD9962414F95C00A95564 /* SimpleJava */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00DCD9982414F95C00A95564 /* SimpleJava */ = {
+			isa = PBXGroup;
+			children = (
+				00DCD9F32419D36C00A95564 /* simple_java_parser.h */,
+				00DCD9AC2414F9EB00A95564 /* parser.h */,
+				00DCD9A02414F9EA00A95564 /* semantic.c */,
+				00DCD9AA2414F9EB00A95564 /* semantic.h */,
+				00DCD9A72414F9EA00A95564 /* simple_java_foundation.h */,
+				00DCD9A92414F9EB00A95564 /* simple_java.c */,
+				00DCD9A22414F9EA00A95564 /* simple_java.h */,
+				00DCD9A52414F9EA00A95564 /* simple_java.out */,
+				00DCD9A42414F9EA00A95564 /* simple_java.y */,
+				00DCD9A12414F9EA00A95564 /* simple.sj */,
+				00DCD9A32414F9EA00A95564 /* test.c */,
+				00DCD9A82414F9EB00A95564 /* test.dSYM */,
+				00DCD9AB2414F9EB00A95564 /* tokenize.c */,
+				00DCD9A62414F9EA00A95564 /* tokenize.h */,
+				00DCD9992414F95C00A95564 /* main.c */,
+			);
+			path = SimpleJava;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00DCD9952414F95C00A95564 /* SimpleJava */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00DCD99D2414F95C00A95564 /* Build configuration list for PBXNativeTarget "SimpleJava" */;
+			buildPhases = (
+				00DCD9922414F95C00A95564 /* Sources */,
+				00DCD9932414F95C00A95564 /* Frameworks */,
+				00DCD9942414F95C00A95564 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleJava;
+			productName = SimpleJava;
+			productReference = 00DCD9962414F95C00A95564 /* SimpleJava */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		00DCD98E2414F95C00A95564 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = heboyce;
+				TargetAttributes = {
+					00DCD9952414F95C00A95564 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 00DCD9912414F95C00A95564 /* Build configuration list for PBXProject "SimpleJava" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 00DCD98D2414F95C00A95564;
+			productRefGroup = 00DCD9972414F95C00A95564 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00DCD9952414F95C00A95564 /* SimpleJava */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00DCD9922414F95C00A95564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00DCD9B12414F9EB00A95564 /* tokenize.c in Sources */,
+				00DCD9AE2414F9EB00A95564 /* test.c in Sources */,
+				00DCD9B02414F9EB00A95564 /* simple_java.c in Sources */,
+				00DCD9AD2414F9EB00A95564 /* semantic.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		00DCD99B2414F95C00A95564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		00DCD99C2414F95C00A95564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		00DCD99E2414F95C00A95564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		00DCD99F2414F95C00A95564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00DCD9912414F95C00A95564 /* Build configuration list for PBXProject "SimpleJava" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00DCD99B2414F95C00A95564 /* Debug */,
+				00DCD99C2414F95C00A95564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00DCD99D2414F95C00A95564 /* Build configuration list for PBXNativeTarget "SimpleJava" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00DCD99E2414F95C00A95564 /* Debug */,
+				00DCD99F2414F95C00A95564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 00DCD98E2414F95C00A95564 /* Project object */;
+}
