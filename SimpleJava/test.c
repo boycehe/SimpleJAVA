@@ -12,12 +12,18 @@ void showToken(const unsigned char *sourcecode);
 void testToken();
 int main(int argc, char *argv[]) {
 	
-	const char *sjfile = "/Users/heboyce/Desktop/Study/LearnCompilers/SimpleJAVA/SimpleJava/simple.sj";
+    if (argc <= 1 && argv[1] == 0) {
+        printf("Please input source code path!\n");
+        return 0;
+    }
+
+	const char *sjfile = argv[1];
 	FILE *fp = fopen(sjfile, "r");
     if (fp==0) {
         printf("can't read file\n");
         return 0;
     }
+    
 	struct stat statbuf;
 	stat(sjfile,&statbuf);
 	long fileSize = statbuf.st_size;

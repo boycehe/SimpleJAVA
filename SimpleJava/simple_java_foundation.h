@@ -6,15 +6,10 @@
 
 typedef struct MetaClass MetaClass;
 typedef struct JavaFunction JavaFunction;
-typedef struct JavaVar JavaVar;
 typedef struct JavaExprList  JavaExprList;
 typedef struct JavaExpr	JavaExpr;
-typedef struct JavaSentenceList JavaSentenceList;
 typedef struct MetaJavaClass MetaJavaClass;
-typedef struct JavaSentence JavaSentence;
-typedef struct JavaClassBody JavaClassBody;
 typedef struct JavaParser JavaParser;
-typedef struct JavaDeclareVar JavaDeclareVar;
 typedef struct JavaParameterlist JavaParameterlist;
 typedef struct JavaParameter JavaParameter;
 typedef struct MetaJavaClassList MetaJavaClassList;
@@ -25,12 +20,6 @@ typedef struct JavaFunctionList JavaFunctionList;
 typedef enum ExprType ExprType;
 typedef enum JavaAccessType JavaAccessType;
 
-
-/*
-access ::= PUBLIC.
-access ::= PROTECTED.
-access ::= PRIVATE.
-*/
 
 struct Token {
 	const unsigned char *z;     /* Text of the token.  Not NULL-terminated! */
@@ -91,10 +80,6 @@ struct MetaJavaClass {
     JavaClassItems *clsItems;
 };
 
-struct JavaDeclareVar {
-	
-};
-
 struct JavaExprList{
 	JavaExpr **exprs;
 	unsigned short len;
@@ -145,27 +130,6 @@ struct JavaFunction {
 	const char *name;
 	JavaParameterlist *parameters;
 	JavaExprList *sentenceList;
-};
-
-struct JavaSentenceList {
-	
-};
-
-struct JavaSentence {
-	
-};
-
-struct JavaVar {
-	
-	unsigned char type;
-
-};
-
-struct JavaClassBody {
-	JavaFunction *functions;
-	unsigned char funLen;
-	JavaVar **javaVars;
-	unsigned char javaVarLen;
 };
 
 struct JavaParser {

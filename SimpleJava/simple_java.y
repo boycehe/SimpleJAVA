@@ -11,42 +11,6 @@
     #include "simple_java_parser.h"
 }
 
-
-/*
-类声明
-*/
-
-/*
-1.类声明
-
-2.方法声明
-
-3.变量声明
-3.1 int变量声明
-3.2 String变量声明
-
-4.赋值语句
-4.1 int赋值
-4.2 string赋值
-4.3 类属性赋值
-4.4 类初始化
-
-5.计算语句
-5.1 int 计算
-
-6.方法调用
-
-7.入口函数执行
-
-**************
-1.赋值语句
-2.声明语句
-3.计算语句
-4.调用语句
-5.类属性访问
-6.返回值
-*/
-
 %syntax_error {
 	char *errSyntaxMsg = (char *)malloc(TOKEN.n);
 	memcpy(errSyntaxMsg,(void*)TOKEN.z,TOKEN.n);
@@ -82,7 +46,7 @@ expr(A) ::= INTEGER(B).{
 expr(A) ::= ID(B) DOT ID(C).{
 	A =  instanceGetProperty(@B,B,C);
 }
-//方法调用 入参类型 text，int 类属性，赞不支持返回值入参
+//方法调用 入参类型 text，int 类属性，暂不支持返回值入参
 %type callexpr {JavaExpr*}
 %type callNoSemi {JavaExpr*}
 callexpr(A) ::= callNoSemi(B) SEMI.{

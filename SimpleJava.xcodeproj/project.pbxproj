@@ -27,7 +27,6 @@
 
 /* Begin PBXFileReference section */
 		00DCD9962414F95C00A95564 /* SimpleJava */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleJava; sourceTree = BUILT_PRODUCTS_DIR; };
-		00DCD9992414F95C00A95564 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		00DCD9A02414F9EA00A95564 /* semantic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = semantic.c; sourceTree = "<group>"; };
 		00DCD9A12414F9EA00A95564 /* simple.sj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple.sj; sourceTree = "<group>"; };
 		00DCD9A22414F9EA00A95564 /* simple_java.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_java.h; sourceTree = "<group>"; };
@@ -88,7 +87,6 @@
 				00DCD9A82414F9EB00A95564 /* test.dSYM */,
 				00DCD9AB2414F9EB00A95564 /* tokenize.c */,
 				00DCD9A62414F9EA00A95564 /* tokenize.h */,
-				00DCD9992414F95C00A95564 /* main.c */,
 			);
 			path = SimpleJava;
 			sourceTree = "<group>";
